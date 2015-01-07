@@ -13,6 +13,7 @@ hideOverlay = ->
 $ ->
   map = null
   families = {}
+  speciesList = {}
   trails = {}
   markers = []
 
@@ -23,6 +24,7 @@ $ ->
     $.get "json/families.json", (json) ->
 
       families = jQuery.extend(true, {}, json);
+      window.families = families
 
       familiesSorted = []
 
@@ -32,13 +34,14 @@ $ ->
 
         _.each family, (species, key) ->
           # List the species in the options menu
-          $('#menu-content-list').append("<div class=\"list-row\"><div class=\"text\"><div class=\"title\">#{key}</div><div class=\"subtitle\">#{species.commonName}</div></div><img src=\"/assets/images/disclosure-indicator.png\" class=\"disclosure-indicator\"></div>")
+          $('#menu-content-list').append("<div class=\"list-row\"><img class=\"list-image\" src=\"/assets/images/plant_images/#{species.genusSpecies}/#{species.genusSpecies}1.jpg\"><div class=\"text\"><div class=\"title\">#{key}</div><div class=\"subtitle\">#{species.commonName}</div></div><img src=\"/assets/images/disclosure-indicator.png\" class=\"disclosure-indicator\"></div>")
+          speciesList[key] = species
 
           return unless species.mapPin
           _.each species.mapPin.replace(/[\(|\)]/g, '').split('; '), (coords) ->
             # Place the marker on the map
             coordsSplit = coords.split ", "
-            infoWindow = new google.maps.InfoWindow(content: species.genusSpecies)
+            infoWindow = new google.maps.InfoWindow(content: "#{species.genusSpecies}")
 
             marker = new google.maps.Marker(
               position: new google.maps.LatLng(coordsSplit[0], coordsSplit[1]);
@@ -46,7 +49,7 @@ $ ->
               title: species.genusSpecies
             )
 
-            markers.push {species: species.genusSpecies.toLowerCase(), marker: marker}
+            markers.push {species: species.genusSpecies, marker: marker}
 
             # Save pins for modification later
             families[familyName]['markers'].push marker
@@ -56,6 +59,10 @@ $ ->
               infoWindow.open map, marker
               openInfoWindow = infoWindow
               return
+
+      console.log speciesList
+      # Last dummy row to even out heights
+      $('#menu-content-list').append("<div class=\"list-row\"></div>")
 
       familiesSorted.sort()
       _.each familiesSorted, (family) ->
@@ -86,8 +93,11 @@ $ ->
 
       $('#menu-content-list .list-row').on 'click', ->
         showOverlay()
+        template = _.template($('#popover-template').html())
+        console.log template(speciesList[$(this).find('.title').html()])
+        $('#popover-inner').html(template(speciesList[$(this).find('.title').html()]))
 
-      $('#overlay-close').on 'click', ->
+      $('#popover-inner').on 'click', '#overlay-close', ->
         hideOverlay()
 
       $('#popover-inner').on 'click', (e) ->
@@ -141,7 +151,7 @@ $ ->
           species = trails[$(this).find('.title').html()].split('; ')
           _.each species, (current) ->
             _.each markers, (marker) ->
-              if marker.species is current.toLowerCase()
+              if marker.species is current
                   marker.marker.setMap(map)
 
           $(this).find('.checkbox').addClass('selected')

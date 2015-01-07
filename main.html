@@ -20,7 +20,7 @@
     <div id="popover-outer" class="popover-outer">
       <div class="height-fix"></div>
       <div id="popover-inner" class="popover-inner">
-        <i id="overlay-close" class="icon-cancel"></i>
+
       </div>
     </div>
     <div id="inner-container" class="inner-container">
@@ -49,3 +49,18 @@
     </div>
   </body>
 </html>
+
+<script type="text/template" id="popover-template">
+  <i id="overlay-close" class="icon-cancel"></i>
+  <div class="images">
+    <img src="/assets/images/plant_images/Livistona australis/Livistona australis1.jpg">
+  </div>
+  <div class="content">
+    <div class="title"><%= genusSpecies %></div>
+    <div class="subtitle"><%= commonName %></div>
+    <div class="authority"><%= authority %></div>
+    <div class="description">Description<br /><%= description %></div>
+    <div class="distribution">Distribution<br /><% print(distribution.split('|')[1]); %></div>
+    <div class="Information">information<br /><% print(information.split('|')[1]); %></div>
+  </div>
+</script>

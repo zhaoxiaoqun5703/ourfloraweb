@@ -17,9 +17,10 @@
   };
 
   $(function() {
-    var families, initialize, map, markers, trails;
+    var families, initialize, map, markers, speciesList, trails;
     map = null;
     families = {};
+    speciesList = {};
     trails = {};
     markers = [];
     initialize = function() {
@@ -37,12 +38,14 @@
       $.get("json/families.json", function(json) {
         var familiesSorted;
         families = jQuery.extend(true, {}, json);
+        window.families = families;
         familiesSorted = [];
         _.each(json, function(family, familyName) {
           familiesSorted.push(familyName);
           families[familyName]['markers'] = [];
           return _.each(family, function(species, key) {
-            $('#menu-content-list').append("<div class=\"list-row\"><div class=\"text\"><div class=\"title\">" + key + "</div><div class=\"subtitle\">" + species.commonName + "</div></div><img src=\"/assets/images/disclosure-indicator.png\" class=\"disclosure-indicator\"></div>");
+            $('#menu-content-list').append("<div class=\"list-row\"><img class=\"list-image\" src=\"/assets/images/plant_images/" + species.genusSpecies + "/" + species.genusSpecies + "1.jpg\"><div class=\"text\"><div class=\"title\">" + key + "</div><div class=\"subtitle\">" + species.commonName + "</div></div><img src=\"/assets/images/disclosure-indicator.png\" class=\"disclosure-indicator\"></div>");
+            speciesList[key] = species;
             if (!species.mapPin) {
               return;
             }
@@ -50,7 +53,7 @@
               var coordsSplit, infoWindow, marker;
               coordsSplit = coords.split(", ");
               infoWindow = new google.maps.InfoWindow({
-                content: species.genusSpecies
+                content: "" + species.genusSpecies
               });
               marker = new google.maps.Marker({
                 position: new google.maps.LatLng(coordsSplit[0], coordsSplit[1]),
@@ -58,7 +61,7 @@
                 title: species.genusSpecies
               });
               markers.push({
-                species: species.genusSpecies.toLowerCase(),
+                species: species.genusSpecies,
                 marker: marker
               });
               families[familyName]['markers'].push(marker);
@@ -72,6 +75,8 @@
             });
           });
         });
+        console.log(speciesList);
+        $('#menu-content-list').append("<div class=\"list-row\"></div>");
         familiesSorted.sort();
         _.each(familiesSorted, function(family) {
           return $('#menu-content-families').append("<div class=\"family-row\"><div class=\"checkbox family selected\"><i class=\"icon-ok\"></i></div><div class='title'>" + family + "</div></div>");
@@ -108,9 +113,13 @@
           });
         });
         $('#menu-content-list .list-row').on('click', function() {
-          return showOverlay();
+          var template;
+          showOverlay();
+          template = _.template($('#popover-template').html());
+          console.log(template(speciesList[$(this).find('.title').html()]));
+          return $('#popover-inner').html(template(speciesList[$(this).find('.title').html()]));
         });
-        $('#overlay-close').on('click', function() {
+        $('#popover-inner').on('click', '#overlay-close', function() {
           return hideOverlay();
         });
         $('#popover-inner').on('click', function(e) {
@@ -163,7 +172,7 @@
             species = trails[$(this).find('.title').html()].split('; ');
             _.each(species, function(current) {
               return _.each(markers, function(marker) {
-                if (marker.species === current.toLowerCase()) {
+                if (marker.species === current) {
                   return marker.marker.setMap(map);
                 }
               });
