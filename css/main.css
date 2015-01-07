@@ -1,0 +1,357 @@
+@charset "UTF-8";
+/* Breakpoints
+...................................................................................... */
+/* Helpers
+...................................................................................... */
+/* Classes
+...................................................................................... */
+.height-fix {
+  vertical-align: middle;
+  height: 100%;
+  width: 0;
+  display: inline-block;
+  overflow: hidden; }
+
+.highlight {
+  color: #2c90b6; }
+
+.inline-middle {
+  display: inline-block;
+  vertical-align: middle; }
+
+@font-face {
+  font-family: 'fontello';
+  src: url("../assets/fonts/fontello.eot?40435210");
+  src: url("../assets/fonts/fontello.eot?40435210#iefix") format("embedded-opentype"), url("../assets/fonts/fontello.woff?40435210") format("woff"), url("../assets/fonts/fontello.ttf?40435210") format("truetype"), url("../assets/fonts/fontello.svg?40435210#fontello") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+
+/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
+/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
+/*
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: 'fontello';
+    src: url('../font/fontello.svg?40435210#fontello') format('svg');
+  }
+}
+*/
+[class^="icon-"]:before, [class*=" icon-"]:before {
+  font-family: "fontello";
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-right: .2em;
+  text-align: center;
+  /* opacity: .8; */
+  /* For safety - reset parent styles, that can break glyph codes*/
+  font-variant: normal;
+  text-transform: none;
+  /* fix buttons height, for twitter bootstrap */
+  line-height: 1em;
+  /* Animation center compensation - margins should be symmetric */
+  /* remove if not needed */
+  margin-left: .2em;
+  /* you can be more comfortable with increased icons size */
+  /* font-size: 120%; */
+  /* Uncomment for 3D effect */
+  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */ }
+
+.icon-cancel:before {
+  content: '\e800'; }
+
+/* '' */
+.icon-ok:before {
+  content: '\e801'; }
+
+/* '' */
+html {
+  width: 100%;
+  height: 100%; }
+  html body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative; }
+    html body .inner-container {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      text-align: right;
+      -webkit-transition: all 0.3s ease;
+      -moz-transition: all 0.3s ease;
+      -ms-transition: all 0.3s ease;
+      -o-transition: all 0.3s ease;
+      transition: all 0.3s ease; }
+      html body .inner-container.menu-visible {
+        left: -300px; }
+    html body .map-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1; }
+    html body .overlay-buttons {
+      position: relative;
+      display: inline-block;
+      margin: 10px 10px 0 0;
+      font-size: 0;
+      z-index: 2; }
+      html body .overlay-buttons .overlay-button {
+        cursor: pointer;
+        display: inline-block;
+        padding: 12px 0;
+        width: 170px;
+        font-family: "Lato";
+        color: #fff;
+        font-size: 16px;
+        text-align: center;
+        margin-bottom: 10px;
+        background-color: #2c3e50;
+        -moz-border-radius: 8px 8px 8px 8px;
+        -webkit-border-radius: 8px 8px 8px 8px;
+        -khtml-border-radius: 8px 8px 8px 8px;
+        border-radius: 8px 8px 8px 8px; }
+        html body .overlay-buttons .overlay-button:hover {
+          background-color: #273646; }
+        html body .overlay-buttons .overlay-button.selected {
+          background-color: #233140; }
+          html body .overlay-buttons .overlay-button.selected:hover {
+            background-color: #1e2a36; }
+        html body .overlay-buttons .overlay-button.left, html body .overlay-buttons .overlay-button.right {
+          width: 85px;
+          vertical-align: middle; }
+        html body .overlay-buttons .overlay-button.left {
+          -moz-border-radius: 8px 0px 0px 8px;
+          -webkit-border-radius: 8px 0px 0px 8px;
+          -khtml-border-radius: 8px 0px 0px 8px;
+          border-radius: 8px 0px 0px 8px; }
+        html body .overlay-buttons .overlay-button.right {
+          -moz-border-radius: 0px 8px 8px 0px;
+          -webkit-border-radius: 0px 8px 8px 0px;
+          -khtml-border-radius: 0px 8px 8px 0px;
+          border-radius: 0px 8px 8px 0px; }
+    html body .side-menu {
+      position: absolute;
+      width: 300px;
+      height: 100%;
+      top: 0px;
+      right: -300px;
+      background: #2c3e50;
+      z-index: 0;
+      font-size: 0; }
+      html body .side-menu .tab-button-outer {
+        color: #fff;
+        font-family: "Lato"; }
+        html body .side-menu .tab-button-outer .tab-button {
+          font-size: 16px;
+          width: 100px;
+          display: inline-block;
+          vertical-align: middle;
+          text-align: center;
+          padding: 15px 0;
+          cursor: pointer;
+          background-color: #2c3e50;
+          background-color: #2c3e50; }
+          html body .side-menu .tab-button-outer .tab-button:hover {
+            background-color: #273646; }
+          html body .side-menu .tab-button-outer .tab-button:active {
+            background-color: #212f3c; }
+          html body .side-menu .tab-button-outer .tab-button.selected {
+            background-color: #233140;
+            background-color: #233140; }
+            html body .side-menu .tab-button-outer .tab-button.selected:hover {
+              background-color: #1e2a36; }
+            html body .side-menu .tab-button-outer .tab-button.selected:active {
+              background-color: #18222c; }
+      html body .side-menu .menu-content-container {
+        position: relative;
+        left: 0;
+        overflow-y: visible;
+        width: 900px;
+        font-size: 0;
+        padding: 0;
+        height: 100%;
+        white-space: nowrap;
+        text-align: left; }
+        html body .side-menu .menu-content-container .menu-content {
+          font-family: "Lato";
+          color: #fff;
+          width: 300px;
+          height: 100%;
+          overflow-y: scroll;
+          display: inline-block;
+          vertical-align: top;
+          margin: 0;
+          -webkit-touch-callout: none;
+          -webkit-user-select: none;
+          -khtml-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none; }
+          html body .side-menu .menu-content-container .menu-content .selection-option {
+            width: 50%;
+            font-size: 16px;
+            display: inline-block;
+            vertical-align: middle;
+            padding: 15px 0;
+            text-align: center;
+            cursor: pointer;
+            background-color: #2c3e50;
+            background-color: #2c3e50; }
+            html body .side-menu .menu-content-container .menu-content .selection-option:hover {
+              background-color: #273646; }
+            html body .side-menu .menu-content-container .menu-content .selection-option:active {
+              background-color: #212f3c; }
+          html body .side-menu .menu-content-container .menu-content .list-row {
+            font-size: 16px;
+            text-align: left;
+            padding: 15px 18px 15px 20px;
+            cursor: pointer;
+            background-color: #2c3e50;
+            background-color: #2c3e50; }
+            html body .side-menu .menu-content-container .menu-content .list-row:hover {
+              background-color: #273646; }
+            html body .side-menu .menu-content-container .menu-content .list-row:active {
+              background-color: #212f3c; }
+            html body .side-menu .menu-content-container .menu-content .list-row .text {
+              vertical-align: middle;
+              display: inline-block;
+              width: 250px; }
+              html body .side-menu .menu-content-container .menu-content .list-row .text .subtitle {
+                color: #bbb;
+                font-size: 13px; }
+            html body .side-menu .menu-content-container .menu-content .list-row .disclosure-indicator {
+              display: inline-block;
+              vertical-align: middle;
+              width: 20px;
+              height: 20px; }
+          html body .side-menu .menu-content-container .menu-content .family-row {
+            font-size: 16px;
+            text-align: left;
+            padding: 15px 18px 15px 20px;
+            cursor: pointer;
+            background-color: #2c3e50;
+            background-color: #2c3e50;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none; }
+            html body .side-menu .menu-content-container .menu-content .family-row:hover {
+              background-color: #273646; }
+            html body .side-menu .menu-content-container .menu-content .family-row:active {
+              background-color: #212f3c; }
+            html body .side-menu .menu-content-container .menu-content .family-row:hover .checkbox:not(.selected) i {
+              color: #aaa;
+              -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+              filter: alpha(opacity=100);
+              -moz-opacity: 1;
+              -khtml-opacity: 1;
+              opacity: 1; }
+            html body .side-menu .menu-content-container .menu-content .family-row .title {
+              display: inline-block;
+              vertical-align: middle; }
+            html body .side-menu .menu-content-container .menu-content .family-row .checkbox {
+              width: 18px;
+              height: 18px;
+              display: inline-block;
+              vertical-align: middle;
+              margin-right: 20px;
+              background: #fff;
+              position: relative;
+              -moz-border-radius: 3px 3px 3px 3px;
+              -webkit-border-radius: 3px 3px 3px 3px;
+              -khtml-border-radius: 3px 3px 3px 3px;
+              border-radius: 3px 3px 3px 3px;
+              -webkit-transition: all 0.3s ease;
+              -moz-transition: all 0.3s ease;
+              -ms-transition: all 0.3s ease;
+              -o-transition: all 0.3s ease;
+              transition: all 0.3s ease; }
+              html body .side-menu .menu-content-container .menu-content .family-row .checkbox i {
+                position: absolute;
+                font-size: 13px;
+                top: 1px;
+                left: 0px;
+                -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+                filter: alpha(opacity=0);
+                -moz-opacity: 0;
+                -khtml-opacity: 0;
+                opacity: 0;
+                -webkit-transition: all 0.3s ease;
+                -moz-transition: all 0.3s ease;
+                -ms-transition: all 0.3s ease;
+                -o-transition: all 0.3s ease;
+                transition: all 0.3s ease; }
+              html body .side-menu .menu-content-container .menu-content .family-row .checkbox.selected {
+                background: #1abc9c; }
+                html body .side-menu .menu-content-container .menu-content .family-row .checkbox.selected i {
+                  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+                  filter: alpha(opacity=100);
+                  -moz-opacity: 1;
+                  -khtml-opacity: 1;
+                  opacity: 1; }
+    html body .overlay-dark, html body .popover-outer {
+      z-index: 3;
+      display: none;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      text-align: center;
+      -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+      filter: alpha(opacity=0);
+      -moz-opacity: 0;
+      -khtml-opacity: 0;
+      opacity: 0;
+      -webkit-transition: all 0.3s ease;
+      -moz-transition: all 0.3s ease;
+      -ms-transition: all 0.3s ease;
+      -o-transition: all 0.3s ease;
+      transition: all 0.3s ease; }
+    html body .overlay-dark {
+      background: #666; }
+      html body .overlay-dark.selected {
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+        filter: alpha(opacity=80);
+        -moz-opacity: 0.8;
+        -khtml-opacity: 0.8;
+        opacity: 0.8; }
+    html body .popover-outer.selected {
+      -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+      filter: alpha(opacity=100);
+      -moz-opacity: 1;
+      -khtml-opacity: 1;
+      opacity: 1; }
+    html body .popover-outer .popover-inner {
+      position: relative;
+      display: inline-block;
+      vertical-align: middle;
+      width: 700px;
+      height: 500px;
+      background: #fff;
+      -moz-border-radius: 6px 6px 6px 6px;
+      -webkit-border-radius: 6px 6px 6px 6px;
+      -khtml-border-radius: 6px 6px 6px 6px;
+      border-radius: 6px 6px 6px 6px; }
+      html body .popover-outer .popover-inner i {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        font-size: 17px;
+        cursor: pointer;
+        color: #bbbbbb;
+        color: #bbbbbb; }
+        html body .popover-outer .popover-inner i:hover {
+          color: #a7a7a7; }
+        html body .popover-outer .popover-inner i:active {
+          color: #929292; }
