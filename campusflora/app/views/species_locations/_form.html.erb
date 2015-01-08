@@ -1,0 +1,17 @@
+<%= form_for(@species_location) do |f| %>
+  <% if @species_location.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@species_location.errors.count, "error") %> prohibited this species_location from being saved:</h2>
+
+      <ul>
+      <% @species_location.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
