@@ -17,8 +17,6 @@ Rails.application.routes.draw do
 
   resources :pictures
 
-  resources :families
-
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

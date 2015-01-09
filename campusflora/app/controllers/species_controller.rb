@@ -4,11 +4,15 @@ class SpeciesController < ApplicationController
   # GET /species
   # GET /species.json
   def index
-    @species = Species.all
+    @species = Species.joins(:species_locations).joins(:pictures).uniq(:species).all
     respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @species }
-      format.json  { render :json => @species.to_json }
+      format.html {
+        not_found
+      }
+      format.xml { render :xml => @species }
+      format.json {
+        render :json => @species.to_json(include: [:species_locations, :pictures])
+      }
   end
   end
 

@@ -30,23 +30,21 @@ ActiveAdmin.register Species do
       row :distribution
       row :information
       row :description
+    end
 
-      panel 'Locations' do
-        species.species_locations.each do |location|
-          div do
-            "#{location.lat}, #{location.lon}"
-          end
+    panel 'Locations' do
+      table_for species.species_locations do
+        column 'Latitude', :lat
+        column 'Longitude', :lon
+      end
+    end
+
+    panel 'Images' do
+      species.pictures.each do |pic|
+        span do
+          image_tag(pic.picture.url(:thumb))
         end
       end
-
-      panel 'Images' do
-        species.pictures.each do |pic|
-          span do
-            image_tag(pic.picture.url(:thumb))
-          end
-        end
-      end
-      # Will display the image on show object page
     end
   end
 end
