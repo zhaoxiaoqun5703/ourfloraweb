@@ -1,8 +1,6 @@
 Rails.application.routes.draw do
   resources :species_pictures
 
-  resources :species_locations
-
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   devise_for :users
@@ -10,8 +8,6 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'map#index'
-
-  resources :species
 
   resources :trails
 
