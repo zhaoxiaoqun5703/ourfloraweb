@@ -1,6 +1,7 @@
 ActiveAdmin.register Species do
   permit_params :commonName, :authority, :distribution, :indigenousName, :information, :genusSpecies, :description, :family_id, species_locations_attributes: [:lat, :lon, :id, :_destroy], pictures_attributes: [:picture, :id]
-  config.filters.each {|name,value| remove_filter(name) if name.match /#{config.resource_table_name.gsub('"','')}_*/ }
+  p = Proc.new { config.filters.each {|name,value| remove_filter(name) if name.match /#{config.resource_table_name.gsub('"','')}_*/ } }
+  p.call
 
   form :html => { :enctype => "multipart/form-data" } do |f|
     f.semantic_errors # shows errors on :base
@@ -15,5 +16,37 @@ ActiveAdmin.register Species do
       end
     end
     f.actions # adds the 'Submit' and 'Cancel' buttons
+  end
+
+  show do |species|
+    attributes_table do
+      row :family do
+        species.family.name
+      end
+      row :genusSpecies
+      row :commonName
+      row :indigenousName
+      row :authority
+      row :distribution
+      row :information
+      row :description
+
+      panel 'Locations' do
+        species.species_locations.each do |location|
+          div do
+            "#{location.lat}, #{location.lon}"
+          end
+        end
+      end
+
+      panel 'Images' do
+        species.pictures.each do |pic|
+          span do
+            image_tag(pic.picture.url(:thumb))
+          end
+        end
+      end
+      # Will display the image on show object page
+    end
   end
 end
