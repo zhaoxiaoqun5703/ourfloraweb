@@ -13,7 +13,7 @@ class SpeciesController < ApplicationController
       format.json {
         render :json => @species.to_json(include: [:species_locations, :pictures])
       }
-  end
+    end
   end
 
   # GET /species/1

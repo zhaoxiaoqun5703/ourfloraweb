@@ -1,7 +1,6 @@
 ActiveAdmin.register Species do
   permit_params :commonName, :authority, :distribution, :indigenousName, :information, :genusSpecies, :description, :family_id, species_locations_attributes: [:lat, :lon, :id, :_destroy], pictures_attributes: [:picture, :id]
-  p = Proc.new { config.filters.each {|name,value| remove_filter(name) if name.match /#{config.resource_table_name.gsub('"','')}_*/ } }
-  p.call
+  config.filters.each {|name,value| remove_filter(name) if name.match /#{config.resource_table_name.gsub('"','')}_*/ }
 
   form :html => { :enctype => "multipart/form-data" } do |f|
     f.semantic_errors # shows errors on :base

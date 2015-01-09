@@ -1,7 +1,6 @@
 ActiveAdmin.register Picture do
   permit_params :picture
-  p = Proc.new { config.filters.each {|name,value| remove_filter(name) if name.match /#{config.resource_table_name.gsub('"','')}_*/ } }
-  p.call
+  config.filters.each {|name,value| remove_filter(name) if name.match /#{config.resource_table_name.gsub('"','')}_*/ }
 
   form :html => { :enctype => "multipart/form-data" } do |f|
     f.semantic_errors
