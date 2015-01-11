@@ -1,7 +1,5 @@
 <script type="text/template" id="list-row-template">
-  <@ for (var i = 0; i < pictures.length; i++) { @>
-    <img class="list-image" src="<@= pictures[i].url @>">
-  <@ } @>
+  <img class="list-image" src="<@ print(pictures.length > 0 ? 'pictures[0].url' : IMG_NOT_FOUND_SMALL) @>">
   <div class="text">
     <div class="title"><@= genusSpecies @></div>
     <div class="subtitle"><@= commonName @></div>
