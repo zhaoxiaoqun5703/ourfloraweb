@@ -1,8 +1,3 @@
-# Redefine the template interpolation character used by underscore to prevent conflicts with rails ERB
-_.templateSettings = {
-  interpolate: /\<\@(.+?)\@\>/g
-};
-
 showOverlay = ->
   $('#overlay-dark,#popover-outer').css('display', 'block')
   setTimeout ->
@@ -112,32 +107,31 @@ $ ->
       $('#popover-outer').on 'click', ->
         hideOverlay()
 
-
-      $('#tab-button-families').on 'click', ->
-        unless $(this).hasClass 'selected'
-          $('.tab-button.selected').removeClass('selected')
-          $(this).addClass 'selected'
-          $('.menu-content-container').animate
-            left: 0
-          , 200
-
-      $('#tab-button-trails').on 'click', ->
-        unless $(this).hasClass 'selected'
-          $('.tab-button.selected').removeClass('selected')
-          $(this).addClass 'selected'
-          $('.menu-content-container').animate
-            left: -300
-          , 200
-
-      $('#tab-button-list').on 'click', ->
-        unless $(this).hasClass 'selected'
-          $('.tab-button.selected').removeClass('selected')
-          $(this).addClass 'selected'
-          $('.menu-content-container').animate
-            left: -600
-          , 200
-
     , 'json'
+
+    $('#tab-button-families').on 'click', ->
+      unless $(this).hasClass 'selected'
+        $('.tab-button.selected').removeClass('selected')
+        $(this).addClass 'selected'
+        $('.menu-content-container').animate
+          left: 0
+        , 200
+
+    $('#tab-button-trails').on 'click', ->
+      unless $(this).hasClass 'selected'
+        $('.tab-button.selected').removeClass('selected')
+        $(this).addClass 'selected'
+        $('.menu-content-container').animate
+          left: -300
+        , 200
+
+    $('#tab-button-list').on 'click', ->
+      unless $(this).hasClass 'selected'
+        $('.tab-button.selected').removeClass('selected')
+        $(this).addClass 'selected'
+        $('.menu-content-container').animate
+          left: -600
+        , 200
 
     $.get "json/trails.json", (json) ->
       trails = jQuery.extend(true, {}, json);

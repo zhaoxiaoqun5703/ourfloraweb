@@ -11,7 +11,7 @@ class SpeciesController < ApplicationController
       }
       format.xml { render :xml => @species }
       format.json {
-        render :json => @species.to_json(include: [:species_locations, :pictures])
+        render :json => @species.to_json(include: [:species_locations, :pictures => {:methods => :picture_url}])
       }
     end
   end

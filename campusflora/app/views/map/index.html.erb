@@ -1,7 +1,6 @@
 <div id="overlay-dark" class="overlay-dark"></div>
 <div id="popover-outer" class="popover-outer">
   <div class="height-fix"></div>
-  <div id="popover-inner" class="popover-inner"></div>
 </div>
 
 <div id="inner-container" class="inner-container">
@@ -28,3 +27,10 @@
     </div>
   </div>
 </div>
+
+<script>
+  $(function() {
+    speciesManager = new SpeciesManager
+    speciesManager.initialize(<%= raw @species %>)
+  });
+</script>

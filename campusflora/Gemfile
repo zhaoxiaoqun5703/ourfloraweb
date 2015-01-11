@@ -42,8 +42,8 @@ gem 'paperclip'
 # Front end gems below -----
 # Normalize css
 gem 'rails-assets-normalize.css'
-# Underscore js for utilities and templating
-gem 'rails-assets-underscore'
+# Backbone.js for front end MVC framework
+gem 'rails-assets-backbone'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

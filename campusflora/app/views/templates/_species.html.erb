@@ -1,0 +1,10 @@
+<script type="text/template" id="list-row-template">
+  <@ for (var i = 0; i < pictures.length; i++) { @>
+    <img class="list-image" src="<@= pictures[i].url @>">
+  <@ } @>
+  <div class="text">
+    <div class="title"><@= genusSpecies @></div>
+    <div class="subtitle"><@= commonName @></div>
+  </div>
+  <%= image_tag 'disclosure-indicator.png', class: 'disclosure-indicator' %>
+</script>
