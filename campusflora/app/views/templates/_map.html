@@ -1,7 +1,13 @@
 <script type="text/template" id="popover-template">
   <i id="overlay-close" class="icon-cancel"></i>
   <div class="images">
-    <img src="/assets/images/plant_images/Livistona australis/Livistona australis1.jpg">
+    <@ if (pictures.length == 0) { @>
+      <img src="<@= IMG_NOT_FOUND_ORIGINAL @>" width=250px height=400px>
+    <@ } else { @>
+      <@ for (i = 0; i < pictures.length; i++) { @>
+        <img src="<@= pictures[i].url @>">
+      <@ } @>
+    <@ } @>
   </div>
   <div class="content">
     <div class="title"><@= genusSpecies @></div>

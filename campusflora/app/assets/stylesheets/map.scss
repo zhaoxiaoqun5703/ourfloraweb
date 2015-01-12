@@ -278,7 +278,7 @@ html {
         position:relative;
         display:inline-block;
         vertical-align: middle;
-        width: 850px;
+        width: 900px;
         height: 400px;
         background: #fff;
         text-align: left;
@@ -303,12 +303,8 @@ html {
 
         .images {
           height: 100%;
-          width: 200px;
+          width: 250px;
           overflow: hidden;
-
-          img {
-            height: 100%;
-          }
         }
 
         .content {
