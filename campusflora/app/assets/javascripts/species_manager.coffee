@@ -29,13 +29,18 @@
 
     initialize: ->
       self = @
-      $('#popover-outer').on 'click', ->
+      
+      # Don't close the window if the user clicked inside, only if they clicked on the grey part outsdie
+      $('#popover-outer').on 'click', '#popover-inner', (e) ->
+        e.stopPropagation()
+        return false
+
+      $('#popover-outer').on 'click', (e) ->
         self.closeOverlay()
 
     # Define javascript events for popover
     events:
       'click #overlay-close' : 'closeOverlay'
-      'click' : 'cancelEvent'
 
     # Fade out the overlay and set display to none to prevent event hogging
     closeOverlay: ->
