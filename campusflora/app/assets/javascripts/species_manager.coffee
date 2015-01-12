@@ -2,9 +2,12 @@
 @SpeciesManager = ->
   # Private variables, functions and backbone objects
   _speciesOuterListView = null
-  _seedData = null
+  _trailOuterListView = null
+  _speciesRaw = null
+  _trailsRaw = null
   _map = null
   _families = {}
+  _species = {}
   # Store a reference to the currently open google maps pin window
   _openInfoWindow = null
 
@@ -19,24 +22,29 @@
   # View for selected species shown in the center of the screen
   SpeciesPopoverView = Backbone.View.extend(
     # Id and class name for popover view
-    className: '#popover-inner'
-    id: '#popover-inner'
+    className: 'popover-inner'
+    id: 'popover-inner'
     # Select the underscore template to use, found in view/_map.html.erb
     template: _.template($('#popover-template').html())
+
+    initialize: ->
+      self = @
+      $('#popover-outer').on 'click', ->
+        self.closeOverlay()
 
     # Define javascript events for popover
     events:
       'click #overlay-close' : 'closeOverlay'
-      'click #popover-inner' : 'cancelEvent'
-      'click' : 'closeOverlay'
+      'click' : 'cancelEvent'
 
     # Fade out the overlay and set display to none to prevent event hogging
     closeOverlay: ->
+      self = @
       $('#overlay-dark, #popover-outer').removeClass('selected')
       setTimeout ->
         $('#overlay-dark,#popover-outer').css('display', 'none')
         # After we've faded out the popover, remove it from the DOM
-        @.remove()
+        self.remove()
       , 300
 
     render: ->
@@ -57,6 +65,8 @@
       
     # Initialize google maps objects and set the parent model
     initMapComponents: (parentModel) ->
+      self = @
+
       @parentModel = parentModel
       # Define google maps info window (little box that pops up when you click a marker)
       @infoWindow = new google.maps.InfoWindow(content: @parentModel.get('genusSpecies'))
@@ -71,8 +81,8 @@
       # Add click event listener for the map pins
       google.maps.event.addListener @marker, "click", ->
         _openInfoWindow.close() if _openInfoWindow
-        infoWindow.open _map, @marker
-        _openInfoWindow = infoWindow
+        self.infoWindow.open _map, self.marker
+        _openInfoWindow = self.infoWindow
         return
 
     # Methods for hiding and showing google maps markers
@@ -176,7 +186,7 @@
     # Define methods to be run at initialization time
     initialize: ->
       # Create a new species collection to hold the data
-      @collection = new speciesCollection(_seedData);
+      @collection = new speciesCollection(_speciesRaw);
       # Whenever a new object is added to the collection, render it's corresponding view
       @collection.bind 'add', @appendItem
       # Call this view's render() function to render all the initial models that might have been added
@@ -193,8 +203,82 @@
       view = new SpeciesListView({model: model})
       # Render the species view in the outer container
       @$el.append(view.render().el)
+      # Add the species view to the outer object for tracking
+      _species[model.get('id')] = view
   )
 
+  # The view for each row in the trails menu
+  TrailListView = Backbone.View.extend(
+    # Set class name for generated view
+    className: 'trail-row'
+    # Set outer container for these rows to live in
+    outerContainer: '#menu-content-trails'
+    # Select the underscore template to use, found in view/_species.html.erb
+    template: _.template($('#trail-row-template').html())
+    # Define javascript events
+    events:
+      'click' : 'toggleTrail'
+
+    initialize: ->
+      @render()
+
+    # Hides / displays the species managed by this family on the map
+    toggleTrail: ->
+      # If it's already selected, toggle off by removing selected class from the checkbox inside this view
+      if @$el.find('.checkbox').hasClass('selected')
+        @$el.find('.checkbox').removeClass('selected')
+        # Loop through and show all remaining markers
+        _.each _species, (species) ->
+          for mapView in species
+            mapView.showMarker()
+      else
+        # Unselect all other trails
+        @$el.parent().find('.family-row .checkbox').removeClass('selected')
+
+        # Loop through and remove all markers from the map
+        _.each _species, (species) ->
+          for mapView in species
+            mapView.hideMarker()
+
+        # Then show all markers that are associated with this trail
+        for s in @model.get('species')
+          species = _species[s.id]
+          for mapView in species
+            mapView.showMarker()
+
+        @$el.find('.checkbox').addClass('selected')
+
+    render: ->
+      # Render and return the trail element
+      @$el.html @template(@model.toJSON())
+      this
+  )
+
+  # The outer backbone view for the species list
+  TrailOuterListView = Backbone.View.extend(
+    el: '#menu-content-trails'
+
+    # Define methods to be run at initialization time
+    initialize: ->
+      # Create a new species collection to hold the data
+      @collection = new trailsCollection(_trailsRaw);
+      # Whenever a new object is added to the collection, render it's corresponding view
+      @collection.bind 'add', @appendItem
+      # Call this view's render() function to render all the initial models that might have been added
+      @render()
+
+    render: ->
+      # For each model in the collection, render and append them to the list view
+      _(@collection.models).each (model) ->
+        @appendItem model;
+      , @
+
+    appendItem: (model) ->
+      # Create a new species view based on the model data
+      view = new TrailListView({model: model})
+      # Render the species view in the outer container
+      @$el.append(view.render().el)
+  )
 
   # MODELS ----------------------------------------------------------------------------------------
   # Model that holds each species
@@ -206,6 +290,9 @@
   # Model that holds family data
   FamilyModel = Backbone.Model.extend({})
 
+  # Model that holds trail data
+  TrailModel = Backbone.Model.extend({})
+
 
   # COLLECTIONS -----------------------------------------------------------------------------------
   # Collection that holds JSON returned from /species.json
@@ -216,11 +303,21 @@
     model: SpeciesModel
   )
 
+  # Collection that holds JSON returned from /trails.json
+  trailsCollection = Backbone.Collection.extend(
+    # Provide a URL to pull JSON data from
+    url: '/trails.json'
+    # Use the species model
+    model: TrailModel
+  )
+
   # SpeciesManager.initialize() is the only exported member variable, it will initialize the backbone objects, pull data
   # and set up the collection
-  initialize: (seedData, map) ->
+  initialize: (species, trails, map) ->
     # Cache local variables
-    _seedData = seedData
+    _speciesRaw = species
+    _trailsRaw = trails
     _map = map
-    # Create a new list view to kick off backbone
+    # Create a new list view to kick off species and trail management via backbone
     _speciesOuterListView = new SpeciesOuterListView()
+    _trailOuterListview = new TrailOuterListView()

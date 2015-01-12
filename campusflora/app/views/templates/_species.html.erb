@@ -1,3 +1,4 @@
+<!-- Species list rows in right side menu -->
 <script type="text/template" id="list-row-template">
   <img class="list-image" src="<@ print(pictures.length > 0 ? 'pictures[0].url' : IMG_NOT_FOUND_SMALL) @>">
   <div class="text">
@@ -7,9 +8,18 @@
   <%= image_tag 'disclosure-indicator.png', class: 'disclosure-indicator' %>
 </script>
 
+<!-- Family checkbox rows in right side menu -->
 <script type="text/template" id="family-row-template">
   <div class="checkbox family selected">
     <i class="icon-ok"></i>
   </div>
   <div class='title'><@= name @></div>
+</script>
+
+<!-- Trails checkbox rows in right side menui -->
+<script type="text/template" id="trail-row-template">
+  <div class="checkbox trail">
+    <i class="icon-ok"></i>
+  </div>
+  <div class="title"><@= name @></div>
 </script>

@@ -4,14 +4,14 @@ class TrailsController < ApplicationController
   # GET /trails
   # GET /trails.json
   def index
-    @trails = Trail.all
+    @trails = Trail.includes(:species).all
     respond_to do |format|
       format.html {
         not_found
       }
       format.xml { render :xml => @trails }
       format.json {
-        render :json => @trails.to_json()
+        render :json => @trails.to_json(include: [:species => {:only => :id}])
       }
     end
   end

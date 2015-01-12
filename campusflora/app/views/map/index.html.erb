@@ -34,6 +34,6 @@
     // Initialize the mapManager and get the google map
     var map = mapManager.initialize();
     var speciesManager = new SpeciesManager;
-    speciesManager.initialize(<%= raw @species %>, map);
+    speciesManager.initialize(<%= raw @species %>, <%= raw @trails %>, map);
   });
 </script>
