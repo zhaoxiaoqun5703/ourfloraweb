@@ -9,7 +9,7 @@
   _families = {}
   _species = {}
   # Store a reference to the currently open google maps pin window
-  _openInfoWindow = null
+  _openInfoBox = null
 
   # Redefine the template interpolation character used by underscore (to @ from %) to prevent conflicts with rails ERB
   _.templateSettings =
@@ -29,7 +29,7 @@
 
     initialize: ->
       self = @
-      
+
       # Don't close the window if the user clicked inside, only if they clicked on the grey part outsdie
       $('#popover-outer').on 'click', '#popover-inner', (e) ->
         e.stopPropagation()
@@ -69,12 +69,18 @@
     parentModel: null
       
     # Initialize google maps objects and set the parent model
-    initMapComponents: (parentModel) ->
+    initMapComponents: (parentModel, listView) ->
       self = @
 
       @parentModel = parentModel
       # Define google maps info window (little box that pops up when you click a marker)
-      @infoWindow = new google.maps.InfoWindow(content: @parentModel.get('genusSpecies'))
+      infoTemplate = _.template($('#infobox-template').html())
+
+      @infoBox = new InfoBox(
+        content: infoTemplate(@parentModel.attributes)
+        pixelOffset: new google.maps.Size(-146, -105)
+        closeBoxURL: ''
+      )
 
       # Define google maps marker (red balloon over species on map)
       @marker = new google.maps.Marker(
@@ -85,14 +91,19 @@
 
       # Add click event listener for the map pins
       google.maps.event.addListener @marker, "click", ->
-        _openInfoWindow.close() if _openInfoWindow
-        self.infoWindow.open _map, self.marker
-        _openInfoWindow = self.infoWindow
+        _openInfoBox.close() if _openInfoBox
+        self.infoBox.open _map, self.marker
+        _openInfoBox = self.infoBox
         return
+      
+      # Bind the click event on the new infobox to show the popover
+      google.maps.event.addListener @infoBox, 'domready', ->
+        $("#infobox-#{self.parentModel.id}").on 'click', ->
+          listView.showPopover()
 
     # Methods for hiding and showing google maps markers
     hideMarker: ->
-      @infoWindow.close()
+      @infoBox.close()
       @marker.setMap(null)
 
     showMarker: ->
@@ -125,7 +136,7 @@
         # Create a new SpeciesMapView with location data
         mapView = new SpeciesMapView(model: new LocationModel(location))
         # Set up google maps components associated with the species map view
-        mapView.initMapComponents @model
+        mapView.initMapComponents @model, @
         # Save the mapview into the array in this model
         @mapViews.push(mapView)
 

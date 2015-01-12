@@ -4,6 +4,7 @@
 $menu-width: 300px;
 $button-width: 170px;
 $button-colour: #2c3e50;
+$button-colour-lighter: #506e8d;
 $menu-colour: #2c3e50;
 
 html {
@@ -315,13 +316,13 @@ html {
 
           .title {
             font-size: 30px;
-            margin-bottom: 5px;
+            margin-bottom: 10px;
           }
 
           .subtitle {
             font-size: 18px;
             color: #999;
-            margin-bottom: 5px;
+            margin-bottom: 15px;
           }
 
           .authority, .description, .distribution, .information {
@@ -331,5 +332,73 @@ html {
         } // .content
       } // .popover-inner
     } // .popover
+
+    .species-infobox-outer {
+      background: none;
+      position: relative;
+      padding-bottom: 15px;
+
+      &:after {
+        bottom: -8px;
+        left: 50%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+        border-color: rgba(255, 255, 255, 0);
+        border-top-color: #fff;
+        border-width: 12px;
+        margin-left: -12px;
+      }
+
+      .species-infobox {
+        font-size: 14px;
+        text-align: left;
+        padding: 8px;
+        cursor: pointer;
+        overflow-x: hidden;
+        @include backgroundHover(#fff, 3%);
+        @include backgroundClick(#fff, 6%);
+        @include roundCornerAll(5px);
+
+        .list-image {
+          display:inline-block;
+          vertical-align: middle;
+          width:42px;
+          height:42px;
+          margin-right:15px;
+          @include roundCornerAll(40px);
+
+          &.no-image {
+            border: 2px solid $button-colour-lighter;
+          }
+        }
+
+        .text {
+          vertical-align: middle;
+          display: inline-block;
+
+          .title, .subtitle {
+            width: 190px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+
+          .subtitle {
+            color: #aaa;
+            font-size: 12px;
+          }
+        }
+
+        .disclosure-indicator {
+          display: inline-block;
+          vertical-align: middle;
+          width: 18px;
+          height: 18px;
+        }
+      } // .species-infobox
+    } // .species-infobox-outer
   } // body
 } // html

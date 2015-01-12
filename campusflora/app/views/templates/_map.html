@@ -10,11 +10,23 @@
     <@ } @>
   </div>
   <div class="content">
-    <div class="title"><@= genusSpecies @></div>
+    <div class="title"><@= genusSpecies @> <@= authority @></div>
     <div class="subtitle"><@= commonName @></div>
-    <div class="authority"><@= authority @></div>
     <div class="description">Description<br /><@= description @></div>
     <div class="distribution">Distribution<br /><@ print(distribution.split('|')[1]) @></div>
     <div class="Information">information<br /><@ print(information.split('|')[1]) @></div>
+  </div>
+</script>
+
+<script type="text/template" id="infobox-template">
+  <div class="species-infobox-outer">
+    <div class="species-infobox" id="infobox-<@= id @>">
+      <img class="list-image<@ print(pictures.length > 0 ? '' : ' no-image') @>" src="<@ print(pictures.length > 0 ? 'pictures[0].url' : IMG_NOT_FOUND_SMALL) @>">
+      <div class="text">
+        <div class="title"><@= genusSpecies @></div>
+        <div class="subtitle"><@= commonName @></div>
+      </div>
+      <%= image_tag 'disclosure-indicator-dark.png', class: 'disclosure-indicator' %>
+    </div>
   </div>
 </script>
