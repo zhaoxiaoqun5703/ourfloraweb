@@ -30,7 +30,10 @@
 
 <script>
   $(function() {
-    speciesManager = new SpeciesManager
-    speciesManager.initialize(<%= raw @species %>)
+    var mapManager = new MapManager;
+    // Initialize the mapManager and get the google map
+    var map = mapManager.initialize();
+    var speciesManager = new SpeciesManager;
+    speciesManager.initialize(<%= raw @species %>, map);
   });
 </script>

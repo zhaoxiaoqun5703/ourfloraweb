@@ -4,16 +4,23 @@ ActiveAdmin.register Species do
 
   form :html => { :enctype => "multipart/form-data" } do |f|
     f.semantic_errors # shows errors on :base
-    f.inputs          # builds an input field for every attribute
-    f.inputs do
-      f.has_many :species_locations, heading: 'Locations', allow_destroy: true, new_record: true do |a|
+    f.inputs 'Details' do
+      f.inputs          # builds an input field for every attribute
+    end
+
+    f.inputs 'Locations' do
+      f.has_many :species_locations, heading: nil, allow_destroy: true, new_record: true do |a|
         a.input :lat
         a.input :lon  
       end
-      f.has_many :pictures, heading: 'Pictures', allow_destroy: true, new_record: true do |a|
+    end
+
+    f.inputs 'Pictures' do
+      f.has_many :pictures, heading: nil, allow_destroy: true, new_record: true do |a|
         a.input :picture, :as => :file
       end
     end
+
     f.actions # adds the 'Submit' and 'Cancel' buttons
   end
 
@@ -33,6 +40,7 @@ ActiveAdmin.register Species do
 
     panel 'Locations' do
       table_for species.species_locations do
+        column 'Location ID', :id
         column 'Latitude', :lat
         column 'Longitude', :lon
       end
@@ -45,5 +53,7 @@ ActiveAdmin.register Species do
         end
       end
     end
+
+    active_admin_comments_for(resource)
   end
 end

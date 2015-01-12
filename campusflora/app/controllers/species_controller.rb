@@ -4,14 +4,14 @@ class SpeciesController < ApplicationController
   # GET /species
   # GET /species.json
   def index
-    @species = Species.includes(:species_locations).includes(:pictures).all
+    @species = Species.includes(:family).includes(:species_locations).includes(:pictures).uniq(:species).all
     respond_to do |format|
       format.html {
         not_found
       }
       format.xml { render :xml => @species }
       format.json {
-        render :json => @species.to_json(include: [:species_locations, :pictures => {:methods => :picture_url}])
+        render :json => @species.to_json(include: [:species_locations, :family, :pictures => {:methods => :picture_url}])
       }
     end
   end

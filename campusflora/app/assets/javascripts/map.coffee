@@ -18,7 +18,7 @@ $ ->
   markers = []
 
   initialize = ->
-    map = new google.maps.Map($('#map-canvas')[0], {center: {lat: -33.886204, lng: 151.189005}, zoom: 19, disableDefaultUI: true, mapTypeId: google.maps.MapTypeId.SATELLITE})
+    # map = new google.maps.Map($('#map-canvas')[0], {center: {lat: -33.886204, lng: 151.189005}, zoom: 19, disableDefaultUI: true, mapTypeId: google.maps.MapTypeId.SATELLITE})
     openInfoWindow = null
 
     $.get "json/families.json", (json) ->
@@ -66,7 +66,7 @@ $ ->
 
       familiesSorted.sort()
       _.each familiesSorted, (family) ->
-        $('#menu-content-families').append("<div class=\"family-row\"><div class=\"checkbox family selected\"><i class=\"icon-ok\"></i></div><div class='title'>#{family}</div></div>");
+        $('#menu-content-families').append("");
 
       $('#menu-content-families .family-row').on 'click', ->
         family = families[$(this).find('.title').html()]
