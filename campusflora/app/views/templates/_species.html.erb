@@ -1,6 +1,6 @@
 <!-- Species list rows in right side menu -->
 <script type="text/template" id="list-row-template">
-  <img class="list-image" src="<@ print(pictures.length > 0 ? 'pictures[0].url' : IMG_NOT_FOUND_SMALL) @>">
+  <img class="list-image" src="<@ print(pictures.length > 0 ? pictures[0].picture_url : IMG_NOT_FOUND_SMALL) @>">
   <div class="text">
     <div class="title"><@= genusSpecies @></div>
     <div class="subtitle"><@= commonName @></div>

@@ -66,6 +66,7 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
+    addressable (2.3.6)
     arbre (1.0.2)
       activesupport (>= 3.0.0)
     arel (6.0.0)
@@ -124,6 +125,8 @@ GEM
     jquery-ui-rails (5.0.3)
       railties (>= 3.2.16)
     json (1.8.1)
+    json-schema (2.5.0)
+      addressable (~> 2.3)
     kaminari (0.16.1)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -240,6 +243,7 @@ DEPENDENCIES
   inherited_resources!
   jbuilder (~> 2.0)
   jquery-rails
+  json-schema
   paperclip
   pry
   rails (= 4.2.0)
