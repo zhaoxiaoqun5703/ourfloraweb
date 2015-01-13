@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>CampusFlora</title>
+    <link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCTx22Wqc5vDQTHX-bUY3cJbwO1TwDiAXE"></script>
+    <script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/src/infobox.js"></script>
+    <script>
+      var IMG_NOT_FOUND_SMALL = '<%= image_path 'not_found_small.png' %>'
+      var IMG_NOT_FOUND_ORIGINAL = '<%= image_path 'not_found_original.png' %>'
+    </script>
+    <%= javascript_include_tag 'application' %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+    <%= yield %>
+  </body>
+  <%= render 'templates/map' %>
+  <%= render 'templates/species' %>
+</html>
