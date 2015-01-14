@@ -1,7 +1,6 @@
 *.rbc
 capybara-*.html
 .rspec
-/log
 /tmp/cache
 /tmp/sessions
 /tmp/sockets
