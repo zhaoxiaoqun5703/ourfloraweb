@@ -16,6 +16,13 @@ gem 'coffee-rails', '~> 4.1.0'
 # Use the json-schema gem for validating imported json
 gem 'json-schema'
 
+group :development do
+  gem 'capistrano'
+  gem 'capistrano-rails'
+  gem 'capistrano-rbenv'
+  gem 'capistrano-passenger'
+end
+
 # Use activeadmin for managing database
 gem 'activeadmin', github: 'activeadmin'
 gem 'inherited_resources', github: 'josevalim/inherited_resources', branch: 'rails-4-2'
