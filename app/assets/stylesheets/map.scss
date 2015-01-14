@@ -290,6 +290,7 @@ html {
         background: #fff;
         text-align: left;
         font-size: 0;
+        overflow: hidden;
         @include roundCornerAll(10px);
 
         i.icon-cancel, i.icon-location {

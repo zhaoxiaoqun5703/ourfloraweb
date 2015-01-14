@@ -31,6 +31,9 @@
     # Select the underscore template to use, found in view/_map.html.erb
     template: _.template($('#popover-template').html())
 
+    events:
+      'click .picture': 'fullscreenPicture'
+
     initialize: ->
       self = @
 
@@ -46,6 +49,11 @@
     events:
       'click #overlay-close' : 'closeOverlay'
       'click #highlight-map' : 'showOnMap'
+
+    # Open a picture in a new tab
+    fullscreenPicture: (e) ->
+      console.log e.target
+      # window.open(url,'_blank');
 
     # Fade out the overlay and set display to none to prevent event hogging
     closeOverlay: ->
@@ -460,7 +468,7 @@
         $(this).addClass 'selected'
         $('.menu-content-container').animate
           left: 0
-        , 200
+        , 200, 'linear'
 
     $('#tab-button-trails').on 'click', ->
       unless $(this).hasClass 'selected'
@@ -468,7 +476,7 @@
         $(this).addClass 'selected'
         $('.menu-content-container').animate
           left: -300
-        , 200
+        , 200, 'linear'
 
     $('#tab-button-list').on 'click', ->
       unless $(this).hasClass 'selected'
@@ -476,7 +484,7 @@
         $(this).addClass 'selected'
         $('.menu-content-container').animate
           left: -600
-        , 200
+        , 200, 'linear'
 
     # Fix height of menus
     $('#menu-content-list').height($(window).height() - $('#tab-button-outer').height())
