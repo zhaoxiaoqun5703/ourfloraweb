@@ -45,6 +45,7 @@
     # Define javascript events for popover
     events:
       'click #overlay-close' : 'closeOverlay'
+      'click #highlight-map' : 'showOnMap'
 
     # Fade out the overlay and set display to none to prevent event hogging
     closeOverlay: ->
@@ -55,6 +56,17 @@
         # After we've faded out the popover, remove it from the DOM
         self.remove()
       , 300
+
+    # Highlights the popover species on the map
+    showOnMap: ->
+      # Hide all markers
+      for marker in _markers
+        marker.setMap(null)
+
+      # Show markers for this species
+      @model.trigger('show')
+      @model.trigger('fitMapToScreen')
+      @closeOverlay()
 
     render: ->
       # Render the element from the template and model
@@ -141,10 +153,10 @@
         # Save the mapview into the array in this model
         @mapViews.push(mapView)
 
-      # Bind the select event for the model to propogate to the views
-      @model.on('hide', @hidePins, @);
-      # Bind the select event for the model to propogate to the views
-      @model.on('show', @showPins, @);
+      # Bind the hide and show events for the model to propogate to the views
+      @model.on('hide', @hidePins, @)
+      @model.on('show', @showPins, @)
+      @model.on('fitMapToScreen', @fitMapToScreen, @)
 
     # When clicked, show the central popover with the corresponding data
     showPopover: ->
@@ -152,13 +164,28 @@
       $('#popover-outer').append(popover.render().el)
 
     hidePins: ->
-      console.log @$el
       for mapView in @mapViews
         mapView.hideMarker()
 
     showPins: ->
       for mapView in @mapViews
         mapView.showMarker()
+
+    # Zooms and pans the google map to fit all currently showing markers
+    fitMapToScreen: ->
+      # Create a new boundary object
+      bounds = new google.maps.LatLngBounds();
+      # Extend the outside of the boundaries to fit the pins
+      for mapView in @mapViews
+         bounds.extend mapView.marker.getPosition()
+      # Center the map to the geometric center of all markers
+      _map.setCenter bounds.getCenter()
+      # Fit boundaries
+      _map.fitBounds bounds
+      # Remove one zoom level to ensure no marker is on the edge.
+      _map.setZoom(_map.getZoom()-1); 
+      # Set a minimum zoom to prevent excessive zoom in if there's only 1 marker
+      if _map.getZoom() > 19 then _map.setZoom 19
 
     render: ->
       # Add the species to the species list
@@ -450,3 +477,6 @@
         $('.menu-content-container').animate
           left: -600
         , 200
+
+    # Fix height of menus
+    $('#menu-content-list').height($(window).height() - $('#tab-button-outer').height())

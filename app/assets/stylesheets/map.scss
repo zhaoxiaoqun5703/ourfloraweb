@@ -130,6 +130,7 @@ html {
           display: inline-block;
           vertical-align: top;
           margin:0;
+          padding-bottom:80px;
           @include unselectable();
 
           &.list {
@@ -145,6 +146,11 @@ html {
               height:50px;
               margin-right:15px;
               @include roundCornerAll(40px);
+            }
+
+            .list-footer {
+              height:80px;
+              width:300px;
             }
           }
 
@@ -286,14 +292,22 @@ html {
         font-size: 0;
         @include roundCornerAll(10px);
 
-        i {
+        i.icon-cancel, i.icon-location {
           position: absolute;
           top: 5px;
-          right: 5px;
           font-size: 17px;
           cursor: pointer;
           @include foregroundHover(#bbb, 8%);
           @include foregroundClick(#bbb, 16%);
+        }
+
+        i.icon-cancel {
+          right: 5px;
+        }
+
+        i.icon-location {
+          right: 27px;
+          font-size: 15px;
         }
 
         .images, .content {
@@ -311,6 +325,7 @@ html {
           img {
             width: 250px;
             vertical-align: top;
+            cursor: pointer;
           }
         }
 
@@ -319,11 +334,13 @@ html {
           font-family: "Lato";
           text-align: left;
           width: 610px;
+          height: 360px;
           overflow-x: hidden;
           overflow-y: auto;
 
           .title {
             font-size: 30px;
+            line-height: 30px;
             margin-bottom: 10px;
           }
 
