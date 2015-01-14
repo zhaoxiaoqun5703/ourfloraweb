@@ -11,5 +11,4 @@ class Species < ActiveRecord::Base
   accepts_nested_attributes_for :family
   accepts_nested_attributes_for :species_locations
   accepts_nested_attributes_for :pictures
-
 end

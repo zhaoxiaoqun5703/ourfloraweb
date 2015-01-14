@@ -29,11 +29,15 @@
 </div>
 
 <script>
-  $(function() {
+  var init = function() {
     var mapManager = new MapManager;
     // Initialize the mapManager and get the google map
     var map = mapManager.initialize();
     var speciesManager = new SpeciesManager;
-    speciesManager.initialize(<%= raw @species %>, <%= raw @trails %>, map);
+    speciesManager.initialize(<%= raw @species %>, <%= raw @trails %>, <%= raw @families %>, map);
+  }
+
+  $(function() {
+    google.maps.event.addDomListener(window, "load", init);
   });
 </script>

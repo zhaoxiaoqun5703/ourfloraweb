@@ -283,7 +283,6 @@ html {
         height: 400px;
         background: #fff;
         text-align: left;
-        overflow: hidden;
         font-size: 0;
         @include roundCornerAll(10px);
 
@@ -305,7 +304,14 @@ html {
         .images {
           height: 100%;
           width: 250px;
-          overflow: hidden;
+          font-size: 0;
+          overflow-x: hidden;
+          overflow-y: auto;
+
+          img {
+            width: 250px;
+            vertical-align: top;
+          }
         }
 
         .content {
@@ -313,6 +319,8 @@ html {
           font-family: "Lato";
           text-align: left;
           width: 610px;
+          overflow-x: hidden;
+          overflow-y: auto;
 
           .title {
             font-size: 30px;
@@ -325,9 +333,14 @@ html {
             margin-bottom: 15px;
           }
 
-          .authority, .description, .distribution, .information {
+          .family, .authority, .description, .distribution, .information {
             font-size: 14px;
             margin-bottom: 15px;
+            
+            .heading {
+              color: #666;
+              border: none;
+            }
           }
         } // .content
       } // .popover-inner

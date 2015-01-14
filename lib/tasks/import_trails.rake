@@ -3,8 +3,16 @@ require 'rake'
 require 'json-schema'
 
 namespace :trails do
-  # Validate trail objects on this schema
+  
+  # Validate json object on this schema
   def object_schema
+    {
+      "$schema": "http://json-schema.org/draft-04/schema#",
+    }
+  end
+
+  # Validate trail objects on this schema
+  def trail_schema
     {
       "$schema": "http://json-schema.org/draft-04/schema#",
       "title": "Trail",
@@ -20,19 +28,29 @@ namespace :trails do
       # Parse the JSON into an object
       json_object = JSON.parse(json_string)
       json_object.each do |trail_name, trail_string|
-        # Create the new trail
-        trail = Trail.new
-        trail.name = trail_name
-        # Split the species on the trail into an array
-        trail_species = trail.split /\;\ /
-        # Loop through and look up each species, adding it to the trail if it exists
-        trail_species.each do |genusSpecies|
-          # If a species was found, add it to the trail
-          unless (species = Species.where(genusSpecies: species)).nil?
-            trail.species << species
+        if JSON::Validator.validate(trail_schema, trail_string)
+          # Create the new trail
+          trail = Trail.new
+          trail.name = trail_name
+          trail.save
+          # Split the species on the trail into an array
+          trail_species = trail_string.split /\;\ /
+          # Loop through and look up each species, adding it to the trail if it exists
+          trail_species.each do |genusSpecies|
+            # If a species was found, add it to the trail
+            if (species = Species.where(genusSpecies: genusSpecies).first)
+              trail.species << species
+            end
+          end
+          trail.save
+        else
+          errors = JSON::Validator.fully_validate(trail_schema, trail_string)
+          puts "INVALID Trail: #{trail_name}"
+          puts "Errors:"
+          errors.each do |error|
+            puts error
           end
         end
-        trail.save()
       end # json_object.each do |trail_name, trail_string|
     end # if JSON::Validator.validate(object_schema, json_string)
   end
