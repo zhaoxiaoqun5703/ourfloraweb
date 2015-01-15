@@ -6,7 +6,7 @@ class CreateSpeciesAndPictures < ActiveRecord::Migration
       t.string :indigenousName
       t.string :authority
       t.string :distribution
-      t.string :information
+      t.text :information
       t.text :description
 
       t.timestamps null: false
