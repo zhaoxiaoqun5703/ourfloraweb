@@ -5,7 +5,7 @@ class Picture < ActiveRecord::Base
                     :styles => { :medium => "300x300>", :thumb => "100x100>" },
                     :default_url => "/images/:style/missing.png",
                     :path => ":rails_root/app/assets/images/species_images/:id/:style_:basename.:extension",
-                    :url => "/images/species_images/:id/:style_:basename.:extension"
+                    :url => "/assets/images/species_images/:id/:style_:basename.:extension"
   validates_attachment_content_type :picture, :content_type => /\Aimage\/.*\Z/
 
   def picture_url
