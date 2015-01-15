@@ -278,7 +278,6 @@ DEPENDENCIES
   devise
   inherited_resources!
   jbuilder (~> 2.0)
-  jquery-rails
   json-schema
   mysql2
   paperclip

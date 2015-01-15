@@ -34,8 +34,6 @@ end
 gem 'activeadmin', github: 'activeadmin'
 gem 'inherited_resources', github: 'josevalim/inherited_resources', branch: 'rails-4-2'
 
-# Use jquery as the JavaScript library
-gem 'jquery-rails'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
@@ -56,6 +54,8 @@ gem 'devise'
 gem 'paperclip'
 
 # Front end gems below -----
+# Jquery
+gem 'rails-assets-jquery'
 # Normalize css
 gem 'rails-assets-normalize.css'
 # Backbone.js for front end MVC framework
