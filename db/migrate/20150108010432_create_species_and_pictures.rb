@@ -5,7 +5,7 @@ class CreateSpeciesAndPictures < ActiveRecord::Migration
       t.string :commonName
       t.string :indigenousName
       t.string :authority
-      t.string :distribution
+      t.text :distribution
       t.text :information
       t.text :description
 
