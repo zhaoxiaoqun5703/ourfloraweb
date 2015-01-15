@@ -105,7 +105,7 @@ namespace :species do
   end
 
   # Call task as rake import_species format=<json,xml etc> file=<filename>
-  task :import_species => :environment do
+  task :import => :environment do
     # Exit if the user hasn't specified a file location and format
     return unless ENV['file'] && ENV['format']
     if ENV['format'] == 'json'
