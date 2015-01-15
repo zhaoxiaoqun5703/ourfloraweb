@@ -1,6 +1,6 @@
 ActiveAdmin.register Trail do
   permit_params :name, species_ids: []
-  config.filters.each {|name,value| remove_filter(name) if name.match /#{config.resource_table_name.gsub('"','')}_*/ }
+  remove_filter :species_trails
 
   form do |f|
     f.semantic_errors # shows errors on :base

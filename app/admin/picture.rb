@@ -1,6 +1,6 @@
 ActiveAdmin.register Picture do
   permit_params :picture
-  config.filters.each {|name,value| remove_filter(name) if name.match /#{config.resource_table_name.gsub('"','')}_*/ }
+  remove_filter :species_pictures
 
   form :html => { :enctype => "multipart/form-data" } do |f|
     f.semantic_errors

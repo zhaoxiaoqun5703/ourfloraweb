@@ -1,6 +1,7 @@
 ActiveAdmin.register Species do
   permit_params :commonName, :authority, :distribution, :indigenousName, :information, :genusSpecies, :description, :family_id, species_locations_attributes: [:lat, :lon, :id, :_destroy], pictures_attributes: [:picture, :id]
-  config.filters.each {|name,value| remove_filter(name) if name.match /#{config.resource_table_name.gsub('"','')}_*/ }
+  remove_filter :species_trails
+  remove_filter :species_pictures
 
   form :html => { :enctype => "multipart/form-data" } do |f|
     f.semantic_errors # shows errors on :base
