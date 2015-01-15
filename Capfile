@@ -7,8 +7,11 @@ require 'capistrano/deploy'
 # Include rbenv for setting ruby version
 require 'capistrano/rbenv'
 
-# Use capistrano-passenger for interfacing with Phusion Passenger
+# Use capistrano-passenger for interfacing with Phusion Passenger 
 require 'capistrano/passenger'
+
+# Use capistrano-bundler to install gems after deploy
+require 'capistrano/bundler'
 
 # Include tasks from other gems included in your Gemfile
 #

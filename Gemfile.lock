@@ -264,6 +264,7 @@ DEPENDENCIES
   activeadmin!
   byebug
   capistrano
+  capistrano-bundler
   capistrano-passenger
   capistrano-rails
   capistrano-rbenv
