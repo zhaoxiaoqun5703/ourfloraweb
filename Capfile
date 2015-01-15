@@ -13,7 +13,7 @@ require 'capistrano/passenger'
 # Use capistrano-bundler to install gems after deploy
 require 'capistrano/bundler'
 
-require 'deploy/assets'
+require 'capistrano/rails/assets'
 
 # Include tasks from other gems included in your Gemfile
 #
