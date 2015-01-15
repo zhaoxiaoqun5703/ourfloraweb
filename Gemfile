@@ -26,7 +26,7 @@ group :development do
 end
 
 group :deployment do
-
+  gem 'therubyracer'
 end
 
 # Use activeadmin for managing database
