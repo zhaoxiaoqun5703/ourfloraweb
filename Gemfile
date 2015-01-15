@@ -26,6 +26,7 @@ group :development do
 end
 
 group :deployment do
+  gem 'mysql2'
   gem 'therubyracer'
 end
 
