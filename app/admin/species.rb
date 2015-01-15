@@ -18,7 +18,7 @@ ActiveAdmin.register Species do
 
     f.inputs 'Pictures' do
       f.has_many :pictures, heading: nil, allow_destroy: true, new_record: true do |a|
-        a.input :picture, :as => :file
+        a.input :picture, :as => :file, :hint => !a.object.id.nil? ? f.template.image_tag(a.object.picture.url(:medium)) : nil
       end
     end
 
