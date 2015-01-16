@@ -93,12 +93,12 @@ module FloraImportJson
               if image_dir
                 # Loop through the specified directory and find a sub directory with the current species name
                 Dir.entries(ENV['image_dir']).select do |d|
-                  if (File.directory? "#{Dir.pwd}/#{ENV['image_dir']}/#{d}")
+                  if (File.directory? "#{ENV['image_dir']}/#{d}")
                     # If the directory name is the same as the species
                     if d == species.genusSpecies
                       # Search for all images in subdirectories
                       img_file_paths = []
-                      Find.find("#{Dir.pwd}/#{ENV['image_dir']}/#{d}") do |path|
+                      Find.find("#{ENV['image_dir']}/#{d}") do |path|
                         img_file_paths << path if path =~ /.*\.(jpeg)|(jpg)|(png)|(gif)$/
                       end
                       # If we found 1 or more images, create new image objects with paperclip
