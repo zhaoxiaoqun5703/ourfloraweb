@@ -1,4 +1,4 @@
-class CreateSpeciesAndPictures < ActiveRecord::Migration
+class CreateSpeciesAndImages < ActiveRecord::Migration
   def change
     create_table :species do |t|
       t.string :genusSpecies
@@ -8,19 +8,16 @@ class CreateSpeciesAndPictures < ActiveRecord::Migration
       t.text :distribution
       t.text :information
       t.text :description
-
       t.timestamps null: false
 
       t.references :family
     end
 
-    create_table :pictures do |t|
+    create_table :images do |t|
       t.timestamps null: false
-    end
+      t.attachment :image
 
-    create_table :species_pictures, id: false do |t|
-      t.belongs_to :species, index: true
-      t.belongs_to :picture, index: true
+      t.belongs_to :species
     end
   end
 end

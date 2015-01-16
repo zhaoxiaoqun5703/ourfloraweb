@@ -2,11 +2,11 @@
   <i id="overlay-close" class="icon-cancel"></i>
   <i id="highlight-map" class="icon-location"></i>
   <div class="images">
-    <@ if (pictures.length == 0) { @>
+    <@ if (images.length == 0) { @>
       <img src="<@= IMG_NOT_FOUND_ORIGINAL @>" width=250px height=400px>
     <@ } else { @>
-      <@ for (i = 0; i < pictures.length; i++) { @>
-        <img src="<@= pictures[i].picture_url @>">
+      <@ for (i = 0; i < images.length; i++) { @>
+        <img src="<@= images[i].picture_url @>">
       <@ } @>
     <@ } @>
   </div>
@@ -23,7 +23,7 @@
 <script type="text/template" id="infobox-template">
   <div class="species-infobox-outer">
     <div class="species-infobox" id="infobox-<@= id @>">
-      <img class="list-image<@ print(pictures.length > 0 ? '' : ' no-image') @>" src="<@ print(pictures.length > 0 ? pictures[0].picture_url : IMG_NOT_FOUND_SMALL) @>">
+      <img class="list-image<@ print(images.length > 0 ? '' : ' no-image') @>" src="<@ print(images.length > 0 ? images[0].picture_url : IMG_NOT_FOUND_SMALL) @>">
       <div class="text">
         <div class="title"><@= genusSpecies @></div>
         <div class="subtitle"><@= commonName @></div>

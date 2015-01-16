@@ -4,69 +4,15 @@ class SpeciesController < ApplicationController
   # GET /species
   # GET /species.json
   def index
-    @species = Species.includes(:family).includes(:species_locations).includes(:pictures).uniq(:species).order(:genusSpecies).all
+    @species = Species.includes(:family).includes(:species_locations).includes(:images).uniq(:species).order(:genusSpecies).all
     respond_to do |format|
       format.html {
         not_found
       }
       format.xml { render :xml => @species }
       format.json {
-        render :json => @species.to_json(include: [:species_locations, :family, :pictures => {:methods => :picture_url}])
+        render :json => @species.to_json(include: [:species_locations, :family, :images => {:methods => :image_url}])
       }
-    end
-  end
-
-  # GET /species/1
-  # GET /species/1.json
-  def show
-  end
-
-  # GET /species/new
-  def new
-    @species = Species.new
-  end
-
-  # GET /species/1/edit
-  def edit
-  end
-
-  # POST /species
-  # POST /species.json
-  def create
-    @species = Species.new(species_params)
-
-    respond_to do |format|
-      if @species.save
-        format.html { redirect_to @species, notice: 'Species was successfully created.' }
-        format.json { render :show, status: :created, location: @species }
-      else
-        format.html { render :new }
-        format.json { render json: @species.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PATCH/PUT /species/1
-  # PATCH/PUT /species/1.json
-  def update
-    respond_to do |format|
-      if @species.update(species_params)
-        format.html { redirect_to @species, notice: 'Species was successfully updated.' }
-        format.json { render :show, status: :ok, location: @species }
-      else
-        format.html { render :edit }
-        format.json { render json: @species.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /species/1
-  # DELETE /species/1.json
-  def destroy
-    @species.destroy
-    respond_to do |format|
-      format.html { redirect_to species_index_url, notice: 'Species was successfully destroyed.' }
-      format.json { head :no_content }
     end
   end
 

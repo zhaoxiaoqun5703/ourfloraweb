@@ -1,7 +1,6 @@
 ActiveAdmin.register Species do
-  permit_params :commonName, :authority, :distribution, :indigenousName, :information, :genusSpecies, :description, :family_id, species_locations_attributes: [:lat, :lon, :id, :_destroy], pictures_attributes: [:picture, :id]
+  permit_params :commonName, :authority, :distribution, :indigenousName, :information, :genusSpecies, :description, :family_id, species_locations_attributes: [:lat, :lon, :id, :_destroy], images_attributes: [:image, :id, :_destroy]
   remove_filter :species_trails
-  remove_filter :species_pictures
 
   form :html => { :enctype => "multipart/form-data" } do |f|
     f.semantic_errors # shows errors on :base
@@ -16,9 +15,12 @@ ActiveAdmin.register Species do
       end
     end
 
-    f.inputs 'Pictures' do
-      f.has_many :pictures, heading: nil, allow_destroy: true, new_record: true do |a|
-        a.input :picture, :as => :file, :hint => !a.object.id.nil? ? f.template.image_tag(a.object.picture.url(:medium)) : nil
+    f.inputs 'images' do
+      f.has_many :images, heading: nil, allow_destroy: true, new_record: true do |a|
+        a.input :image, :as => :attachment,
+                        :required => true,
+                        :hint => 'Accepts JPG, GIF, PNG.',
+                        :image => proc { |o| o.image.url(:thumb) }
       end
     end
 
@@ -48,9 +50,9 @@ ActiveAdmin.register Species do
     end
 
     panel 'Images' do
-      species.pictures.each do |pic|
+      species.images.each do |pic|
         span do
-          image_tag(pic.picture.url(:thumb))
+          image_tag(pic.image.url(:thumb))
         end
       end
     end

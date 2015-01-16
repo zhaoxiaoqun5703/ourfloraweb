@@ -52,13 +52,14 @@ ActiveRecord::Schema.define(version: 20150108023655) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "pictures", force: :cascade do |t|
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-    t.string   "picture_file_name"
-    t.string   "picture_content_type"
-    t.integer  "picture_file_size"
-    t.datetime "picture_updated_at"
+  create_table "images", force: :cascade do |t|
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.integer  "species_id"
   end
 
   create_table "species", force: :cascade do |t|
@@ -66,8 +67,8 @@ ActiveRecord::Schema.define(version: 20150108023655) do
     t.string   "commonName"
     t.string   "indigenousName"
     t.string   "authority"
-    t.string   "distribution"
-    t.string   "information"
+    t.text     "distribution"
+    t.text     "information"
     t.text     "description"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
@@ -81,14 +82,6 @@ ActiveRecord::Schema.define(version: 20150108023655) do
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
   end
-
-  create_table "species_pictures", id: false, force: :cascade do |t|
-    t.integer "species_id"
-    t.integer "picture_id"
-  end
-
-  add_index "species_pictures", ["picture_id"], name: "index_species_pictures_on_picture_id"
-  add_index "species_pictures", ["species_id"], name: "index_species_pictures_on_species_id"
 
   create_table "species_trails", id: false, force: :cascade do |t|
     t.integer "species_id"
