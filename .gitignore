@@ -5,6 +5,13 @@ capybara-*.html
 /tmp/sessions
 /tmp/sockets
 /tmp/pids
+/tmp/species_images
+/tmp/.DS_Store
+
+.DS_Store
+
+/public/assets
+
 /db/*.sqlite3
 /db/*.sqlite3-journal
 /public/system

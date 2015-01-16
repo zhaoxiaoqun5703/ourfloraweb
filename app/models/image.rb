@@ -8,7 +8,9 @@ class Image < ActiveRecord::Base
 
   has_attached_file :image,
                     :styles => { :medium => "300x300>",
-                    :thumb => "100x100>" }, :default_url => "/images/:style/missing.png",
+                    :thumb => "100x100>",
+                    :tiny => "50x50#" },
+                    :default_url => "/images/:style/missing.png",
                     :path => ":rails_root/public/assets/species_images/:species_name/:id/:style_:basename.:extension",
                     :url  => "/assets/species_images/:species_name/:id/:style_:basename.:extension"
 
@@ -17,4 +19,9 @@ class Image < ActiveRecord::Base
   def image_url
     self.image.url(:original)
   end
+
+  def image_url_tiny
+    self.image.url(:tiny)
+  end
+
 end

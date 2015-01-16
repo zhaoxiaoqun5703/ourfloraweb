@@ -12,7 +12,7 @@ namespace :species do
     # Exit if the user hasn't specified a file location and format
     return unless ENV['file'] && ENV['format']
     if ENV['format'] == 'json'
-      import_species_json ENV['file']
+      import_species_json(ENV['file'], ENV['image_dir'] ? ENV['image_dir'] : nil )
     end
   end # task :import_json do
 end

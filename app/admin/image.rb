@@ -11,10 +11,10 @@ ActiveAdmin.register Image do
 
   show do |pic|
     attributes_table do
-      row :picture_file_name
-      row :picture_content_type
-      row :picture_file_size
-      row :picture_updated_at
+      row :image_file_name
+      row :image_content_type
+      row :image_file_size
+      row :image_updated_at
       row :thumbnail do
         image_tag(pic.image.url(:thumb))
       end

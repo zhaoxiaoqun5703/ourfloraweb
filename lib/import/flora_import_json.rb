@@ -1,3 +1,8 @@
+require 'find'
+require 'digest/md5'
+
+BAD_IMAGE_HASH = "7d092050f834b961a287e264087e6d53"
+
 module FloraImportJson
   # Validate basic outer objects (family and species)
   def object_schema
@@ -51,7 +56,7 @@ module FloraImportJson
     }
   end
 
-  def import_species_json(filename)
+  def import_species_json(filename, image_dir = null)
     json_string = File.read(ENV['file'])
     # First, validate that there are family objects in the outer scope
     if JSON::Validator.validate(object_schema, json_string)
@@ -82,6 +87,34 @@ module FloraImportJson
                 l.lat = location[0]
                 l.lon = location[1]
                 species.species_locations << l
+              end
+
+              # If there was an image dir specified, try to use paperclip to import those images
+              if image_dir
+                # Loop through the specified directory and find a sub directory with the current species name
+                Dir.entries(ENV['image_dir']).select do |d|
+                  if (File.directory? "#{Dir.pwd}/#{ENV['image_dir']}/#{d}")
+                    # If the directory name is the same as the species
+                    if d == species.genusSpecies
+                      # Search for all images in subdirectories
+                      img_file_paths = []
+                      Find.find("#{Dir.pwd}/#{ENV['image_dir']}/#{d}") do |path|
+                        img_file_paths << path if path =~ /.*\.(jpeg)|(jpg)|(png)|(gif)$/
+                      end
+                      # If we found 1 or more images, create new image objects with paperclip
+                      img_file_paths.each do |image_path|
+                        # If the file matches a blacklist file (e.g the old "image missing" file) then skip it
+                        unless Digest::MD5.hexdigest(File.read(image_path)) == BAD_IMAGE_HASH
+                          image = Image.new
+                          image.image = File.open(image_path)
+                          species.images << image
+                        else
+                          puts "Skipping old 'image missing' image"
+                        end
+                      end
+                    end
+                  end
+                end
               end
               species.save()
             else
@@ -123,7 +156,7 @@ module FloraImportJson
           trail.name = trail_name
           trail.save
           # Split the species on the trail into an array
-          trail_species = trail_string.split /\;\ /
+          trail_species = trail_string.split(/\;\ /)
           # Loop through and look up each species, adding it to the trail if it exists
           trail_species.each do |genusSpecies|
             # If a species was found, add it to the trail

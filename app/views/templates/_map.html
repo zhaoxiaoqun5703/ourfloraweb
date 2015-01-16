@@ -6,7 +6,7 @@
       <img src="<@= IMG_NOT_FOUND_ORIGINAL @>" width=250px height=400px>
     <@ } else { @>
       <@ for (i = 0; i < images.length; i++) { @>
-        <img src="<@= images[i].picture_url @>">
+        <img src="<@= images[i].image_url @>">
       <@ } @>
     <@ } @>
   </div>
@@ -23,7 +23,7 @@
 <script type="text/template" id="infobox-template">
   <div class="species-infobox-outer">
     <div class="species-infobox" id="infobox-<@= id @>">
-      <img class="list-image<@ print(images.length > 0 ? '' : ' no-image') @>" src="<@ print(images.length > 0 ? images[0].picture_url : IMG_NOT_FOUND_SMALL) @>">
+      <img class="list-image<@ print(images.length > 0 ? '' : ' no-image') @>" src="<@ print(images.length > 0 ? images[0].image_url_tiny : IMG_NOT_FOUND_SMALL) @>">
       <div class="text">
         <div class="title"><@= genusSpecies @></div>
         <div class="subtitle"><@= commonName @></div>
