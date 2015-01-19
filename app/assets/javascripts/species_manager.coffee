@@ -52,7 +52,6 @@
 
     # Open a picture in a new tab
     fullscreenPicture: (e) ->
-      console.log e.target
       # window.open(url,'_blank');
 
     # Fade out the overlay and set display to none to prevent invisible z index problems
@@ -78,7 +77,6 @@
 
     render: ->
       # Render the element from the template and model
-      console.log @model.attributes
       @$el.html @template(@model.toJSON())
       # Set display to block from none
       $('#overlay-dark,#popover-outer').css('display', 'block')
@@ -121,7 +119,8 @@
         _openInfoBox.close() if _openInfoBox
         self.infoBox.open _map, self.marker
         _openInfoBox = self.infoBox
-        return
+        # Prevent the event from bubbling up so the infoBox will stay open
+        return false
       
       # Bind the click event on the new infobox to show the popover
       google.maps.event.addListener @infoBox, 'domready', ->
@@ -254,16 +253,16 @@
 
     initialize: ->
       # Bind listener functions for the parent model
-      @model.on('hideAll', @hideAll, @)
-      @model.on('showAll', @showAll, @)
+      @model.on('hide', @hide, @)
+      @model.on('show', @show, @)
 
     # Called when all families are being hidden - just set selected to false and uncheck checkbox
-    hideAll: ->
+    hide: ->
       @$el.find('.checkbox').removeClass 'selected'
       @selected = false
 
     # Called when all families are being hidden - just set selected to false and uncheck checkbox
-    showAll: ->
+    show: ->
       @$el.find('.checkbox').addClass 'selected'
       @selected = true
 
@@ -331,7 +330,7 @@
 
       # Then, mark all families as selected
       @collection.each (model) ->
-        model.trigger('showAll')
+        model.trigger('show')
 
     hideAll: ->
       # First, hide all markers
@@ -341,8 +340,7 @@
 
       # Then, uncheck all selected families
       @collection.each (model) ->
-        console.log model
-        model.trigger('hideAll')
+        model.trigger('hide')
   )
 
   # The view for each row in the trails menu
@@ -368,24 +366,23 @@
         # Loop through and show all remaining markers
         for marker in _markers
           marker.setMap(_map)
+        _familyOuterListView.collection.each (model) ->
+          model.trigger('show')
+
       else
         # Unselect all other trails
         @$el.parent().find('.trail-row .checkbox').removeClass('selected')
 
-        # Loop through and remove all markers from the map
-        for marker in _markers
-          marker.setMap(null)
+        # Remove all markers from the map
+        _familyOuterListView.hideAll()
 
         # Then show all markers that are associated with this trail
-        speciesModels = []
         for speciesObject in @model.get('species')
-          found = _speciesOuterListView.collection.where({id: speciesObject.id})
-          if found.length > 0
-            for speciesModel in found
-              speciesModels.push speciesModel
+          for speciesModel in _speciesOuterListView.collection.where({id: speciesObject.id})
+            speciesModel.trigger('show')
 
-        for speciesModel in speciesModels
-          if @selected then speciesModel.trigger('hide') else speciesModel.trigger('show')
+            for familyModel in _familyOuterListView.collection.where({id: speciesModel.get('family').id})
+              familyModel.trigger('show')
 
         @$el.find('.checkbox').addClass('selected')
 
@@ -500,3 +497,9 @@
 
     # Fix height of menus
     $('#menu-content-list').height($(window).height() - $('#tab-button-outer').height())
+    $('#menu-content-families').height($(window).height() - $('#tab-button-outer').height())
+
+    # Hide current marker if there is one when clicking on map
+    google.maps.event.addListener _map, "click", ->
+      _openInfoBox.close() if _openInfoBox
+      

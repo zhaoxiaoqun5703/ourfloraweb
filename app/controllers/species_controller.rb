@@ -4,7 +4,7 @@ class SpeciesController < ApplicationController
   # GET /species
   # GET /species.json
   def index
-    @species = Species.includes(:family).includes(:species_locations).includes(:images).uniq(:species).order(:genusSpecies).all
+    @species = Species.includes(:family).includes(:species_locations).includes(:images).uniq(:species).order('families.name').all
     respond_to do |format|
       format.html {
         not_found
