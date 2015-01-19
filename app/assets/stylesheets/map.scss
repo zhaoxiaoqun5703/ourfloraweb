@@ -130,7 +130,6 @@ html {
           display: inline-block;
           vertical-align: top;
           margin:0;
-          padding-bottom:80px;
           @include unselectable();
 
           &.list {
