@@ -57,7 +57,11 @@ module FloraImportJson
   end
 
   def import_species_json(filename, image_dir = null)
+    puts "Beginning species import with file=#{filename} and image_dir=#{image_dir}"
+    puts "-----------------------------"
     json_string = File.read(ENV['file'])
+    puts "Successfully read from json file"
+    puts "-----------------------------"
     # First, validate that there are family objects in the outer scope
     if JSON::Validator.validate(object_schema, json_string)
       json_object = JSON.parse(json_string)
@@ -65,6 +69,7 @@ module FloraImportJson
         if JSON::Validator.validate(object_schema, family_object)
           # If the family name is valid, create a new family object in the database
           if (family = Family.where(name: family_name).first).nil?
+            puts "Family #{family_name} not found in database, creating"
             family = Family.new
             family.name = family_name
           end
@@ -89,6 +94,8 @@ module FloraImportJson
                 species.species_locations << l
               end
 
+              puts "Creating new species #{species.genusSpecies} in family #{family_name} with #{species.locations.length} locations."
+              puts "Searching for images."
               # If there was an image dir specified, try to use paperclip to import those images
               if image_dir
                 # Loop through the specified directory and find a sub directory with the current species name
@@ -96,15 +103,19 @@ module FloraImportJson
                   if (File.directory? "#{ENV['image_dir']}/#{d}")
                     # If the directory name is the same as the species
                     if d.downcase == species.genusSpecies.downcase
+                      puts "Matching directory with name #{d} found"
                       # Search for all images in subdirectories
                       img_file_paths = []
                       Find.find("#{ENV['image_dir']}/#{d}") do |path|
                         img_file_paths << path if path =~ /.*\.(jpeg)|(jpg)|(png)|(gif)$/
                       end
+                      puts "#{img_file_paths.length} images found in directory, running imagemagick to normalise dimensions"
                       # If we found 1 or more images, create new image objects with paperclip
                       img_file_paths.each do |image_path|
+                        digest = Digest::MD5.hexdigest(File.read(image_path))
+                        puts "Running imagemagick on image #{image_path} with hex digest digest"
                         # If the file matches a blacklist file (e.g the old "image missing" file) then skip it
-                        unless Digest::MD5.hexdigest(File.read(image_path)) == BAD_IMAGE_HASH
+                        unless digest == BAD_IMAGE_HASH
                           image = Image.new
                           image.image = File.open(image_path)
                           species.images << image
@@ -116,7 +127,10 @@ module FloraImportJson
                   end
                 end
               end
+              puts "Successfully added #{species.images.length} images"
+              puts "Attempting to save species #{species.genusSpecies}"
               species.save()
+              puts "Saved species #{species.genusSpecies}"
             else
               errors = JSON::Validator.fully_validate(species_schema, species_object)
               puts "INVALID SPECIES: #{species_name}"
@@ -125,9 +139,12 @@ module FloraImportJson
                 puts error
               end
             end # if JSON::Validator.validate(species_schema, species_object)
+            puts "Finished adding species to family #{family_name}"
           end # family_object.each do |species_name, species_object|
-
+          puts "Attempting to save family #{family_name}"
           family.save()
+          puts "Saved family #{family_name}"
+          puts "-----------------------------"
         end # if JSON::Validator.validate(object_schema, family_object)
       end # json_object.each do |family_name, family_object|
     end # if JSON::Validator.validate(object_schema, json_string)
