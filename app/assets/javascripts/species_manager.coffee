@@ -22,12 +22,15 @@
     escape:      /\<\@-(.+?)\@\>/g
 
   # Closes the currently open info box
-  closeInfoBox = (infoBox) ->
+  closeInfoBox = (infoBox, now = false) ->
     if infoBox
       $('.species-infobox-outer').removeClass('visible')
-      setTimeout ->
+      if now
         infoBox.close()
-      , 300
+      else
+        setTimeout ->
+          infoBox.close()
+        , 300
 
 
   # VIEWS -------------------------------------------------------------------------------
@@ -128,7 +131,7 @@
 
       # Add click event listener for the map pins
       google.maps.event.addListener @marker, "click", ->
-        closeInfoBox(_openInfoBox)
+        closeInfoBox(_openInfoBox, true)
         self.infoBox.open _map, self.marker
         _openInfoBox = self.infoBox
         # Prevent the event from bubbling up so the infoBox will stay open
