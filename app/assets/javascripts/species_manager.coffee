@@ -337,6 +337,7 @@
       # First, hide all markers
       for marker in _markers
         marker.setMap(null)
+        _openInfoBox.close() if _openInfoBox
 
       # Then, uncheck all selected families
       @collection.each (model) ->
