@@ -95,7 +95,7 @@ module FloraImportJson
                 Dir.entries(ENV['image_dir']).select do |d|
                   if (File.directory? "#{ENV['image_dir']}/#{d}")
                     # If the directory name is the same as the species
-                    if d == species.genusSpecies
+                    if d.downcase == species.genusSpecies.downcase
                       # Search for all images in subdirectories
                       img_file_paths = []
                       Find.find("#{ENV['image_dir']}/#{d}") do |path|
