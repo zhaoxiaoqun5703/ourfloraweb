@@ -78,8 +78,11 @@
     # Highlights the popover species on the map
     showOnMap: ->
       # Hide all markers
-      for marker in _markers
-        marker.setMap(null)
+      _familyOuterListView.hideAll()
+
+      # Uncheck all family rows that aren't this species
+      for familyModel in _familyOuterListView.collection.where({id: @model.get('family').id})
+        familyModel.trigger('show')
 
       # Show markers for this species
       @model.trigger('show')
@@ -195,7 +198,7 @@
     # Zooms and pans the google map to fit all currently showing markers
     fitMapToScreen: ->
       # Create a new boundary object
-      bounds = new google.maps.LatLngBounds();
+      bounds = new google.maps.LatLngBounds()
       # Extend the outside of the boundaries to fit the pins
       for mapView in @mapViews
          bounds.extend mapView.marker.getPosition()
@@ -204,9 +207,11 @@
       # Fit boundaries
       _map.fitBounds bounds
       # Remove one zoom level to ensure no marker is on the edge.
-      _map.setZoom(_map.getZoom()-1); 
+      _map.setZoom(_map.getZoom() - 1) 
       # Set a minimum zoom to prevent excessive zoom in if there's only 1 marker
       if _map.getZoom() > 19 then _map.setZoom 19
+      # Set a max zoom to prevent excessive zoom if the markers are across a wide area
+      if _map.getZoom() < 17 then _map.setZoom 17
 
     render: ->
       # Add the species to the species list
@@ -377,11 +382,8 @@
       # If it's already selected, toggle off by removing selected class from the checkbox inside this view
       if @$el.find('.checkbox').hasClass('selected')
         @$el.find('.checkbox').removeClass('selected')
-        # Loop through and show all remaining markers
-        for marker in _markers
-          marker.setMap(_map)
-        _familyOuterListView.collection.each (model) ->
-          model.trigger('show')
+        # Show all remaining markers
+        _familyOuterListView.selectAll()
 
       else
         # Unselect all other trails
@@ -390,7 +392,7 @@
         # Remove all markers from the map
         _familyOuterListView.hideAll()
 
-        # Then show all markers that are associated with this trail
+        # Show all markers that are associated with this trail
         for speciesObject in @model.get('species')
           for speciesModel in _speciesOuterListView.collection.where({id: speciesObject.id})
             speciesModel.trigger('show')
