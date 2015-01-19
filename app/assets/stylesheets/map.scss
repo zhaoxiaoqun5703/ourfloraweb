@@ -373,7 +373,15 @@ html {
     .species-infobox-outer {
       background: none;
       position: relative;
+      top: 12px;
       padding-bottom: 15px;
+      @include opacity(0);
+      @include fullTransition(0.2s);
+
+      &.visible {
+        top:0px;
+        @include opacity(1);
+      }
 
       &:after {
         bottom: -8px;

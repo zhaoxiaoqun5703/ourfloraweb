@@ -21,6 +21,14 @@
     interpolate: /\<\@=(.+?)\@\>/g,
     escape:      /\<\@-(.+?)\@\>/g
 
+  # Closes the currently open info box
+  closeInfoBox = (infoBox) ->
+    if infoBox
+      $('.species-infobox-outer').removeClass('visible')
+      setTimeout ->
+        infoBox.close()
+      , 300
+
 
   # VIEWS -------------------------------------------------------------------------------
   # View for selected species shown in the center of the screen
@@ -62,7 +70,7 @@
         $('#overlay-dark,#popover-outer').css('display', 'none')
         # After we've faded out the popover, remove it from the DOM
         self.remove()
-      , 300
+      , 200
 
     # Highlights the popover species on the map
     showOnMap: ->
@@ -105,6 +113,10 @@
         closeBoxURL: ''
       )
 
+      # Override the appear functionality of infobox so we can animate it's appearance
+      google.maps.event.addListener @infoBox, 'domready', ->
+        $('.species-infobox-outer').addClass('visible')
+
       # Define google maps marker (red balloon over species on map)
       @marker = new google.maps.Marker(
         position: new google.maps.LatLng(@model.get('lat'), @model.get('lon'));
@@ -116,7 +128,7 @@
 
       # Add click event listener for the map pins
       google.maps.event.addListener @marker, "click", ->
-        _openInfoBox.close() if _openInfoBox
+        closeInfoBox(_openInfoBox)
         self.infoBox.open _map, self.marker
         _openInfoBox = self.infoBox
         # Prevent the event from bubbling up so the infoBox will stay open
@@ -129,7 +141,6 @@
 
     # Methods for hiding and showing google maps markers
     hideMarker: ->
-      @infoBox.close()
       @marker.setMap(null)
 
     showMarker: ->
@@ -336,7 +347,7 @@
       # First, hide all markers
       for marker in _markers
         marker.setMap(null)
-        _openInfoBox.close() if _openInfoBox
+        closeInfoBox(_openInfoBox)
 
       # Then, uncheck all selected families
       @collection.each (model) ->
@@ -501,5 +512,5 @@
 
     # Hide current marker if there is one when clicking on map
     google.maps.event.addListener _map, "click", ->
-      _openInfoBox.close() if _openInfoBox
+      closeInfoBox(_openInfoBox)
       
