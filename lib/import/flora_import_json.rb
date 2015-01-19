@@ -1,5 +1,6 @@
 require 'find'
 require 'digest/md5'
+require 'open3'
 
 BAD_IMAGE_HASH = "7d092050f834b961a287e264087e6d53"
 
@@ -124,14 +125,16 @@ module FloraImportJson
                               # Remove black letterboxing on the outside of images
                               if ENV['remove_letterbox'] == 'true'
                                 `convert "#{image_path}" -bordercolor Black -border 500x500 "#{image_path}.tmp";`
-                                result = `$( (convert "#{image_path}.tmp" -bordercolor black -fuzz 92% -trim +repage "#{image_path}.tmp") 2>&1)`
+                                cmd = "convert \"#{image_path}.tmp\" -bordercolor black -fuzz 92% -trim +repage \"#{image_path}.tmp\""
                                 # If nothing was printed to stderr, imagemagick succeeded on that image
-                                if result == ''
-                                  puts "Successfully removed letterboxing from #{image_path}"
-                                  `mv "#{image_path}.tmp" "#{image_path}"`
-                                else
-                                  puts "Error removing letterboxing from #{image_path}, output from convert was #{result}".red
-                                  `rm "#{image_path}.tmp"`
+                                Open3.popen3(cmd) do |stdin, stdout, stderr, wait_thr|
+                                  error = stderr.read
+                                  if error == ''
+                                    puts "Successfully removed letterboxing from #{image_path}"
+                                    `mv "#{image_path}.tmp" "#{image_path}"`
+                                  else
+                                    puts "Error removing letterboxing from #{image_path}, output from convert was \"#{error}\"".red
+                                  end
                                 end
                               end
                               image = Image.new
