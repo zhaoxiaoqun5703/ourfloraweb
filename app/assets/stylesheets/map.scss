@@ -127,6 +127,8 @@ html {
           width: $menu-width;
           height: 100%;
           overflow-y: scroll;
+          // This enables momentum scrolling on ios devices
+          -webkit-overflow-scrolling: touch;
           display: inline-block;
           vertical-align: top;
           margin:0;
