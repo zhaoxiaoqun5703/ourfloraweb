@@ -152,6 +152,13 @@ html {
               height:80px;
               width:300px;
             }
+
+            .list-subheader {
+              padding: 15px;
+              color: #fff;
+              font-size: 16px;
+              background: lighten($button-colour, 5%);
+            }
           }
 
           .selection-option {
@@ -415,6 +422,10 @@ html {
             width: 190px;
             overflow: hidden;
             text-overflow: ellipsis;
+          }
+
+          .title {
+            font-style: italic;
           }
 
           .subtitle {

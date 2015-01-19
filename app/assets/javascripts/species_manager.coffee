@@ -55,7 +55,7 @@
       console.log e.target
       # window.open(url,'_blank');
 
-    # Fade out the overlay and set display to none to prevent event hogging
+    # Fade out the overlay and set display to none to prevent invisible z index problems
     closeOverlay: ->
       self = @
       $('#overlay-dark, #popover-outer').removeClass('selected')
@@ -224,6 +224,17 @@
     appendItem: (model) ->
       # Create a new species view based on the model data
       view = new SpeciesListView({model: model})
+      # Since we need to group the list by family, check if a family outer grouped element already exists
+      $className = "list-family-#{model.get('family').name.replace(' ', '').toLowerCase()}"
+      $selector = $(".#{$className}")
+      $familyElement = null
+      # If there isn't a family subheading, create one and append it to the list box
+      if $selector.length > 0
+        $familyElement = $selector
+      else
+        @$el.append("<div class=\"#{$className} list-subheader\">#{model.get('family').name}</div>")
+        $selector = $(".#{$className}")
+
       # Render the species view in the outer container
       @$el.append(view.render().el)
   )
