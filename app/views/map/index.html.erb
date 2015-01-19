@@ -40,4 +40,9 @@
   $(function() {
     google.maps.event.addDomListener(window, "load", init);
   });
+
+  // Hide the address bar in mobile safari
+  setTimeout(function(){
+    window.scrollTo(0, 1);
+  }, 0);
 </script>
