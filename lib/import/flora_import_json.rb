@@ -94,39 +94,59 @@ module FloraImportJson
                 species.species_locations << l
               end
 
-              puts "Creating new species #{species.genusSpecies} in family #{family_name} with #{species.locations.length} locations."
+              puts "Creating new species #{species.genusSpecies} in family #{family_name} with #{species.species_locations.length} locations."
               puts "Searching for images."
               # If there was an image dir specified, try to use paperclip to import those images
               if image_dir
                 # Loop through the specified directory and find a sub directory with the current species name
-                Dir.entries(ENV['image_dir']).select do |d|
-                  if (File.directory? "#{ENV['image_dir']}/#{d}")
-                    # If the directory name is the same as the species
-                    if d.downcase == species.genusSpecies.downcase
-                      puts "Matching directory with name #{d} found"
-                      # Search for all images in subdirectories
-                      img_file_paths = []
-                      Find.find("#{ENV['image_dir']}/#{d}") do |path|
-                        img_file_paths << path if path =~ /.*\.(jpeg)|(jpg)|(png)|(gif)$/
-                      end
-                      puts "#{img_file_paths.length} images found in directory, running imagemagick to normalise dimensions"
-                      # If we found 1 or more images, create new image objects with paperclip
-                      img_file_paths.each do |image_path|
-                        digest = Digest::MD5.hexdigest(File.read(image_path))
-                        puts "Running imagemagick on image #{image_path} with hex digest digest"
-                        # If the file matches a blacklist file (e.g the old "image missing" file) then skip it
-                        unless digest == BAD_IMAGE_HASH
-                          image = Image.new
-                          image.image = File.open(image_path)
-                          species.images << image
-                        else
-                          puts "Skipping old 'image missing' image"
-                        end
-                      end
-                    end
-                  end
-                end
-              end
+                Dir.entries(ENV['image_dir']).select do |f|
+                  if (File.directory? "#{ENV['image_dir']}/#{f}")
+                    # If the directory matches the family, traverse it looking for the species
+                    if !(f.include? '.') && f.downcase == family_name.downcase
+                      puts "Found matching family directory with name #{ENV['image_dir']}/#{f}"
+                      Dir.entries("#{ENV['image_dir']}/#{f}").select do |d|
+                        # If the directory name is the same as the species                      
+                        if d.downcase == species.genusSpecies.downcase
+                          puts "Found matching family directory with name #{ENV['image_dir']}/#{f}/#{d}"
+                          # Search for all images in subdirectories
+                          img_file_paths = []
+                          Find.find("#{ENV['image_dir']}/#{f}/#{d}") do |path|
+                            img_file_paths << path if path =~ /.*\.(jpeg)|(jpg)|(png)|(gif)$/
+                          end
+                          puts "#{img_file_paths.length} images found in directory, running imagemagick to normalise dimensions"
+                          # If we found 1 or more images, create new image objects with paperclip
+                          img_file_paths.each do |image_path|
+                            puts "Attempting hex digest on file"
+                            digest = Digest::MD5.hexdigest(File.read(image_path))
+                            puts "Running imagemagick on image #{image_path} with hex digest #{digest}"
+                            # If the file matches a blacklist file (e.g the old "image missing" file) then skip it
+                            unless digest == BAD_IMAGE_HASH
+                              # Remove black letterboxing on the outside of images
+                              if ENV['remove_letterbox'] == 'true'
+                                `convert "#{image_path}" -bordercolor Black -border 500x500 "#{image_path}.tmp";`
+                                result = `$( (convert "#{image_path}.tmp" -bordercolor black -fuzz 92% -trim +repage "#{image_path}.tmp") 2>&1)`
+                                # If nothing was printed to stderr, imagemagick succeeded on that image
+                                if result == ''
+                                  puts "Successfully removed letterboxing from #{image_path}"
+                                  `mv "#{image_path}.tmp" "#{image_path}"`
+                                else
+                                  puts "Error removing letterboxing from #{image_path}, output from convert was #{result}".red
+                                  `rm "#{image_path}.tmp"`
+                                end
+                              end
+                              image = Image.new
+                              image.image = File.open(image_path)
+                              species.images << image
+                            else
+                              puts "Skipping old 'image missing' image"
+                            end
+                          end # img_file_paths.each do |image_path|
+                        end # if d.downcase == species.genusSpecies.downcase
+                      end # Dir.entries("#{ENV['image_dir']}/#{f}").select do |d|
+                    end # if f.downcase = family_name.downcase
+                  end # if (File.directory? "#{ENV['image_dir']}/#{d}")
+                end # Dir.entries(ENV['image_dir']).select do |d|
+              end # if image_dir
               puts "Successfully added #{species.images.length} images"
               puts "Attempting to save species #{species.genusSpecies}"
               species.save()
@@ -136,7 +156,7 @@ module FloraImportJson
               puts "INVALID SPECIES: #{species_name}"
               puts "Errors:"
               errors.each do |error|
-                puts error
+                puts error.red
               end
             end # if JSON::Validator.validate(species_schema, species_object)
             puts "Finished adding species to family #{family_name}"

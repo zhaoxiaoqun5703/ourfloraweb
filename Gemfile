@@ -14,6 +14,9 @@ gem 'coffee-rails', '~> 4.1.0'
 # Use the json-schema gem for validating imported json
 gem 'json-schema'
 
+# Color output from puts for logging
+gem 'colorize'
+
 group :development do
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3'

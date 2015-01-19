@@ -3,7 +3,7 @@
 #   rm "$file"
 # done
 
-find . -type f \( -name "*.png" -o -name "*.jpg" \) | while read file ; do
+find $1 -type f \( -name "*.png" -o -name "*.jpg" \) | while read file ; do
   convert "$file" -bordercolor Black -border 500x500 "$file.tmp";
   result=$( (convert "$file.tmp" -bordercolor black -fuzz 92% -trim +repage "$file.tmp") 2>&1)
   if [ "$result" = "" ]; then
