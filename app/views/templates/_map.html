@@ -1,6 +1,5 @@
 <script type="text/template" id="popover-template">
-  <i id="overlay-close" class="icon-cancel"></i>
-  <i id="highlight-map" class="icon-location"></i>
+  <% unless browser.mobile? %><i id="overlay-close" class="icon-cancel"></i><% end %>
   <div class="images">
     <@ if (images.length == 0) { @>
       <img src="<@= IMG_NOT_FOUND_ORIGINAL @>" width=250px height=400px>
@@ -11,6 +10,7 @@
     <@ } @>
   </div>
   <div class="content">
+    <% if browser.mobile? %><i id="overlay-close" class="icon-cancel mobile"></i><% end %>
     <div class="title"><@= genusSpecies @> <@= authority @></div>
     <div class="subtitle"><@= commonName @></div>
     <div class="family"><abbr class="heading">Family name</abbr><br /><@= family.name @></div>

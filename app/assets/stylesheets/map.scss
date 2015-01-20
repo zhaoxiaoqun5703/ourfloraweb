@@ -409,24 +409,15 @@ html {
         height: 100%;
         background: #fff;
 
-        i.icon-cancel, i.icon-location {
+        & > i.icon-cancel {
           position: absolute;
           top: 26%;
+          right: 5px;
           font-size: 24px;
           padding: 5px;
           color: #666;
           @include foregroundHover(#333, 8%);
           @include foregroundClick(#333, 16%);
-        }
-
-        i.icon-cancel {
-          right: 5px;
-        }
-
-        i.icon-location {
-          margin-top: 2px;
-          right: 40px;
-          font-size: 21px;
         }
 
         .images {
@@ -449,8 +440,20 @@ html {
           font-family: "Lato";
           text-align: left;
           overflow-y: auto;
+          position: relative;
           // This enables momentum scrolling on ios devices
           -webkit-overflow-scrolling: touch;
+
+          & > i {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            font-size: 24px;
+            padding: 5px;
+            color: #666;
+            @include foregroundHover(#333, 8%);
+            @include foregroundClick(#333, 16%);
+          }
 
           .title, .subtitle {
             margin: 10px;
