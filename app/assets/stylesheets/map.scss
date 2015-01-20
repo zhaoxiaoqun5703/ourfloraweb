@@ -92,7 +92,7 @@ html {
         width: 45px;
         height: 45px;
         font-size: 0;
-        margin-right: 15px;
+        margin-bottom: 15px;
         border: 2px solid #fff;
         @include backgroundHover($button-colour);
         @include roundCornerAll(100px);
