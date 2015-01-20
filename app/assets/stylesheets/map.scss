@@ -89,28 +89,23 @@ html {
       }
 
       .mobile-menu-button {
-        padding: 6px;
-        padding-bottom: 0;
+        width: 45px;
+        height: 45px;
         font-size: 0;
-        margin: 5px 5px 0 0;
-        display: inline-block;
-        vertical-align: middle;
+        margin: 5px 5px 10px 0;
+        border: 2px solid #fff;
         @include backgroundHover($button-colour);
-        @include roundCornerAll(3px);
+        @include roundCornerAll(100px);
+        text-align: center;
 
         i {
+          margin-left: 2px;
+          display: inline-block;
+          vertical-align: middle;
           font-size: 24px;
           color: #fff;
         }
       }
-
-      .expand-menu-mobile {
-
-      } // .expand-menu-mobile
-
-      .current-location-mobile {
-
-      } // .expand-menu-mobile
     } // .overlay-buttons
 
     .side-menu {
