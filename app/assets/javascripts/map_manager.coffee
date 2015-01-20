@@ -8,6 +8,12 @@
       $('#expand-menu').toggleClass('selected')
       $('#inner-container').toggleClass('menu-visible')
 
+    # If we're on mobile, contract the side menu when the user taps the map
+    if IS_MOBILE
+      $('#map-canvas').on 'click', ->
+        $('#expand-menu').removeClass('selected')
+        $('#inner-container').removeClass('menu-visible')
+
     # Bind events for map type selection buttons
     $('#mapview-satellite').on 'click', ->
       unless $('#mapview-satellite').hasClass('selected')

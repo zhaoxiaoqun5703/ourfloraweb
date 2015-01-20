@@ -60,6 +60,12 @@
 
     ga('create', 'UA-49103924-2', 'auto');
     ga('send', 'pageview');
+  </script>
 
+  <script>
+    // Define the retina variable to supplant images
+    var IS_RETINA = window.devicePixelRatio > 1;
+    // Define whether the browser is mobile or not
+    var IS_MOBILE = <% browser.mobile? %>
   </script>
 </html>
