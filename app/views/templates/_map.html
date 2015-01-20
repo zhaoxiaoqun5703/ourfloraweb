@@ -13,6 +13,7 @@
     <% if browser.mobile? %><i id="overlay-close" class="icon-cancel mobile"></i><% end %>
     <div class="title"><@= genusSpecies @> <@= authority @></div>
     <div class="subtitle"><@= commonName @></div>
+    <div id="highlight-map" class="map-view"><i class="icon-location"></i>View species on map</div>
     <div class="family"><abbr class="heading">Family name</abbr><br /><@= family.name @></div>
     <div class="description"><abbr class="heading">Description</abbr><br /><@= description @></div>
     <div class="distribution"><abbr class="heading">Distribution</abbr><br /><@ print(distribution.split('|')[1]) @></div>

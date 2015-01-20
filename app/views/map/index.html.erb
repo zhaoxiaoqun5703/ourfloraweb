@@ -33,6 +33,10 @@
 </div>
 
 <script>
+  if (HOMESCREEN_INSTALLED) {
+    $('#inner-container.ios').addClass('homescreen');
+  }
+
   var init = function() {
     var mapManager = new MapManager;
     // Initialize the mapManager and get the google map
