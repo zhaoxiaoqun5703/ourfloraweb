@@ -24,4 +24,8 @@ class Image < ActiveRecord::Base
     self.image.url(:tiny)
   end
 
+  def image_url_small
+    self.image.url(:thumb)
+  end
+
 end
