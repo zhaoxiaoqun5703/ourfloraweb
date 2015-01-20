@@ -17,8 +17,8 @@ gem 'json-schema'
 # Color output from puts for logging
 gem 'colorize'
 
-# Mobile_fu to detect if the user is mobile, tablet or desktop
-gem 'mobile-fu'
+# Detect if the user is mobile, tablet or desktop
+gem 'browser'
 
 group :development do
   # Use sqlite3 as the database for Active Record

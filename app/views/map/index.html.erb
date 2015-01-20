@@ -3,7 +3,7 @@
   <div class="height-fix"></div>
 </div>
 
-<div id="inner-container" class="inner-container<%= is_mobile_device? ? ' mobile' : '' %>">
+<div id="inner-container" class="inner-container<%= browser.mobile? && browser.safari? ? ' ios' : '' %>">
   <div id="map-canvas" class="map-canvas"></div>
   <div id="overlay-buttons" class="overlay-buttons">
     <div id="mapview-satellite" class="overlay-button left selected">Satellite</div>
