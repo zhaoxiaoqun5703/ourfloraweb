@@ -80,10 +80,6 @@
       # Hide all markers
       _familyOuterListView.hideAll()
 
-      # Uncheck all family rows that aren't this species
-      for familyModel in _familyOuterListView.collection.where({id: @model.get('family').id})
-        familyModel.trigger('show')
-
       # Show markers for this species
       @model.trigger('show')
       @model.trigger('fitMapToScreen')
@@ -517,8 +513,8 @@
         , 200, 'linear'
 
     # Fix height of menus
-    $('#menu-content-list').height($(window).height() - $('#tab-button-outer').height())
-    $('#menu-content-families').height($(window).height() - $('#tab-button-outer').height())
+    $('#menu-content-list').height($(window).outerHeight() - $('#tab-button-outer').outerHeight())
+    $('#menu-content-families').height($(window).outerHeight() - $('#tab-button-outer').outerHeight())
 
     # Hide current marker if there is one when clicking on map
     google.maps.event.addListener _map, "click", ->
