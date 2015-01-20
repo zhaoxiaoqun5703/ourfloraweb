@@ -88,18 +88,28 @@ html {
         }
       }
 
-      .expand-menu-mobile {
-        padding: 5px;
+      .mobile-menu-button {
+        padding: 6px;
         padding-bottom: 0;
         font-size: 0;
-        margin: 10px 10px 0 0;
+        margin: 5px 5px 0 0;
+        display: inline-block;
+        vertical-align: middle;
         @include backgroundHover($button-colour);
         @include roundCornerAll(3px);
 
         i {
-          font-size: 18px;
+          font-size: 24px;
           color: #fff;
         }
+      }
+
+      .expand-menu-mobile {
+
+      } // .expand-menu-mobile
+
+      .current-location-mobile {
+
       } // .expand-menu-mobile
     } // .overlay-buttons
 
