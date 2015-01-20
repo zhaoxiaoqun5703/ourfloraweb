@@ -31,8 +31,6 @@ html {
       }
 
       &.ios {
-        @include roundCornerAll(4px);
-
         .overlay-buttons {
           margin-top: 30px;
         }
