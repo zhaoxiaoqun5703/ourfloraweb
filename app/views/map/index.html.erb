@@ -43,4 +43,11 @@
 
   // Define the retina variable to supplant images
   IS_RETINA = window.devicePixelRatio > 1;
+
+  // Configure fastclick.js to remove mobile input delay on touch
+  if ('addEventListener' in document) {
+    document.addEventListener('DOMContentLoaded', function() {
+        FastClick.attach(document.body);
+    }, false);
+  }
 </script>
