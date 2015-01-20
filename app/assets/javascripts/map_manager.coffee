@@ -1,5 +1,6 @@
 @MapManager = ->
   _map = null
+  _geoMarker = null
 
   # Initialize our google maps object and return it
   initialize: ->
@@ -37,5 +38,12 @@
       zoom: 19,
       disableDefaultUI: true,
       mapTypeId: google.maps.MapTypeId.SATELLITE
+
+    # Add a current location marker to the map
+    _geoMarker = new GeolocationMarker _map
+
+    # Re center the map over the current position on click
+    $('#current-location').on 'click', ->
+      _map.panTo _geoMarker.getPosition()
 
     return _map
