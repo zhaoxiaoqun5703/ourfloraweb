@@ -70,6 +70,8 @@ gem 'rails-assets-jquery'
 gem 'rails-assets-normalize.css'
 # Backbone.js for front end MVC framework
 gem 'rails-assets-backbone'
+# Fastclick.js to remove mobile input delay on clicking elements
+gem 'rails-assets-fastclick'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
