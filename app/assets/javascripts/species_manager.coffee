@@ -37,7 +37,7 @@
   # View for selected species shown in the center of the screen
   SpeciesPopoverView = Backbone.View.extend(
     # Id and class name for popover view
-    className: 'popover-inner'
+    className: if IS_MOBILE then 'popover-inner-mobile' else 'popover-inner'
     id: 'popover-inner'
     # Select the underscore template to use, found in view/_map.html.erb
     template: _.template($('#popover-template').html())
@@ -88,6 +88,11 @@
       @model.trigger('show')
       @model.trigger('fitMapToScreen')
       @closeOverlay()
+
+      # Close the side menu when exiting the overlay if we're on mobile
+      if IS_MOBILE
+        $('#expand-menu').removeClass('selected')
+        $('#inner-container').removeClass('menu-visible')
 
     render: ->
       # Render the element from the template and model
