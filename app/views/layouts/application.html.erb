@@ -46,7 +46,7 @@
       // Define whether the browser is mobile or not
       var IS_MOBILE = <%= browser.mobile? %>
       var IS_IOS = <%= browser.mobile? && browser.safari? %>
-      var HOMESCREEN_INSTALLED = (("standalone" in window.navigator) && !window.navigator.standalone)
+      var HOMESCREEN_INSTALLED = !(("standalone" in window.navigator) && !window.navigator.standalone)
     </script>
     <%= javascript_include_tag 'application' %>
     <%= csrf_meta_tags %>
