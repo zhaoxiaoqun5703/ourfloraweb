@@ -23,7 +23,7 @@
 <script type="text/template" id="infobox-template">
   <div class="species-infobox-outer">
     <div class="species-infobox" id="infobox-<@= id @>">
-      <img class="list-image<@ print(images.length > 0 ? '' : ' no-image') @>" src="<@ print(images.length > 0 ? images[0].image_url_tiny : IMG_NOT_FOUND_SMALL) @>">
+      <img class="list-image<@ print(images.length > 0 ? '' : ' no-image') @>" src="<@ print(images.length > 0 ? (IS_RETINA ? images[0].image_url_small : images[0].image_url_tiny) : IMG_NOT_FOUND_SMALL) @>">
       <div class="text">
         <div class="title"><@= genusSpecies @></div>
         <div class="subtitle"><@= commonName @></div>
