@@ -17,15 +17,22 @@ gem 'json-schema'
 # Color output from puts for logging
 gem 'colorize'
 
+# Mobile_fu to detect if the user is mobile, tablet or desktop
+gem 'mobile-fu'
+
 group :development do
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3'
 
+  # Capistrano for deployment to remote servers
   gem 'capistrano'
   gem 'capistrano-rails'
   gem 'capistrano-rbenv'
   gem 'capistrano-passenger'
   gem 'capistrano-bundler'
+
+  # Use bullet for watching and optimising active record queries
+  gem 'bullet'
 end
 
 group :deployment do

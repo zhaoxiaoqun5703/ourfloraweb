@@ -29,6 +29,17 @@ html {
       &.menu-visible {
         left: -$menu-width;
       }
+
+      &.mobile {
+
+        .overlay-buttons {
+          margin-top: 30px;
+        }
+
+        .side-menu {
+          padding-top: 20px;
+        }
+      } // &.mobile
     } // .inner-container
 
     .map-canvas {
