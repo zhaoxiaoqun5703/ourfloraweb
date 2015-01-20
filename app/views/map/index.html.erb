@@ -6,9 +6,7 @@
 <div id="inner-container" class="inner-container<%= browser.mobile? && browser.safari? ? ' ios' : '' %>">
   <div id="map-canvas" class="map-canvas"></div>
   <div id="overlay-buttons" class="overlay-buttons">
-    <div id="mapview-satellite" class="overlay-button left selected">Satellite</div>
-    <div id="mapview-standard" class="overlay-button right">Standard</div><br />
-    <div id="expand-menu" class="overlay-button">Families / Trails</div>
+    <% browser.mobile? ? render 'map/menu_mobile.html.erb' : render 'map/menu_desktop.html.erb' %>
   </div>
   <div id="side-menu" class="side-menu">
     <div id="tab-button-outer" class="tab-button-outer">
