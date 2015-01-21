@@ -43,8 +43,8 @@
       var IMG_NOT_FOUND_ORIGINAL = '<%= image_path 'not_found_original.png' %>' 
       // Define the retina variable to supplant images
       var IS_RETINA = window.devicePixelRatio > 1;
-      // Define whether the browser is mobile or not
-      var IS_MOBILE = <%= browser.mobile? %>
+      // Define whether the browser is mobile or not - we're showing tablets the mobile view
+      var IS_MOBILE = <%= browser.mobile? || browser.tablet? %>
       var IS_IOS = <%= browser.mobile? && browser.safari? %>
       var HOMESCREEN_INSTALLED = !(("standalone" in window.navigator) && !window.navigator.standalone)
     </script>
