@@ -142,14 +142,27 @@ html {
 
       .menu-content-container {
         position: relative;
-        left: 0;
         overflow-y: visible;
+        left: 0;
         width: $menu-width * 3;
         font-size: 0;
         padding: 0;
         height:100%;
         white-space: nowrap;
         text-align: left;
+        @include selectTransition(left 0.3s ease);
+
+        &.pos1 {
+          left: 0;
+        }
+
+        &.pos2 {
+          left: -($menu-width);
+        }
+
+        &.pos3 {
+          left: -($menu-width * 2)
+        }
 
         .menu-content {
           font-family: "Lato";

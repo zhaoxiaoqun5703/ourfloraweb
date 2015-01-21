@@ -492,25 +492,19 @@
       unless $(this).hasClass 'selected'
         $('.tab-button.selected').removeClass('selected')
         $(this).addClass 'selected'
-        $('.menu-content-container').animate
-          left: 0
-        , 200, 'linear'
+        $('.menu-content-container').removeClass('pos2 pos3').addClass('pos1')
 
     $('#tab-button-trails').on 'click', ->
       unless $(this).hasClass 'selected'
         $('.tab-button.selected').removeClass('selected')
         $(this).addClass 'selected'
-        $('.menu-content-container').animate
-          left: -300
-        , 200, 'linear'
+        $('.menu-content-container').removeClass('pos1 pos3').addClass('pos2')
 
     $('#tab-button-list').on 'click', ->
       unless $(this).hasClass 'selected'
         $('.tab-button.selected').removeClass('selected')
         $(this).addClass 'selected'
-        $('.menu-content-container').animate
-          left: -600
-        , 200, 'linear'
+        $('.menu-content-container').removeClass('pos1 pos2').addClass('pos3')
 
     # Fix height of menus
     $('#menu-content-list').height($(window).outerHeight() - $('#tab-button-outer').outerHeight())
