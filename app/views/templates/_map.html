@@ -5,7 +5,9 @@
       <img src="<@= IMG_NOT_FOUND_ORIGINAL @>" width=250px height=400px>
     <@ } else { @>
       <@ for (i = 0; i < images.length; i++) { @>
-        <img src="<@= images[i].image_url @>">
+        <a href="<@= images[i].image_url @>" target="_blank">
+          <img src="<@= images[i].image_url @>">
+        </a>
       <@ } @>
     <@ } @>
   </div>
@@ -15,7 +17,7 @@
     <div class="subtitle"><@= commonName @></div>
     <div id="highlight-map" class="map-view"><i class="icon-location"></i>View species on map</div>
     <div class="family"><abbr class="heading">Family name</abbr><br /><@= family.name @></div>
-    <div class="description"><abbr class="heading">Description</abbr><br /><@= description @></div>
+    <div class="description"><abbr class="heading">Description</abbr><br /><@= html_link_description @></div>
     <div class="distribution"><abbr class="heading">Distribution</abbr><br /><@ print(distribution.split('|')[1]) @></div>
     <div class="information"><abbr class="heading">Information</abbr><br /><@ print(information.split('|')[1]) @></div>
   </div>

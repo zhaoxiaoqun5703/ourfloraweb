@@ -20,6 +20,9 @@ gem 'colorize'
 # Detect if the user is mobile, tablet or desktop
 gem 'browser'
 
+# Use rails_autolink to detect and convert links in text blobs
+gem 'rails_autolink'
+
 group :development do
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3'

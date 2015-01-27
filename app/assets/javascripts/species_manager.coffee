@@ -51,7 +51,6 @@
       # Don't close the window if the user clicked inside, only if they clicked on the grey part outside
       $('#popover-outer').on 'click', '#popover-inner', (e) ->
         e.stopPropagation()
-        return false
 
       $('#popover-outer').on 'click', (e) ->
         self.closeOverlay()

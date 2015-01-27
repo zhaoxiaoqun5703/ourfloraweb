@@ -208,6 +208,8 @@ GEM
       rails-deprecated_sanitizer (>= 1.0.1)
     rails-html-sanitizer (1.0.1)
       loofah (~> 2.0)
+    rails_autolink (1.1.6)
+      rails (> 3.1)
     railties (4.2.0)
       actionpack (= 4.2.0)
       activesupport (= 4.2.0)
@@ -297,6 +299,7 @@ DEPENDENCIES
   rails-assets-fastclick
   rails-assets-jquery
   rails-assets-normalize.css
+  rails_autolink
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
   spring
