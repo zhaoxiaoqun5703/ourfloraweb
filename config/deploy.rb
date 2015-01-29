@@ -2,7 +2,7 @@
 lock '3.3.5'
 
 set :application, 'campus_flora'
-set :repo_url, 'git@bitbucket.org:nicbarker/campusfloraweb.git'
+set :repo_url, 'git@bitbucket.org:bio_eru/campusfloraweb.git'
 
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
