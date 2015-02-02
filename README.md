@@ -30,7 +30,7 @@ The University of Sydney is using Digital Ocean for this project, but there are 
 
 ## Install Guide (from scratch) ##
 * Log into your VPS as root
-* Download the Rbenv + Rails + Nginx + Passenger + MySQL installer from installscripts.io
+* Download the Rbenv + Rails + Nginx + Passenger + MySQL installer from installscripts.io - [http://installscripts.io/rails-passenger-nginx-mysql-rbenv](http://installscripts.io/rails-passenger-nginx-mysql-rbenv)
 * Run the script as root
 * Download the sample passenger nginx config from installscripts.io
 * Create a linux user called deploy, and give it permissions to the /srv/ directory where you'll be serving campus flora from:
