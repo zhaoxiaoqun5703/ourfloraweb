@@ -16,4 +16,4 @@
 //= require underscore
 //= require backbone
 //= require geolocationmarker
-//= require_tree .
+//= require_directory .

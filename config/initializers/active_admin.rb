@@ -230,4 +230,12 @@ ActiveAdmin.setup do |config|
   # You can enable or disable them for all resources here.
   #
   # config.filters = true
+
+  # Reset active admin asset paths to correct ones
+  config.clear_stylesheets!
+  config.register_stylesheet 'admin/active_admin.css.scss'
+
+  config.clear_javascripts!
+  config.register_javascript 'admin/active_admin.js.coffee'
+
 end

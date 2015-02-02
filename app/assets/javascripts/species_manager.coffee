@@ -97,6 +97,8 @@
       # After a delay of 50 ms, add the class to allow the CSS transition to kick in at the next render loop
       setTimeout ->
         $('#overlay-dark,#popover-outer').addClass('selected')
+        # Reload twitter widgets to get the dynamic tweet button to work + check if twtter is initialized, ghostery might have blocked it
+        if twttr then twttr.widgets.load()
       , 50
       this
   )

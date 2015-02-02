@@ -344,7 +344,7 @@ html {
         overflow: hidden;
         @include roundCornerAll(10px);
 
-        i.icon-cancel, i.icon-location {
+        i.icon-cancel {
           position: absolute;
           top: 5px;
           font-size: 17px;
@@ -355,11 +355,6 @@ html {
 
         i.icon-cancel {
           right: 5px;
-        }
-
-        i.icon-location {
-          right: 27px;
-          font-size: 15px;
         }
 
         .images, .content {
@@ -400,6 +395,25 @@ html {
             font-size: 18px;
             color: #999;
             margin-bottom: 15px;
+          }
+          
+          .map-view {
+            font-size: 14px;
+            color: lighten($button-colour, 10%);
+            text-decoration: underline;
+            cursor: pointer;
+            margin: 0 10px 15px 0;
+
+            i {
+              font-size: 16px;
+              margin-right: 5px;
+            }
+          }
+
+          .twitter-tweet-button {
+            position: absolute;
+            right: 10px;
+            top: 5px;
           }
 
           .family, .authority, .description, .distribution, .information {
@@ -489,17 +503,8 @@ html {
             color: #999;
           }
 
-          .map-view {
-            font-size: 14px;
-            color: lighten($button-colour, 10%);
-            text-decoration: underline;
-            cursor: pointer;
-            margin: 0 10px 15px 10px;
-
-            i {
-              font-size: 16px;
-              margin-right: 5px;
-            }
+          .mobile {
+            margin-left: 10px;
           }
 
           .family, .authority, .description, .distribution, .information {
