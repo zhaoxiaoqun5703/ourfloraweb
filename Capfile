@@ -15,6 +15,9 @@ require 'capistrano/bundler'
 
 require 'capistrano/rails/assets'
 
+# Use capistrano/sitemap_generator to generate a sitemap for google and bing after deploy
+require 'capistrano/sitemap_generator'
+
 # Include tasks from other gems included in your Gemfile
 #
 # For documentation on these, see for example:

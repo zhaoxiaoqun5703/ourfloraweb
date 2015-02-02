@@ -41,6 +41,8 @@ set :rbenv_prefix, "RBENV_ROOT=/usr/local/rbenv RBENV_VERSION=#{fetch(:rbenv_rub
 set :rbenv_map_bins, %w{rake gem bundle ruby rails}
 set :rbenv_roles, :all # default value
 
+deploy:sitemap:refresh  #Create sitemaps and ping search engines
+
 namespace :deploy do
 
   after :restart, :clear_cache do
