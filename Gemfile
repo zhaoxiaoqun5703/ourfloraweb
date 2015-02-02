@@ -30,13 +30,6 @@ group :development do
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3'
 
-  # Capistrano for deployment to remote servers
-  gem 'capistrano'
-  gem 'capistrano-rails'
-  gem 'capistrano-rbenv'
-  gem 'capistrano-passenger'
-  gem 'capistrano-bundler'
-
   # Use bullet for watching and optimising active record queries
   gem 'bullet'
   gem 'pry'
@@ -54,6 +47,13 @@ group :deployment do
   # Therubyracer for javascript execution
   gem 'therubyracer'
 end
+
+# Capistrano for deployment to remote servers
+gem 'capistrano'
+gem 'capistrano-rails'
+gem 'capistrano-rbenv'
+gem 'capistrano-passenger'
+gem 'capistrano-bundler'
 
 # Use activeadmin for managing database
 gem 'activeadmin', github: 'activeadmin'
@@ -78,7 +78,3 @@ gem 'rails-assets-normalize.css'
 gem 'rails-assets-backbone'
 # Fastclick.js to remove mobile input delay on clicking elements
 gem 'rails-assets-fastclick'
-
-group :development, :test do
-end
-
