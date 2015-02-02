@@ -1,5 +1,5 @@
 ActiveAdmin.register Trail do
-  permit_params :name, species_ids: []
+  permit_params :name, species_trails_attributes: [:species_id, :trail_id, :id, :_destroy]
   remove_filter :species_trails
 
   form do |f|
@@ -8,9 +8,15 @@ ActiveAdmin.register Trail do
       f.inputs          # builds an input field for every attribute
     end
 
-    f.inputs 'Select Species' do
-      f.input :species, :collection => Species.pluck(:genusSpecies, :id)
+    f.inputs 'Species' do
+      f.has_many :species_trails, heading: "Species", allow_destroy: true, new_record: true do |a|
+        a.input :species_id, :label => 'Genus Species', :as => :select, :collection => Species.all.order(:genusSpecies).map{|s| ["#{s.genusSpecies}", s.id]}
+      end
     end
+
+    # f.inputs 'Select Species' do
+    #   f.input :species, :collection => Species.pluck(:genusSpecies, :id)
+    # end
 
     f.actions # adds the 'Submit' and 'Cancel' buttons
   end

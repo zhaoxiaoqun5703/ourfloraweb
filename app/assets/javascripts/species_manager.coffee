@@ -12,6 +12,8 @@
   _map = null
   # Store a reference to the currently open google maps pin window
   _openInfoBox = null
+  # Store a reference to the most recently selected location so that we can place it in a tweet
+  _recentLocation = null
   # Store all markers for efficiency when hiding everything
   _markers = []
 
@@ -90,6 +92,7 @@
         $('#inner-container').removeClass('menu-visible')
 
     render: ->
+      # Monkey patch the location of the selected individual species into the model so the user can tweet about it
       # Render the element from the template and model
       @$el.html @template(@model.toJSON())
       # Set display to block from none
@@ -139,6 +142,7 @@
         closeInfoBox(_openInfoBox, true)
         self.infoBox.open _map, self.marker
         _openInfoBox = self.infoBox
+        _recentLocation = "(#{self.model.get('lat')}, #{self.model.get('lon')})"
         # Prevent the event from bubbling up so the infoBox will stay open
         return false
       
@@ -165,7 +169,7 @@
     mapViews: null
     # Define javascript events
     events:
-      'click': 'showPopover'
+      'click': 'listItemClicked'
 
     initialize: ->
       # Initialize the array to prevent sharing of data between extended views
@@ -184,8 +188,16 @@
       @model.on('show', @showPins, @)
       @model.on('fitMapToScreen', @fitMapToScreen, @)
 
+    listItemClicked: ->
+      firstLocation = @model.get('species_locations')[0]
+      _recentLocation = "(#{firstLocation.lat}, #{firstLocation.lon})"
+      @showPopover()
+
+
     # When clicked, show the central popover with the corresponding data
     showPopover: ->
+      # Pass the location of the selected species to the model so the user can tweet about it
+      @model.set('tweetLocation', _recentLocation)
       popover = new SpeciesPopoverView({model: @model})
       $('#popover-outer').append(popover.render().el)
 
