@@ -41,12 +41,11 @@ set :rbenv_prefix, "RBENV_ROOT=/usr/local/rbenv RBENV_VERSION=#{fetch(:rbenv_rub
 set :rbenv_map_bins, %w{rake gem bundle ruby rails}
 set :rbenv_roles, :all # default value
 
-
 namespace :deploy do
 
   after :restart, :clear_cache do
     on roles(:web), in: :groups, limit: 3, wait: 10 do
-      invoke 'sitemap:refresh'
+      invoke 'deploy:sitemap:refresh'
     end
   end
 
