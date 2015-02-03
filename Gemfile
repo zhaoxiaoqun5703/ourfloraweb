@@ -54,6 +54,7 @@ gem 'capistrano-rails'
 gem 'capistrano-rbenv'
 gem 'capistrano-passenger'
 gem 'capistrano-bundler'
+gem 'capistrano-rails-console'
 
 # Use activeadmin for managing database
 gem 'activeadmin', github: 'activeadmin'

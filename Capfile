@@ -18,6 +18,9 @@ require 'capistrano/rails/assets'
 # Use capistrano/sitemap_generator to generate a sitemap for google and bing after deploy
 require 'capistrano/sitemap_generator'
 
+# Use capistrano/rails/console to get access to the production rails console through cap
+require 'capistrano/rails/console'
+
 # Include tasks from other gems included in your Gemfile
 #
 # For documentation on these, see for example:
