@@ -516,6 +516,9 @@
           { name: "genusSpecies", boost: 10 }
           { name: "commonName", boost: 5 }
       ]
+
+    comparator: (model) ->
+      model.get('family').name
   )
 
   # Collection that holds JSON returned from /trails.json
