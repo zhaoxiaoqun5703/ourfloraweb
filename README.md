@@ -9,6 +9,8 @@ The project team acknowledges the support of the School of Biological Sciences a
  
 Project team:  Rosanne Quinnell, Lachlan Pettit, Matthew Pye, Angela Pursey, Xiaolong Wang, Nic Barker (bitbucket / github username nicbarker), Caroline Cheung, Grant Zeng.
   
+This web repository was built and maintained by Nic Barker and as a result all tech related questions should be directed to him.
+
 This README aims to document the design process behind the app, as well provide instructions on branching and installing your own copy of the app for your institution or just for personal interest.  
 
 ## Stack
