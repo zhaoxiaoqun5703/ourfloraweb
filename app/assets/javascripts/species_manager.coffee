@@ -184,9 +184,10 @@
         @mapViews.push(mapView)
 
       # Bind the hide and show events for the model to propogate to the views
-      @model.on('hide', @hidePins, @)
-      @model.on('show', @showPins, @)
-      @model.on('fitMapToScreen', @fitMapToScreen, @)
+      @model.on 'hide', @hidePins, @
+      @model.on 'show', @showPins, @
+      @model.on 'fitMapToScreen', @fitMapToScreen, @
+      @model.on 'showListView', @showListView, @
 
     listItemClicked: ->
       firstLocation = @model.get('species_locations')[0]
@@ -227,6 +228,9 @@
       # Set a max zoom to prevent excessive zoom if the markers are across a wide area
       if _map.getZoom() < 17 then _map.setZoom 17
 
+    showListView: ->
+      @$el.removeClass 'hidden'
+
     render: ->
       # Add the species to the species list
       @$el.html @template(@model.toJSON())
@@ -237,6 +241,10 @@
   # The outer backbone view for the species list
   SpeciesOuterListView = Backbone.View.extend(
     el: '#menu-content-list'
+
+    events:
+      'keypress .search-box' : 'searchEvent'
+      'click .icon-cancel-circled' : 'clearSearch'
 
     # Define methods to be run at initialization time
     initialize: ->
@@ -269,6 +277,39 @@
 
       # Render the species view in the outer container
       @$el.append(view.render().el)
+
+    clearSearch: ->
+      @$el.find('.search-box').val('')
+      # Just search for blank to clear the search
+      @searchCollection('')
+
+    searchEvent: (event) ->
+      # Get the new character being typed and append it to the current value of the input box
+      newchar = String.fromCharCode(event.charCode || event.keyCode)
+      value = @$el.find('.search-box').val()
+      # If the character pressed was backspace, remove one char from the end of the string, else append it
+      terms = if event.keyCode == 8 then value.substring(0, value.length - 1) else terms = "#{@$el.find('.search-box').val()}#{newchar}"
+      @searchCollection(terms)
+
+    # Uses lunr full text search to search the collection for models, based on the search field
+    searchCollection: (terms) ->
+      # If the user has just deleted all their search terms, show the empty search box and close button
+      unless (terms.length > 0)
+        @$el.find('.search-box-outer i.icon-search').removeClass 'hidden'
+        @$el.find('.search-box-outer i.icon-cancel-circled').addClass 'hidden'
+        $('.list-row').removeClass 'hidden'
+        $('.list-subheader').removeClass 'hidden'
+        return
+
+      # Hide the search icon if the user has typed letters into the box
+      @$el.find('.search-box-outer i.icon-search').addClass 'hidden'
+      # Show the clear textbox icon
+      @$el.find('.search-box-outer i.icon-cancel-circled').removeClass 'hidden'
+      results = @collection.search terms
+      $('.list-row').addClass 'hidden'
+      $('.list-subheader').addClass 'hidden'
+      for model in results
+        model.trigger 'showListView'
   )
 
   # View for families in list
@@ -464,11 +505,17 @@
 
   # COLLECTIONS -----------------------------------------------------------------------------------
   # Collection that holds JSON returned from /species.json
-  speciesCollection = Backbone.Collection.extend(
+  speciesCollection = Backbone.Collection.Lunr.extend(
     # Provide a URL to pull JSON data from
     url: '/species.json'
     # Use the species model
     model: SpeciesModel
+    # Specify fields to search with Lunr full text search
+    lunroptions: 
+      fields: [
+          { name: "genusSpecies", boost: 10 }
+          { name: "commonName", boost: 5 }
+      ]
   )
 
   # Collection that holds JSON returned from /trails.json

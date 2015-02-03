@@ -78,3 +78,5 @@ gem 'rails-assets-normalize.css'
 gem 'rails-assets-backbone'
 # Fastclick.js to remove mobile input delay on clicking elements
 gem 'rails-assets-fastclick'
+# Use lunr for full text front end searching
+gem 'rails-assets-lunr.js'

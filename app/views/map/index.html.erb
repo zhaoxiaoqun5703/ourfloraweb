@@ -27,7 +27,13 @@
       </div>
       <div id="menu-content-trails" class="menu-content trails">
       </div>
-      <div id="menu-content-list" class="menu-content list"></div>
+      <div id="menu-content-list" class="menu-content list">
+        <div class="search-box-outer">
+          <i class="icon-search"></i>
+          <i class="icon-cancel-circled hidden"></i>
+          <input type="text" class="search-box" placeholder="Search" autocomplete="off"></input>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -44,10 +50,6 @@
     var speciesManager = new SpeciesManager;
     speciesManager.initialize(<%= raw @species %>, <%= raw @trails %>, <%= raw @families %>, map);
   }
-
-  $(function() {
-    google.maps.event.addDomListener(window, "load", init);
-  });
 
   // Configure fastclick.js to remove mobile input delay on touch
   if ('addEventListener' in document) {

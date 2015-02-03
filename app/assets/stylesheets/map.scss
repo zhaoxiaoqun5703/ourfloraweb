@@ -179,8 +179,55 @@ html {
 
           &.list {
 
+            .search-box-outer {
+              position: relative;
+              text-align: center;
+              padding: 10px;
+
+              i {
+                position: absolute;
+                right: 23px;
+                top: 19px;
+                font-size: 19px;
+                color: #fff;
+                @include opacity(1);
+                @include fullTransition(0.4s);
+
+                &.hidden {
+                  @include opacity(0);
+                }
+
+                &.icon-cancel-circled {
+                  cursor: pointer;
+                  @include foregroundHover(#fff, 10%);
+                  @include foregroundClick(#fff, 20%);
+
+                  &:active {
+                    @include noTransition();
+                  }
+
+                  &.hidden {
+                    cursor: default;
+                  }
+                }
+              }
+
+              .search-box {
+                background: lighten($button-colour, 15%);
+                font-size: 16px;
+                padding: 8px 12px;
+                width: 250px;
+                border: none;
+                @include roundCornerAll(8px);
+              }
+            }
+
             .list-row {
               padding-left: 15px;
+
+              &.hidden {
+                display: none;
+              }
             }
 
             .list-image {
@@ -202,6 +249,10 @@ html {
               color: #fff;
               font-size: 16px;
               background: lighten($button-colour, 5%);
+
+              &.hidden {
+                display: none;
+              }
             }
           }
 

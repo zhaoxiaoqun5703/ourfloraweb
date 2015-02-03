@@ -15,4 +15,6 @@
 //= require jquery_ujs
 //= require underscore
 //= require backbone
+//= require lunr
+//= require backlunr.min.js
 //= require_directory .
