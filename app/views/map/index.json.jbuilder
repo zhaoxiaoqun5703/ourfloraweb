@@ -1,5 +1,5 @@
 json.array! @species do |species|
-  json.genusSpecies species.genusSpecies
+  json.id species.id
   json.genusSpecies species.genusSpecies
   json.commonName species.commonName
   json.indigenousName species.indigenousName
