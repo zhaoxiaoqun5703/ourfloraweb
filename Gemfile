@@ -29,16 +29,15 @@ gem 'sitemap_generator'
 group :development do
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3'
-
-  # Use bullet for watching and optimising active record queries
-  gem 'bullet'
   gem 'pry'
 
-  # Access an IRB console on exception pages or by using <%= console %> in views
-  gem 'web-console', '~> 2.0'
-
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring'
+  # Capistrano for deployment to remote servers
+  gem 'capistrano'
+  gem 'capistrano-rails'
+  gem 'capistrano-rbenv'
+  gem 'capistrano-passenger'
+  gem 'capistrano-bundler'
+  gem 'capistrano-rails-console'
 end
 
 group :deployment do
@@ -48,20 +47,12 @@ group :deployment do
   gem 'therubyracer'
 end
 
-# Capistrano for deployment to remote servers
-gem 'capistrano'
-gem 'capistrano-rails'
-gem 'capistrano-rbenv'
-gem 'capistrano-passenger'
-gem 'capistrano-bundler'
-gem 'capistrano-rails-console'
-
 # Use activeadmin for managing database
 gem 'activeadmin', github: 'activeadmin'
 gem 'inherited_resources', github: 'josevalim/inherited_resources', branch: 'rails-4-2'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.0'
+gem 'jbuilder'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 # use devise for user accounts

@@ -1,8 +1,7 @@
 class MapController < ApplicationController
   def index
     # Render list of all trails and species and push to the view as JSON so that backbone can use it
-    @species = Species.includes(:family).includes(:species_locations).includes(:images).uniq(:species).order('families.name').all
-    @species = @species.to_json(include: [:species_locations, :family, :images => {:methods => [:image_url, :image_url_tiny, :image_url_small]}], methods: :html_link_description)
+    @species = Species.includes(:family, :species_locations, :images).order('families.name').all
 
     @trails = Trail.includes(:species).all
     @trails = @trails.to_json(include: [:species => {:only => :id}])
