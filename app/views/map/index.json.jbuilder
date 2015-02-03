@@ -7,6 +7,7 @@ json.array! @species do |species|
   json.distribution species.distribution
   json.information species.information
   json.description species.description
+  json.html_link_description auto_link(species.description)
   json.created_at species.created_at 
   json.updated_at species.updated_at  
   json.family species.family
