@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150202025711) do
+ActiveRecord::Schema.define(version: 20150203054826) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -75,6 +75,9 @@ ActiveRecord::Schema.define(version: 20150202025711) do
     t.integer  "family_id"
   end
 
+  add_index "species", ["family_id"], name: "index_species_on_family_id"
+  add_index "species", ["genusSpecies"], name: "index_species_on_genusSpecies"
+
   create_table "species_locations", force: :cascade do |t|
     t.integer  "species_id"
     t.decimal  "lat",        precision: 10, scale: 6
@@ -82,6 +85,8 @@ ActiveRecord::Schema.define(version: 20150202025711) do
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
   end
+
+  add_index "species_locations", ["species_id"], name: "index_species_locations_on_species_id"
 
   create_table "species_trails", force: :cascade do |t|
     t.integer "species_id"
