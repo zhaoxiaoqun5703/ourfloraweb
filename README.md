@@ -49,6 +49,8 @@ Before you start trying to deploy campus flora you're going to want to make some
 wget -O /tmp/rails-passenger-nginx-mysql-rbenv.sh http://installscripts.io/scripts/rails-passenger-nginx-mysql-rbenv.sh
 sh /tmp/rails-passenger-nginx-mysql-rbenv.sh
 ```
+* Note this script will take some time (20+ minutes on smaller VPS's) so grab a cup of coffee - although it will prompt you right at the end to enter your new root mysql password.
+
 * Download the sample passenger nginx config from installscripts.io - [http://installscripts.io/sample-nginx-passenger-config](http://installscripts.io/sample-nginx-passenger-config) and copy it into nginx's "sites-enabled" via symlink from "sites-available"
 ```
 #!bash
