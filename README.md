@@ -49,7 +49,13 @@ Before you start trying to deploy campus flora you're going to want to make some
 wget -O /tmp/rails-passenger-nginx-mysql-rbenv.sh http://installscripts.io/scripts/rails-passenger-nginx-mysql-rbenv.sh
 sh /tmp/rails-passenger-nginx-mysql-rbenv.sh
 ```
-* Download the sample passenger nginx config from installscripts.io - [http://installscripts.io/sample-nginx-passenger-config](http://installscripts.io/sample-nginx-passenger-config) and copy it into nginx's "sites-enabled"
+* Download the sample passenger nginx config from installscripts.io - [http://installscripts.io/sample-nginx-passenger-config](http://installscripts.io/sample-nginx-passenger-config) and copy it into nginx's "sites-enabled" via symlink from "sites-available"
+```
+#!bash
+wget -O /tmp/passenger.conf http://installscripts.io/sample-nginx-passenger-config.conf
+mv /tmp/passenger.conf /opt/nginx/sites-available/passenger.conf
+ln -s /opt/nginx/sites-available/passenger.conf /opt/nginx/sites-enabled/passenger-conf
+```
 * Install imagemagick (used for image uploads):
 ```
 #!bash
@@ -66,5 +72,11 @@ chgrp -R www-data /srv
 ```
 * Log out of the VPS
 * Copy your ssh key to the /home/deploy/.ssh/authorized_keys
+```
+#!bash
+scp ~/.ssh/id_rsa.pub root@server_ip_address:
+ssh root@server_ip_address
+cat id_rsa.pub >> /home/deploy/.ssh/authorized_keys
+```
 * Try deploying with cap production deploy:migrations
 * If it was succesful, your app should be running at your.ip:80, or whatever domain name you've specified.
