@@ -40,10 +40,14 @@ Before you start trying to deploy campus flora you're going to want to make some
 * Change the URL in config/sitemap.rb to point to the domain you'll be using for the production version of the site
 
 ### Server setup (Blank server) ###
-* Log into your VPS as root
-* Download the Rbenv + Rails + Nginx + Passenger + MySQL installer from installscripts.io - [http://installscripts.io/rails-passenger-nginx-mysql-rbenv](http://installscripts.io/rails-passenger-nginx-mysql-rbenv)
-* Run the script as root
-* Download the sample passenger nginx config from installscripts.io
+* Log into your VPS __as root (important!)__
+* Download and run the Rbenv + Rails + Nginx + Passenger + MySQL installer from installscripts.io - [http://installscripts.io/rails-passenger-nginx-mysql-rbenv](http://installscripts.io/rails-passenger-nginx-mysql-rbenv)
+```
+#!bash
+wget -O /tmp/rails-passenger-nginx-mysql-rbenv.sh http://installscripts.io/scripts/rails-passenger-nginx-mysql-rbenv.sh
+sh /tmp/rails-passenger-nginx-mysql-rbenv.sh
+```
+* Download the sample passenger nginx config from installscripts.io - [http://installscripts.io/sample-nginx-passenger-config](http://installscripts.io/sample-nginx-passenger-config) and copy it into nginx's "sites-enabled"
 * Install imagemagick (used for image uploads):
 ```
 #!bash
