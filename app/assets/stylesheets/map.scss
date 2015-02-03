@@ -186,8 +186,8 @@ html {
 
               i {
                 position: absolute;
-                right: 23px;
-                top: 19px;
+                right: 21px;
+                top: 18px;
                 font-size: 19px;
                 color: #fff;
                 @include opacity(1);
@@ -218,7 +218,7 @@ html {
                 padding: 8px 12px;
                 width: 250px;
                 border: none;
-                @include roundCornerAll(8px);
+                @include roundCornerAll(6px);
               }
             }
 
