@@ -11,9 +11,9 @@ json.array! @species do |species|
   json.updated_at species.updated_at  
   json.family species.family
   json.images species.images do |image|
-    json.image_url "image.image.url(:original)"
-    json.image_url_tiny "image.image.url(:tiny)"
-    json.image_url_small "image.image.url(:thumb)"
+    json.image_url image.image.url(:original)
+    json.image_url_tiny image.image.url(:tiny)
+    json.image_url_small image.image.url(:thumb)
   end
   json.species_locations species.species_locations
 end 
