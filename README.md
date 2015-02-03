@@ -1,9 +1,13 @@
 # README #
 
 ### Abstract ###
-CampusFlora is an application ecosystem and database that allows you to view and locate flora on Sydney Uni campus. It was built initially as an iOS app by a small team lead by Rosanne Quinnel at the University of Sydney, Australia in 2014.  
-The web version of this project was built by Nic Barker (bitbucket username nicbarker) in early 2015, with the aim of separating the database from the front end implementation.
-Sydney Uni's implementation of the site is always hosted live at [campusflora.sydneybiology.org](http://campusflora.sydneybiology.org), and the iOS app is available at [itunes.apple.com/au/app/campus-flora/id918408102?mt=8](https://itunes.apple.com/au/app/campus-flora/id918408102?mt=8)  
+Campus Flora maps the locations of more than 2000 individual plants from over 70 families on campus grounds and provides a botanical description of each plant and information on its distribution. Campus Flora not only extends the teaching of botany from the classroom into the University of Sydney campus grounds but it enables us to share our learning resources with the broader community.
+
+“Trails” highlight the important aspects of select plant groups and we have initially developed these to align with the current botanical curriculum. We encourage those using Campus Flora to provide us with feedback: each species page allows users to offer feedback, and we will use this to shape future versions and develop additional trails.
+ 
+The project team acknowledges the support of the School of Biological Sciences and University grounds staff.
+ 
+Project team:  Rosanne Quinnell, Lachlan Pettit, Matthew Pye, Angela Pursey, Xiaolong Wang, Nic Barker (bitbucket / github username nicbarker), Caroline Cheung, Grant Zeng.
   
 This README aims to document the design process behind the app, as well provide instructions on branching and installing your own copy of the app for your institution or just for personal interest.  
 
