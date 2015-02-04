@@ -16,6 +16,8 @@
   _recentLocation = null
   # Store all markers for efficiency when hiding everything
   _markers = []
+  # Use markerclusterer.js to cluster groups of markers together
+  _markerClusterer = null
 
   # Redefine the template interpolation character used by underscore (to @ from %) to prevent conflicts with rails ERB
   _.templateSettings =
@@ -549,6 +551,9 @@
     _familyOuterListView = new FamilyOuterListView()
     _speciesOuterListView = new SpeciesOuterListView()
     _trailOuterListview = new TrailOuterListView()
+
+    # Init markerClusterer to group close maps markers together
+    _markerClusterer = new MarkerClusterer(map, _markers)
 
     # Bind click events for menu tabs
     $('#tab-button-families').on 'click', ->

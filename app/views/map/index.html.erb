@@ -48,7 +48,7 @@
     // Initialize the mapManager and get the google map
     var map = mapManager.initialize();
     var speciesManager = new SpeciesManager;
-    speciesManager.initialize(<%= raw render(:template => 'map/index.json', :locals => { :species => @species}) %>, <%= raw @trails %>, <%= raw @families %>, map);
+    speciesManager.initialize(<% cache do %><%= raw render(:partial => 'map/index.json', :locals => { :species => @species}) %><% end %>, <%= raw @trails %>, <%= raw @families %>, map);
   }
 
   // Configure fastclick.js to remove mobile input delay on touch
