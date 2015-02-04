@@ -553,7 +553,7 @@
     _trailOuterListview = new TrailOuterListView()
 
     # Init markerClusterer to group close maps markers together
-    _markerClusterer = new MarkerClusterer(map, _markers, {gridSize: 30, maxZoom: 18, minimumClusterSize:4})
+    # _markerClusterer = new MarkerClusterer(map, _markers, {gridSize: 30, maxZoom: 18, minimumClusterSize:4})
 
     # Bind click events for menu tabs
     $('#tab-button-families').on 'click', ->
