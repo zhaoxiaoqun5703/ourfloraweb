@@ -11,7 +11,7 @@ class Species < ActiveRecord::Base
   has_many :images
 
   accepts_nested_attributes_for :family
-  # accepts_nested_attributes_for :species_locations, :allow_destroy => true
+  accepts_nested_attributes_for :species_locations, :allow_destroy => true
   accepts_nested_attributes_for :species_trails
   accepts_nested_attributes_for :images, :allow_destroy => true
 
