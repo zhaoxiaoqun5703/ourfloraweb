@@ -1,5 +1,7 @@
 class Species < ActiveRecord::Base
   include ActionView::Helpers::TextHelper
+  after_save :expire_cache
+
   belongs_to :family
   has_many :species_locations
 
@@ -15,5 +17,10 @@ class Species < ActiveRecord::Base
 
   def html_link_description
     auto_link(self.description)
+  end
+
+  # When we update or create a new species, expire the front end cache for the species objects
+  def expire_cache
+    expire_fragment('map_index_json')
   end
 end
