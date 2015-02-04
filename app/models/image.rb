@@ -1,6 +1,6 @@
 class Image < ActiveRecord::Base
   belongs_to :species
-  before_save :update_genusSpecies
+  before_save :update_genus_species
 
   # Add a paperclip interpolation for species name
   Paperclip.interpolates :genusSpecies do |attachment, style|
@@ -17,20 +17,7 @@ class Image < ActiveRecord::Base
 
   validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
 
-  def update_genusSpecies
+  def update_genus_species
     self.genusSpecies = self.species.genusSpecies
   end
-
-  def image_url
-    self.image.url(:original)
-  end
-
-  def image_url_tiny
-    self.image.url(:tiny)
-  end
-
-  def image_url_small
-    self.image.url(:thumb)
-  end
-
 end
