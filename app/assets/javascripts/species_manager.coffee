@@ -94,7 +94,6 @@
         $('#inner-container').removeClass('menu-visible')
 
     render: ->
-      # Monkey patch the location of the selected individual species into the model so the user can tweet about it
       # Render the element from the template and model
       @$el.html @template(@model.toJSON())
       # Set display to block from none
