@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150209005628) do
+ActiveRecord::Schema.define(version: 20150209041041) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -95,10 +95,11 @@ ActiveRecord::Schema.define(version: 20150209005628) do
 
   create_table "species_locations", force: :cascade do |t|
     t.integer  "species_id"
-    t.decimal  "lat",        precision: 10, scale: 6
-    t.decimal  "lon",        precision: 10, scale: 6
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.decimal  "lat",          precision: 10, scale: 6
+    t.decimal  "lon",          precision: 10, scale: 6
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+    t.string   "arborplan_id"
   end
 
   add_index "species_locations", ["species_id"], name: "index_species_locations_on_species_id"

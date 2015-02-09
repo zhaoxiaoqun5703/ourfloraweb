@@ -118,9 +118,13 @@
       @parentModel = parentModel
       # Define google maps info window (little box that pops up when you click a marker)
       infoTemplate = _.template($('#infobox-template').html())
+      # Add arborplan id to our attributes
+      attributes = @parentModel.attributes
+      attributes['arborplan_id'] = @model.get('arborplan_id')
 
+      # Initialize the little popup box when you click the marker
       @infoBox = new InfoBox(
-        content: infoTemplate(@parentModel.attributes)
+        content: infoTemplate(attributes)
         pixelOffset: new google.maps.Size(-146, -105)
         closeBoxURL: ''
       )
