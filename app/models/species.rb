@@ -1,5 +1,9 @@
 class Species < ActiveRecord::Base
+  extend FriendlyId
   include ActionView::Helpers::TextHelper
+
+  friendly_id :genusSpecies, use: :slugged
+
   after_save :expire_cache
 
   belongs_to :family
@@ -21,6 +25,6 @@ class Species < ActiveRecord::Base
 
   # When we update or create a new species, expire the front end cache for the species objects
   def expire_cache
-    expire_fragment('map_index_json')
+    ActionController::Base.new.expire_fragment('map_index_json')
   end
 end

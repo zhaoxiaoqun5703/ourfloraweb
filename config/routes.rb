@@ -7,8 +7,10 @@ Rails.application.routes.draw do
   get 'trails' => 'trails#index'
   get 'families' => 'families#index'
 
+  get 'species/:id' => 'species#show', as: 'species_show'
+
   # You can have the root of your site routed with "root"
-  root 'map#index'
+  root 'map#index', as: 'map_index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

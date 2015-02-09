@@ -202,6 +202,8 @@
       @model.set('tweetLocation', _recentLocation)
       popover = new SpeciesPopoverView({model: @model})
       $('#popover-outer').append(popover.render().el)
+      # Push a new html history state to mimic browser navigation to this species
+      # window.history.pushState("#{@model.get('genusSpecies')}", "#{@model.get('genusSpecies')} - CampusFlora", "#{window.location.protocol}//#{window.location.host}/species/#{@model.get('id')}")
 
     hidePins: ->
       for mapView in @mapViews

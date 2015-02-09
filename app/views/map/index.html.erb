@@ -1,7 +1,10 @@
 <% unless browser.mobile? %>
-  <div id="overlay-dark" class="overlay-dark"></div>
+  <div id="overlay-dark" class="overlay-dark<%= @species_selected ? ' selected' : '' %>" <%= @species_selected ? 'style=display:block' : '' %>></div>
 <% end %>
-<div id="popover-outer" class="popover-outer">
+<div id="popover-outer" class="popover-outer<%= @species_selected ? ' selected' : '' %>" <%= @species_selected ? 'style=display:block' : '' %>>
+  <% if @species_selected %>
+    <%= render 'species/popover' %>
+  <% end %>
   <div class="height-fix"></div>
 </div>
 

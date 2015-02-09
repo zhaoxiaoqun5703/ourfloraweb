@@ -23,6 +23,9 @@ gem 'browser'
 # Use rails_autolink to detect and convert links in text blobs
 gem 'rails_autolink'
 
+# Use friendly_id to generate slugs
+gem 'friendly_id'
+
 # sitemap_generator to generate bing, google, yahoo sitemaps
 gem 'sitemap_generator'
 
