@@ -29,6 +29,8 @@ class SpeciesController < ApplicationController
         @trails = Trail.includes(:species).all
         @trails = @trails.to_json(include: [:species => {:only => :id}])
 
+        @page_title = @species_selected.genusSpecies
+
         render 'map/index'
       }
     end

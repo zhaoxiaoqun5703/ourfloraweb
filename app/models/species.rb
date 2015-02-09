@@ -1,6 +1,6 @@
 class Species < ActiveRecord::Base
-  extend FriendlyId
   include ActionView::Helpers::TextHelper
+  extend FriendlyId
 
   friendly_id :genusSpecies, use: :slugged
 
