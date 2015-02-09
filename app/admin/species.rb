@@ -2,6 +2,13 @@ ActiveAdmin.register Species do
   permit_params :commonName, :authority, :distribution, :indigenousName, :information, :genusSpecies, :description, :family_id, species_locations_attributes: [:lat, :lon, :id, :_destroy], images_attributes: [:image, :id, :_destroy]
   remove_filter :species_trails
 
+  # Override find resource to get the select species by the friendly slug, rather than int id
+  controller do
+    def find_resource
+      scoped_collection.where(slug: params[:id]).first!
+    end
+  end
+
   form :html => { :enctype => "multipart/form-data" } do |f|
     f.semantic_errors # shows errors on :base
     f.inputs 'Details' do
@@ -11,7 +18,8 @@ ActiveAdmin.register Species do
     f.inputs 'Locations' do
       f.has_many :species_locations, heading: nil, allow_destroy: true, new_record: true do |a|
         a.input :lat
-        a.input :lon  
+        a.input :lon 
+        a.input :arborplan_id 
       end
     end
 
@@ -44,6 +52,7 @@ ActiveAdmin.register Species do
     panel 'Locations' do
       table_for species.species_locations do
         column 'Location ID', :id
+        column 'Arborplan ID', :arborplan_id
         column 'Latitude', :lat
         column 'Longitude', :lon
       end

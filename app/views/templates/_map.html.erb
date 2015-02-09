@@ -19,8 +19,8 @@
     <% unless (browser.mobile? || browser.tablet?) %><a class="twitter-share-button" href="https://twitter.com/share" data-via="CampusFloraAus" data-text="<@= genusSpecies @> @ <@= tweetLocation @>" data-count="none"></a><% end %>
     <div class="family"><abbr class="heading">Family name</abbr><br /><@= family.name @></div>
     <div class="description"><abbr class="heading">Description</abbr><br /><@= html_link_description @></div>
-    <div class="distribution"><abbr class="heading">Distribution</abbr><br /><@= distribution.split('|')[0] @></div>
-    <div class="information"><abbr class="heading">Information</abbr><br /><@= information.split('|')[0] @></div>
+    <div class="distribution"><abbr class="heading">Distribution</abbr><br /><@= distribution @></div>
+    <div class="information"><abbr class="heading">Information</abbr><br /><@= information @></div>
   </div>
 </script>
 
@@ -31,7 +31,7 @@
       <div class="text">
         <div class="title"><@= genusSpecies @></div>
         <div class="subtitle"><@= commonName @></div>
-        <div class="arborplan-id">Arborplan: <@= arborplan_id @></div>
+        <@ if (arborplan_id) { @><div class="arborplan-id">Arborplan: <@= arborplan_id @></div><@ } @>
       </div>
       <%= image_tag 'disclosure-indicator-dark.png', class: 'disclosure-indicator' %>
     </div>
