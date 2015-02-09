@@ -615,7 +615,8 @@ html {
           vertical-align: middle;
           width:42px;
           height:42px;
-          margin-right:15px;
+          margin-right:10px;
+          margin-left: 5px;
           @include roundCornerAll(40px);
 
           &.no-image {
