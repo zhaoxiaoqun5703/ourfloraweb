@@ -98,14 +98,14 @@ production:
 __Commit these changes via git and push them to your fork of campus flora (IMPORTANT)__  
 Try deploying with capistrano:
 ```
-!#bash
+#!bash
 cap production deploy
 ```
 
 If it was a success, the final step is to migrate the initial database.  
 Run the following command:  
 ```
-!#bash
+#!bash
 cap production deploy:migrate
 ```
 If that was successful, your app should be serving at YOUR_IP_OR_DOMAIN:80. You should be able to login at YOUR_URL/admin with the username 'admin@example.com' and password 'password'. **Please** change this!
