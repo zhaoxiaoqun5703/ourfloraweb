@@ -35,12 +35,6 @@ Campus Flora runs on Ruby On Rails - and while you can certainly run this on a s
 The University of Sydney is using Digital Ocean for this project, but there are many others such as Linode or even Amazon AWS that are all great.
 
 ## Install Guide ##
-### Local modifications ###
-Before you start trying to deploy campus flora you're going to want to make some local modifications to the rails app:
-* Change the ip address listed in config/deploy/production.rb to point to your server
-* Change the github url in config/deploy.rb to point to your repository if you've forked the repo
-* Change the URL in config/sitemap.rb to point to the domain you'll be using for the production version of the site
-* Create the file config/application.yml and set the variables DATABASE_USER, DATABASE_PASSWORD, SECRET_KEY_BASE and DEVISE_SECRET.
 
 ### Server setup (Blank server) ###
 * Log into your VPS __as root (important!)__
@@ -73,6 +67,39 @@ chgrp -R www-data /srv
 scp ~/.ssh/id_rsa.pub root@server_ip_address:
 ssh root@server_ip_address
 cat id_rsa.pub >> /home/deploy/.ssh/authorized_keys
+```  
+* Next you're going to need to create a database and user for campus flora to use. First, log into the mysql console with mysql -uroot -p and enter the password you set earlier. Then run the following commands:
 ```
-* Try deploying with cap production deploy:migrations
-* If it was succesful, your app should be running at your.ip:80, or whatever domain name you've specified.
+#!mysql
+CREATE DATABASE campusflora;
+CREATE USER 'campusflora'@'localhost' IDENTIFIED BY 'your_password';
+GRANT ALL PRIVILEGES ON campusflora.* TO 'campusflora'@'localhost';
+```
+
+### Local modifications ###
+Before you start trying to deploy campus flora you're going to want to make some local modifications to the rails app:  
+* Change the ip address listed in config/deploy/production.rb to point to your server  
+* Change the github url in config/deploy.rb to point to your repository if you've forked the repo  
+* Change the URL in config/sitemap.rb to point to the domain you'll be using for the production version of the site  
+* Create the file config/application.yml and set the variables DATABASE_USER, DATABASE_PASSWORD, SECRET_KEY_BASE and DEVISE_SECRET.  
+```
+#!yaml
+# config/application.yml
+development:
+  SECRET_KEY_BASE: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  DEVISE_SECRET: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+production:
+  SECRET_KEY_BASE: YOUR SECRET KEY BASE
+  DEVISE_SECRET: YOUR DEVISE SECRET KEY
+  DATABASE_USER: campusflora
+  DATABASE_PASSWORD: YOUR DATABASE PASSWORD
+```
+__Commit these changes via git and push them to your fork of campus flora (IMPORTANT)__  
+* Try deploying with cap production deploy
+* If it was a success, the final step is to migrate the initial database.
+* Run the following command:
+```
+!#bash
+cap production deploy:migrate
+```
+If that was successful, your app should be serving at YOUR_IP_OR_DOMAIN:80. You should be able to login at YOUR_URL/admin with the username 'admin@example.com' and password 'password'. **Please** change this!
