@@ -40,6 +40,7 @@ Before you start trying to deploy campus flora you're going to want to make some
 * Change the ip address listed in config/deploy/production.rb to point to your server
 * Change the github url in config/deploy.rb to point to your repository if you've forked the repo
 * Change the URL in config/sitemap.rb to point to the domain you'll be using for the production version of the site
+* Create the file config/application.yml and set the variables DATABASE_USER, DATABASE_PASSWORD, SECRET_KEY_BASE and DEVISE_SECRET.
 
 ### Server setup (Blank server) ###
 * Log into your VPS __as root (important!)__
@@ -49,15 +50,8 @@ Before you start trying to deploy campus flora you're going to want to make some
 wget -O /tmp/rails-passenger-nginx-mysql-rbenv.sh http://installscripts.io/scripts/rails-passenger-nginx-mysql-rbenv.sh
 sh /tmp/rails-passenger-nginx-mysql-rbenv.sh
 ```
-* Note this script will take some time (20+ minutes on smaller VPS's) so grab a cup of coffee - although it will prompt you right at the end to enter your new root mysql password.
-
-* Download the sample passenger nginx config from installscripts.io - [http://installscripts.io/sample-nginx-passenger-config](http://installscripts.io/sample-nginx-passenger-config) and copy it into nginx's "sites-enabled" via symlink from "sites-available"
-```
-#!bash
-wget -O /tmp/passenger.conf http://installscripts.io/sample-nginx-passenger-config.conf
-mv /tmp/passenger.conf /opt/nginx/sites-available/passenger.conf
-ln -s /opt/nginx/sites-available/passenger.conf /opt/nginx/sites-enabled/passenger-conf
-```
+* Note this script will take some time (20+ minutes on smaller VPS's) so grab a cup of coffee. The script will prompt you right at the end to set up your nginx config in a way that is relatively simple, then ask you to set your mysql root password.
+* There is also a script available for installing this stack using the [unicorn server instead of passenger.](http://www.installscripts.io/scripts/rails-unicorn-nginx-mysql-rbenv)
 * Install imagemagick (used for image uploads):
 ```
 #!bash
