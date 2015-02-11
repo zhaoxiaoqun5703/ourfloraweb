@@ -96,9 +96,14 @@ production:
   DATABASE_PASSWORD: YOUR DATABASE PASSWORD
 ```
 __Commit these changes via git and push them to your fork of campus flora (IMPORTANT)__  
-* Try deploying with cap production deploy
-* If it was a success, the final step is to migrate the initial database.
-* Run the following command:
+Try deploying with capistrano:
+```
+!#bash
+cap production deploy
+```
+
+If it was a success, the final step is to migrate the initial database.  
+Run the following command:  
 ```
 !#bash
 cap production deploy:migrate
