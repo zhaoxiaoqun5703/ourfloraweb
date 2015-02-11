@@ -78,6 +78,7 @@ GRANT ALL PRIVILEGES ON campusflora.* TO 'campusflora'@'localhost';
 
 ### Local modifications ###
 Before you start trying to deploy campus flora you're going to want to make some local modifications to the rails app:  
+
 * Change the ip address listed in config/deploy/production.rb to point to your server  
 * Change the github url in config/deploy.rb to point to your repository if you've forked the repo  
 * Change the URL in config/sitemap.rb to point to the domain you'll be using for the production version of the site  
