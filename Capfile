@@ -21,6 +21,9 @@ require 'capistrano/sitemap_generator'
 # Use capistrano/rails/console to get access to the production rails console through cap
 require 'capistrano/rails/console'
 
+# Use capistrano/rails/migrations to allow capistrano to perform database migrations
+require 'capistrano/rails/migrations'
+
 # Include tasks from other gems included in your Gemfile
 #
 # For documentation on these, see for example:
