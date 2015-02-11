@@ -29,6 +29,9 @@ gem 'friendly_id'
 # sitemap_generator to generate bing, google, yahoo sitemaps
 gem 'sitemap_generator'
 
+# Figaro for environment variables
+gem 'figaro'
+
 group :development do
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3'

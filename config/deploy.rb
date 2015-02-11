@@ -34,12 +34,16 @@ set :deploy_to, '/srv/campus_flora'
 # Default value for keep_releases is 5
 # set :keep_releases, 5
 
+set :default_env, {
+  'DEVISE_SECRET' => ENV['DEVISE_SECRET']
+}
+
 set :rbenv_custom_path, '/usr/local/rbenv'
 set :rbenv_type, :user # or :system, depends on your rbenv setup
 set :rbenv_ruby, '2.2.0'
 set :rbenv_prefix, "RBENV_ROOT=/usr/local/rbenv RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
-set :rbenv_map_bins, %w{rake gem bundle ruby rails}
-set :rbenv_roles, :all # default value
+set :rbenv_map_bins, %w{rake gem bundle ruby rails
+}set :rbenv_roles, :all # default value
 
 namespace :deploy do
 
@@ -50,3 +54,22 @@ namespace :deploy do
   end
 
 end
+
+namespace :figaro do
+  desc "SCP transfer figaro configuration to the shared folder"
+  task :setup do
+  on roles(:app) do
+  upload! "config/application.yml", "#{shared_path}/application.yml", via: :scp
+  end
+  end
+
+  desc "Symlink application.yml to the release path"
+  task :symlink do
+    on roles(:app) do
+      execute "ln -sf #{shared_path}/application.yml #{current_path}/config/application.yml"
+      puts ENV["DEVISE_SECRET"]
+    end
+  end
+end
+after "deploy:started", "figaro:setup"
+after "deploy:symlink:release", "figaro:symlink"

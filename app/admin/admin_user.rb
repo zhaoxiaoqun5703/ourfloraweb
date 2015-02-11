@@ -1,5 +1,4 @@
 ActiveAdmin.register AdminUser do
-  # AdminUser.create!(:email => 'admin@campusflora.com', :password => 'password', :password_confirmation => 'password')
   permit_params :email, :password, :password_confirmation
   
   index do
