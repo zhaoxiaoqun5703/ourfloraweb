@@ -1,6 +1,3 @@
-# Require 'capistrano/rails' to correctly set environment variables
-require 'capistrano/rails'
-
 # Load DSL and set up stages
 require 'capistrano/setup'
 
@@ -27,6 +24,9 @@ require 'capistrano/rails/console'
 
 # Use capistrano/rails/migrations to allow capistrano to perform database migrations
 require 'capistrano/rails/migrations'
+
+# Require 'capistrano/rails' to correctly set environment variables
+require 'capistrano/rails'
 
 # Include tasks from other gems included in your Gemfile
 #
