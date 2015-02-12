@@ -1,3 +1,6 @@
+# Require 'capistrano/rails' to correctly set environment variables
+require 'capistrano/rails'
+
 # Load DSL and set up stages
 require 'capistrano/setup'
 
@@ -13,6 +16,7 @@ require 'capistrano/passenger'
 # Use capistrano-bundler to install gems after deploy
 require 'capistrano/bundler'
 
+# Use capistrano rails assets to pre compile production assets to public
 require 'capistrano/rails/assets'
 
 # Use capistrano/sitemap_generator to generate a sitemap for google and bing after deploy
@@ -20,6 +24,9 @@ require 'capistrano/sitemap_generator'
 
 # Use capistrano/rails/console to get access to the production rails console through cap
 require 'capistrano/rails/console'
+
+# Use capistrano/rails/migrations to allow capistrano to perform database migrations
+require 'capistrano/rails/migrations'
 
 # Include tasks from other gems included in your Gemfile
 #
