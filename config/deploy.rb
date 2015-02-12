@@ -36,6 +36,8 @@ set :deploy_to, '/srv/campus_flora'
 
 set :default_env, {
   'DEVISE_SECRET' => ENV['DEVISE_SECRET']
+  'DATABASE_USER' => ENV['DATABASE_USER']
+  'DATABASE_PASSWORD' => ENV['DATABASE_PASSWORD']
 }
 
 set :rbenv_custom_path, '/usr/local/rbenv'
