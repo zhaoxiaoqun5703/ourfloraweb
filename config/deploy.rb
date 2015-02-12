@@ -35,8 +35,8 @@ set :deploy_to, '/srv/campus_flora'
 # set :keep_releases, 5
 
 set :default_env, {
-  'DEVISE_SECRET' => ENV['DEVISE_SECRET']
-  'DATABASE_USER' => ENV['DATABASE_USER']
+  'DEVISE_SECRET' => ENV['DEVISE_SECRET'],
+  'DATABASE_USER' => ENV['DATABASE_USER'],
   'DATABASE_PASSWORD' => ENV['DATABASE_PASSWORD']
 }
 
