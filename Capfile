@@ -13,6 +13,8 @@ require 'capistrano/passenger'
 # Use capistrano-bundler to install gems after deploy
 require 'capistrano/bundler'
 
+require 'capistrano/rails/assets'
+
 # Use capistrano/sitemap_generator to generate a sitemap for google and bing after deploy
 require 'capistrano/sitemap_generator'
 
