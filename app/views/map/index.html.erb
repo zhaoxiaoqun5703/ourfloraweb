@@ -8,11 +8,13 @@
   <div class="height-fix"></div>
 </div>
 
-<a href="http://sydney.edu.au">
-  <div id="usyd-logo" class="usyd-logo">
-    <%= image_tag 'usyd-logo.png' %>
-  </div>
-</a>
+<% unless browser.mobile? %>
+  <a href="http://sydney.edu.au">
+    <div id="usyd-logo" class="usyd-logo">
+      <%= image_tag 'usyd-logo.png' %>
+    </div>
+  </a>
+<% end %>
 
 <div id="inner-container" class="inner-container<%= browser.mobile? && browser.safari? ? ' ios' : '' %>">
   <div id="map-canvas" class="map-canvas"></div>
