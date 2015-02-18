@@ -108,4 +108,6 @@ Run the following command:
 #!bash
 cap production deploy:migrate
 ```
-If that was successful, your app should be serving at YOUR_IP_OR_DOMAIN:80. You should be able to login at YOUR_URL/admin with the username 'admin@example.com' and password 'password'. **Please** change this!
+If that was successful, your app should be serving at YOUR_IP_OR_DOMAIN:80. You should be able to login at YOUR_URL/admin with the username 'admin@example.com' and password 'password'. **Please** change this!  
+  
+If you have any issues, please don't hesitate to [refer to the wiki.](https://bitbucket.org/bio_eru/campusfloraweb/wiki)
