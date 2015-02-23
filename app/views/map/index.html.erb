@@ -8,6 +8,26 @@
   <div class="height-fix"></div>
 </div>
 
+<div id="popover-about-outer" class="popover-outer">
+  <div class="height-fix"></div>
+  <div id="popover-about-inner" class="popover-inner about">
+    <i id="overlay-close" class="icon-cancel"></i>
+    <div class="images">
+      <img src="<%= image_path 'about_original.png' %>" width=250px height=400px>
+    </div>
+    <div class="content">
+      <h1>About</h1>
+      <p>Campus Flora maps the locations of more than 2000 individual plants from over 70 families on campus grounds and provides a botanical description of each plant and information on its distribution. Campus Flora not only extends the teaching of botany from the classroom into the University of Sydney campus grounds but it enables us to share our learning resources with the broader community.</p>
+
+      <p>“Trails” highlight the important aspects of select plant groups and we have initially developed these to align with the current botanical curriculum. We encourage those using Campus Flora to provide us with feedback: each species page allows users to offer feedback, and we will use this to shape future versions and develop additional trails.</p>
+     
+      <p>The project team acknowledges the support of the School of Biological Sciences and University grounds staff.</p>
+     
+      <p>Project team:  Rosanne Quinnell, Lachlan Pettit, Matthew Pye, Angela Pursey, Xiaolong Wang, Nic Barker, Caroline Cheung, Grant Zeng.</p>  
+    </div>
+  </div>
+</div>
+
 <% unless browser.mobile? %>
   <a href="http://sydney.edu.au">
     <div id="usyd-logo" class="usyd-logo">
@@ -53,6 +73,22 @@
   if (HOMESCREEN_INSTALLED) {
     $('#inner-container.ios').addClass('homescreen');
   }
+
+  // Handle the about popup
+  $('#about').on('click', function() {
+      $('#overlay-dark,#popover-about-outer').css('display', 'block');
+      // After a delay of 50 ms, add the class to allow the CSS transition to kick in at the next render loop
+      setTimeout(function() {
+        $('#overlay-dark,#popover-about-outer').addClass('selected');
+      }, 50);
+  });
+
+  $("#popover-about-outer #overlay-close").on('click', function() {
+    $('#overlay-dark, #popover-about-outer').removeClass('selected')
+    setTimeout(function() {
+      $('#overlay-dark, #popover-about-outer').css('display', 'none')
+    }, 200);
+  });
 
   function init() {
     var mapManager = new MapManager;

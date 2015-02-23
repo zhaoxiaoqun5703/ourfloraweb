@@ -77,36 +77,77 @@ html {
       margin: 10px 10px 0 0;
       font-size: 0;
       z-index: 2;
-      
-      .overlay-button {
-        cursor: pointer;
-        display: inline-block;
-        padding: 12px 0;
-        width: $button-width;
-        font-family: "Lato";
-        color: #fff;
-        font-size: 16px;
-        text-align: center;
-        margin-bottom: 10px;
-        @include backgroundHover($button-colour, 3%);
+      font-family: "Lato";
+
+      .overlay-buttons-inner {
         @include roundCornerAll(8px);
 
-        &.selected {
-          @include backgroundHover(darken($button-colour, 5%), 3%);
+        .title {
+          background: lighten($button-colour, 15%) !important;
+          position: relative;
+
+          &:after {
+            top: 100%;
+            left: 50%;
+            border: solid transparent;
+            content: " ";
+            height: 0;
+            width: 0;
+            position: absolute;
+            pointer-events: none;
+            border-color: rgba(136, 183, 213, 0);
+            border-top-color: lighten($button-colour, 15%);
+            border-width: 10px;
+            margin-left: -10px;
+          }
         }
 
-        &.left, &.right {
-          width: $button-width/2;
-          vertical-align:  middle;
-        }
+        // a {
+        //   display: inline-block;
+        // }
 
-        &.left {
-          @include roundCorner(8px,0px,0px,8px);
-        }
-        &.right {
-          @include roundCorner(0px,8px,8px,0px);
-        }
-      }
+        .overlay-button {
+          cursor: pointer;
+          display: inline-block;
+          padding: 12px 0;
+          width: $button-width;
+          color: #fff;
+          font-size: 16px;
+          text-align: center;
+          @include backgroundHover($button-colour, 3%);
+
+          &.selected {
+            @include backgroundHover(darken($button-colour, 10%), 3%);
+          }
+
+          &.left, &.right {
+            width: $button-width/2;
+            vertical-align:  middle;
+          }
+
+          &.last {
+            @include roundCorner(0, 0, 8px, 8px);
+
+            &.left {
+              @include roundCorner(0px,0px,0px,8px);
+            }
+            &.right {
+              @include roundCorner(0px,0px,8px,0px);
+            }
+          }
+
+          &.first {
+            @include roundCorner(8px, 8px, 0, 0);
+          }
+
+          &.expand-menu {
+
+            i {
+              margin-left: 10px;
+            }
+          } // .expand-menu
+        } // .overlay-button
+      } // .overlay-buttons-inner
 
       .mobile-menu-button {
         width: 45px;
@@ -504,6 +545,23 @@ html {
             }
           }
         } // .content
+
+        &.about {
+
+          .content {
+            padding-top: 0;
+
+            h1 {
+              font-size: 26px;
+              font-weight: 200;
+              color: #888;
+            }
+
+            p {
+              font-size: 14px;
+            }
+          }
+        } // &.about
       } // .popover-inner
 
       .popover-inner-mobile {
