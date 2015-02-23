@@ -13,7 +13,8 @@
   </div>
   <div class="content">
     <% if (browser.mobile? || browser.tablet?) %><i id="overlay-close" class="icon-cancel mobile"></i><% end %>
-    <div class="title"><%= @species_selected.genusSpecies %> <%= @species_selected.authority %></div>
+    <div class="title"><em><%= @species_selected.genusSpecies %></em></div>
+    <div class="authority"><%= @species_selected.authority %></div>
     <div class="subtitle"><%= @species_selected.commonName %></div>
     <% unless (browser.mobile? || browser.tablet?) %><a class="twitter-share-button" href="https://twitter.com/share" data-via="CampusFloraAus" data-text="<%= @species_selected.genusSpecies %>" data-count="none"></a><% end %>
     <div class="family"><abbr class="heading">Family name</abbr><br /><%= @species_selected.family.name %></div>
