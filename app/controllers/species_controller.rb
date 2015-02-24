@@ -11,9 +11,7 @@ class SpeciesController < ApplicationController
       }
       format.xml { render :xml => @species }
       format.json {
-        cache 'species_index_json' do
-          render :json => render_to_string( partial: 'map/index.json', locals: { species: @species})
-        end
+        render :json => render_to_string( partial: 'map/index.json', locals: { species: @species})
       }
     end
   end
