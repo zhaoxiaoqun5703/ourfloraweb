@@ -62,6 +62,10 @@ gem 'inherited_resources', github: 'josevalim/inherited_resources', branch: 'rai
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder'
+
+# Jbuilder cache multi for caching collections of objects as rails fragments
+gem 'jbuilder_cache_multi'
+
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 # use devise for user accounts
