@@ -71,6 +71,9 @@ gem 'devise'
 # Use paperclip for file uploads
 gem 'paperclip'
 
+# Actionpack page caching for caching json
+gem 'actionpack-action_caching'
+
 # Front end gems below -----
 # Jquery
 gem 'rails-assets-jquery'

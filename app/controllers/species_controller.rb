@@ -11,7 +11,7 @@ class SpeciesController < ApplicationController
       }
       format.xml { render :xml => @species }
       format.json {
-        render :json => render_to_string( partial: 'map/index.json', locals: { species: @species})
+         render :template => 'species/index.json'
       }
     end
   end

@@ -1,4 +1,4 @@
-json.cache! 'species_index_json', skip_digest: true do
+json.cache! 'species_index_json' do
   json.array! @species do |species|
     json.id species.id
     json.genusSpecies species.genusSpecies

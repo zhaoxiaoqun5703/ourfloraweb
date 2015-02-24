@@ -1,5 +1,5 @@
 ActiveAdmin.register Species do
-  permit_params :commonName, :authority, :distribution, :indigenousName, :information, :genusSpecies, :description, :family_id, species_locations_attributes: [:lat, :lon, :id, :_destroy], images_attributes: [:image, :id, :_destroy]
+  permit_params :commonName, :authority, :distribution, :indigenousName, :information, :genusSpecies, :description, :family_id, :slug, species_locations_attributes: [:lat, :lon, :arborplan_id, :id, :_destroy], images_attributes: [:image, :id, :_destroy]
   remove_filter :species_trails
 
   # Override find resource to get the select species by the friendly slug, rather than int id
