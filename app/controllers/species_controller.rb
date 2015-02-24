@@ -4,14 +4,16 @@ class SpeciesController < ApplicationController
   # GET /species
   # GET /species.json
   def index
-    @species = Species.includes(:family).includes(:species_locations).includes(:images).uniq(:species).order('families.name').all
+    @species = Species.eager_load(:family, :species_locations, :images).order('families.name')
     respond_to do |format|
       format.html {
         not_found
       }
       format.xml { render :xml => @species }
       format.json {
-        render :json => @species.to_json(include: [:species_locations, :family, :images => {:methods => [:image_url, :image_url_tiny, :image_url_small]}])
+        cache 'species_index_json' do
+          render :json => render_to_string( partial: 'map/index.json', locals: { species: @species})
+        end
       }
     end
   end

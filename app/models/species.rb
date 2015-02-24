@@ -26,5 +26,6 @@ class Species < ActiveRecord::Base
   # When we update or create a new species, expire the front end cache for the species objects
   def expire_cache
     ActionController::Base.new.expire_fragment('map_index_json')
+    ActionController::Base.new.expire_fragment('species_index_json')
   end
 end
