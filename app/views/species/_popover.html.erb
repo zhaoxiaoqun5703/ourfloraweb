@@ -16,7 +16,7 @@
     <div class="title"><em><%= @species_selected.genusSpecies %></em></div>
     <div class="authority"><%= @species_selected.authority %></div>
     <div class="subtitle"><%= @species_selected.commonName %></div>
-    <% unless (browser.mobile? || browser.tablet?) %><a class="twitter-share-button" href="https://twitter.com/share" data-via="CampusFloraAus" data-text="<%= @species_selected.genusSpecies %>" data-count="none"></a><% end %>
+    <% unless (browser.mobile? || browser.tablet?) %><a class="twitter-share-button" href="https://twitter.com/share" data-via="CampusFloraOz" data-text="<%= @species_selected.genusSpecies %>" data-count="none"></a><% end %>
     <div class="family"><abbr class="heading">Family name</abbr><br /><%= @species_selected.family.name %></div>
     <div class="description"><abbr class="heading">Description</abbr><br /><%= @species_selected.html_link_description %></div>
     <div class="distribution"><abbr class="heading">Distribution</abbr><br /><%= @species_selected.distribution %></div>
