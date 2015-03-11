@@ -8,12 +8,14 @@ json.cache! 'species_index_json' do
     json.distribution species.distribution
     json.information species.information
     json.description species.description
-    json.html_link_description auto_link(species.description)
     json.created_at species.created_at
     json.updated_at species.updated_at
+    json.slug species.slug
     json.family species.family
     json.images species.images do |image|
       json.image_url image.image.url(:original)
+      json.image_width 300
+      json.image_height 300
       json.image_url_tiny image.image.url(:tiny)
       json.image_url_small image.image.url(:thumb)
     end

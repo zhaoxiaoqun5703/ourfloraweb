@@ -1,14 +1,9 @@
-$color-text: #ffffff;
-$color-highlight: #2C90B6;
-$color-dark: #2C7896;
-$color-red: #c0392b;
-$color-green: #16a085;
-$color-yellow: #e67e22;
-$color-facebook: #3b5998;
-$color-menu:darken($color-highlight, 20%);
-$menu-width:160px;
-$bubble-width:460px;
-$bubble-height: 140px;
+// Project specific variables
+$menu-width: 300px;
+$button-width: 170px;
+$button-colour: #2c3e50;
+$button-colour-lighter: #506e8d;
+$menu-colour: #2c3e50;
 
 /* Breakpoints
 ...................................................................................... */
@@ -164,10 +159,17 @@ $bubble-height: 140px;
 }
 
 .highlight {
-  color:$color-highlight;
+  color: lighten($button-colour, 20%);
 }
 
 .inline-middle {
   display:inline-block;
   vertical-align: middle;
+}
+
+/* Normalize
+...................................................................................... */
+
+figure {
+  margin: 0 !important;
 }

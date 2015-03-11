@@ -9,6 +9,7 @@ ActiveAdmin.register Species do
     end
   end
 
+  # Content for the edit page
   form :html => { :enctype => "multipart/form-data" } do |f|
     f.semantic_errors # shows errors on :base
     f.inputs 'Details' do
@@ -35,7 +36,9 @@ ActiveAdmin.register Species do
     f.actions # adds the 'Submit' and 'Cancel' buttons
   end
 
+  # Content for the individual species "view" page
   show do |species|
+    markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true)
     attributes_table do
       row :family do
         species.family.name
@@ -45,8 +48,12 @@ ActiveAdmin.register Species do
       row :indigenousName
       row :authority
       row :distribution
-      row :information
-      row :description
+      row :information do
+        markdown.render(species.information).html_safe
+      end
+      row :description do
+        markdown.render(species.description).html_safe
+      end
     end
 
     panel 'Locations' do
@@ -68,4 +75,37 @@ ActiveAdmin.register Species do
 
     active_admin_comments_for(resource)
   end
+
+  # This defines the column order for the index page which shows the list of all species
+  index do
+    selectable_column
+    column "Family" do |species|
+      species.family.name
+    end
+    column :genusSpecies
+    column :commonName
+    column :indigenousName
+    column :authority
+    column :distribution
+    column :description
+    column :information
+    column :created_at
+    column :updated_at
+    column :slug
+    actions
+  end
+
+  # Define which filters (search criteria) should be available and in what order
+  filter :family, as: :select, collection: proc { Family.all.order('name') }
+  filter :genusSpecies
+  filter :commonName
+  filter :indigenousName
+  filter :authority
+  filter :distribution
+  filter :description
+  filter :information
+  filter :created_at
+  filter :updated_at
+  filter :slug
+
 end

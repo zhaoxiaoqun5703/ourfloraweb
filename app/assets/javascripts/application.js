@@ -15,6 +15,10 @@
 //= require jquery_ujs
 //= require underscore
 //= require backbone
+//= require markdown
+//= require share-button/build/share.js
+//= require photoswipe
+//= require photoswipe/photoswipe-ui-default
 //= require lunr
 //= require backlunr.min.js
 //= require_directory .

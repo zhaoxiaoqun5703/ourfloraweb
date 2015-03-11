@@ -5,9 +5,11 @@
       <img src="<@= IMG_NOT_FOUND_ORIGINAL @>" width=250px height=400px>
     <@ } else { @>
       <@ for (i = 0; i < images.length; i++) { @>
-        <a href="<@= images[i].image_url @>" target="_blank">
-          <img src="<@= images[i].image_url @>">
-        </a>
+        <figure itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/ImageObject">
+          <a href="<@= images[i].image_url @>" itemprop="contentUrl" data-size="<@= images[i].image_width @>x<@= images[i].image_height @>" target="_blank">
+            <img src="<@= images[i].image_url @>" itemprop="thumbnail" />
+          </a>
+        </figure>
       <@ } @>
     <@ } @>
   </div>
@@ -17,11 +19,17 @@
     <div class="authority"><@= authority @></div>
     <div class="subtitle"><@= commonName @></div>
     <div id="highlight-map" class="map-view"><i class="icon-location"></i>View species on map</div>
-    <% unless (browser.mobile? || browser.tablet?) %><a class="twitter-share-button" href="https://twitter.com/share" data-via="CampusFloraOz" data-text="<@= genusSpecies @> @ <@= tweetLocation @>" data-count="none"></a><% end %>
+    <% unless (browser.mobile? || browser.tablet?) %><div class="share-button" href="https://twitter.com/share" data-via="CampusFloraOz"></div><% end %>
     <div class="family"><abbr class="heading">Family name</abbr><br /><@= family.name @></div>
-    <div class="description"><abbr class="heading">Description</abbr><br /><@= html_link_description @></div>
-    <div class="distribution"><abbr class="heading">Distribution</abbr><br /><@= distribution @></div>
-    <div class="information"><abbr class="heading">Information</abbr><br /><@= information @></div>
+    <div class="description"><abbr class="heading">Description</abbr><br /><@= markdown.toHTML(description) @></div>
+    <div class="distribution"><abbr class="heading">Distribution</abbr><br /><@= markdown.toHTML(distribution) @></div>
+    <div class="information">
+      <abbr class="heading">Information</abbr><br />
+      <@ if (family.phylogeny) { @>
+        <@= family.phylogeny @> <br />
+      <@ } @>
+      <@= markdown.toHTML(information) @>
+    </div>
   </div>
 </script>
 

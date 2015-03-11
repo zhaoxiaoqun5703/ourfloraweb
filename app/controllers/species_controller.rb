@@ -31,6 +31,11 @@ class SpeciesController < ApplicationController
 
         @page_title = @species_selected.genusSpecies
 
+        # Initialise a markdown parser that we can use in the view to well, parse markdown
+        @markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true)
+        # Grab the about page content to render
+        @page_content = PageContent.first
+
         render 'map/index'
       }
     end

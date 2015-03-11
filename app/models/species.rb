@@ -19,10 +19,6 @@ class Species < ActiveRecord::Base
   accepts_nested_attributes_for :species_trails
   accepts_nested_attributes_for :images, :allow_destroy => true
 
-  def html_link_description
-    auto_link(self.description)
-  end
-
   # When we update or create a new species, expire the front end cache for the species objects
   def expire_cache
     logger.debug 'expiring species cache'

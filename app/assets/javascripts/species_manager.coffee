@@ -96,13 +96,36 @@
     render: ->
       # Render the element from the template and model
       @$el.html @template(@model.toJSON())
+      # Cache self to use inside the timeout block
+      self = @
       # Set display to block from none
       $('#overlay-dark,#popover-outer').css('display', 'block')
       # After a delay of 50 ms, add the class to allow the CSS transition to kick in at the next render loop
       setTimeout ->
         $('#overlay-dark,#popover-outer').addClass('selected')
-        # Reload twitter widgets to get the dynamic tweet button to work + check if twtter is initialized, ghostery might have blocked it
-        if twttr then twttr.widgets.load()
+        # Initialize the share widget
+        new Share(".share-button", {
+          url: "campusflora.sydneybiology.org/species/#{self.model.get('slug')}",
+          title: "#{self.model.get('genusSpecies')}",
+          description: "#{self.model.get('genusSpecies')} @campusflora - campusflora.sydneybiology.org/species/#{self.model.get('slug')}",
+          ui: {
+            button_text: 'Share'
+          },
+          networks: {
+            facebook: {
+              image: "http://campusflora.sydneybiology.org/#{if self.model.get('images').length > 0 then self.model.get('images')[0].image_url else IMG_NOT_FOUND_ORIGINAL}"
+            },
+            pinterest: {
+              enabled: false
+            },
+            twitter: {
+              description: "I found #{self.model.get('genusSpecies')} on campus! via @CampusFloraOz campusflora.sydneybiology.org/species/#{self.model.get('slug')}"
+            }
+
+          }
+        });
+        # Bind photoswipe on the image gallery
+        bindPhotoSwipe('.images');
       , 50
       this
   )
@@ -247,7 +270,7 @@
 
   # The outer backbone view for the species list
   SpeciesOuterListView = Backbone.View.extend(
-    el: '#menu-content-list'
+    el: '#menu-content-species'
 
     events:
       'keypress .search-box' : 'searchEvent'
@@ -561,26 +584,26 @@
     # _markerClusterer = new MarkerClusterer(map, _markers, {gridSize: 30, maxZoom: 18, minimumClusterSize:4})
 
     # Bind click events for menu tabs
-    $('#tab-button-families').on 'click', ->
+    $('#tab-button-species').on 'click', ->
       unless $(this).hasClass 'selected'
         $('.tab-button.selected').removeClass('selected')
         $(this).addClass 'selected'
         $('.menu-content-container').removeClass('pos2 pos3').addClass('pos1')
 
-    $('#tab-button-trails').on 'click', ->
+    $('#tab-button-families').on 'click', ->
       unless $(this).hasClass 'selected'
         $('.tab-button.selected').removeClass('selected')
         $(this).addClass 'selected'
         $('.menu-content-container').removeClass('pos1 pos3').addClass('pos2')
 
-    $('#tab-button-list').on 'click', ->
+    $('#tab-button-trails').on 'click', ->
       unless $(this).hasClass 'selected'
         $('.tab-button.selected').removeClass('selected')
         $(this).addClass 'selected'
         $('.menu-content-container').removeClass('pos1 pos2').addClass('pos3')
 
     # Fix height of menus
-    $('#menu-content-list').height($(window).outerHeight() - $('#tab-button-outer').outerHeight())
+    $('#menu-content-species').height($(window).outerHeight() - $('#tab-button-outer').outerHeight())
     $('#menu-content-families').height($(window).outerHeight() - $('#tab-button-outer').outerHeight())
 
     # Hide current marker if there is one when clicking on map

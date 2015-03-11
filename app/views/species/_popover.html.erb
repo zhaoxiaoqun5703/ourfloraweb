@@ -3,7 +3,7 @@
   <div class="images">
     <% if @species_selected.images.length == 0 %>
       <img src="<%= image_path 'not_found_original.png' %>" width=250px height=400px>
-    <% elsif %>
+    <% else %>
       <% @species_selected.images.each do |image| %>
         <a href="<%= image.image.url(:original) %>" target="_blank">
           <img src="<%= image.image.url(:original) %>">
@@ -16,16 +16,21 @@
     <div class="title"><em><%= @species_selected.genusSpecies %></em></div>
     <div class="authority"><%= @species_selected.authority %></div>
     <div class="subtitle"><%= @species_selected.commonName %></div>
-    <% unless (browser.mobile? || browser.tablet?) %><a class="twitter-share-button" href="https://twitter.com/share" data-via="CampusFloraOz" data-text="<%= @species_selected.genusSpecies %>" data-count="none"></a><% end %>
+    <% unless (browser.mobile? || browser.tablet?) %><div class="share-button" href="https://twitter.com/share" data-via="CampusFloraOz" data-text="<%= @species_selected.genusSpecies %>" data-count="none"></div><% end %>
     <div class="family"><abbr class="heading">Family name</abbr><br /><%= @species_selected.family.name %></div>
-    <div class="description"><abbr class="heading">Description</abbr><br /><%= @species_selected.html_link_description %></div>
+    <div class="description"><abbr class="heading">Description</abbr><br /><%= @markdown.render(@species_selected.description).html_safe %></div>
     <div class="distribution"><abbr class="heading">Distribution</abbr><br /><%= @species_selected.distribution %></div>
-    <div class="information"><abbr class="heading">Information</abbr><br /><%= @species_selected.information %></div>
+    <div class="information">
+      <abbr class="heading">Information</abbr><br />
+      <% if @species_selected.family.phylogeny %><%= @species_selected.family.phylogeny %><br /><% end %>
+      <%= @markdown.render(@species_selected.information).html_safe %>
+    </div>
   </div>
 </div>
 
 
 <script>
+  console.log("http://campusflora.sydneybiology.org/<%= @species_selected.images.first.image.url(:original) %>");
   $("#overlay-close").on('click', function() {
     $('#overlay-dark, #popover-outer').removeClass('selected')
     setTimeout(function() {
@@ -33,5 +38,25 @@
       $("#species-popover-initial").remove()
       window.history.pushState('CampusFlora', 'Flora locations and information at Sydney Uni Campus - CampusFlora', window.location.protocol + "//" + window.location.host);
     }, 200);
+  });
+
+  new Share(".share-button", {
+    url: "campusflora.sydneybiology.org/species/<%= @species_selected.slug %>",
+    title: "<%= @species_selected.genusSpecies %>",
+    description: "<%= @species_selected.genusSpecies %> @campusflora - campusflora.sydneybiology.org/species/<%= @species_selected.slug %>",
+    ui: {
+      button_text: 'Share'
+    },
+    networks: {
+      facebook: {
+        image: "http://campusflora.sydneybiology.org/<%= @species_selected.images.first.image.url(:original) %>"
+      },
+      pinterest: {
+        enabled: false
+      },
+      twitter: {
+        description: "I found <%= @species_selected.genusSpecies %> on campus! via @CampusFloraOz campusflora.sydneybiology.org/species/<%= @species_selected.slug %>"
+      }
+    }
   });
 </script>

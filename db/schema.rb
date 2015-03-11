@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150209041041) do
+ActiveRecord::Schema.define(version: 20150311010743) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 20150209041041) do
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "phylogeny"
   end
 
   create_table "friendly_id_slugs", force: :cascade do |t|
@@ -74,6 +75,12 @@ ActiveRecord::Schema.define(version: 20150209041041) do
     t.datetime "image_updated_at"
     t.integer  "species_id"
     t.string   "genusSpecies"
+  end
+
+  create_table "page_contents", force: :cascade do |t|
+    t.text     "about_page_content"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
   end
 
   create_table "species", force: :cascade do |t|

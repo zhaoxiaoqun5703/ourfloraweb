@@ -20,9 +20,6 @@ gem 'colorize'
 # Detect if the user is mobile, tablet or desktop
 gem 'browser'
 
-# Use rails_autolink to detect and convert links in text blobs
-gem 'rails_autolink'
-
 # Use friendly_id to generate slugs
 gem 'friendly_id'
 
@@ -34,6 +31,9 @@ gem 'figaro'
 
 # Whenever for crontab management
 gem 'whenever', :require => false
+
+# Redcarpet for markdown parsing
+gem 'redcarpet'
 
 group :development do
   # Use sqlite3 as the database for Active Record
@@ -85,3 +85,9 @@ gem 'rails-assets-backbone'
 gem 'rails-assets-fastclick'
 # Use lunr for full text front end searching
 gem 'rails-assets-lunr.js'
+# Markdown js for markdown parsing on the front end
+gem 'rails-assets-markdown'
+# Share-button is a nice little library for adding multiple types of social sharing
+gem 'rails-assets-share-button'
+# Photoswipe for mobile friendly image gallery
+gem 'rails-assets-photoswipe'
