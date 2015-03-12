@@ -125,7 +125,8 @@
           }
         });
         # Bind photoswipe on the image gallery
-        bindPhotoSwipe('.images');
+        if self.model.get('images').length > 0
+          bindPhotoSwipe '.images'
       , 50
       this
   )

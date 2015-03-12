@@ -63,6 +63,7 @@
       font-size: 0;
       overflow-x: hidden;
       overflow-y: auto;
+      @include roundCorner(10px, 0, 0, 10px);
 
       img {
         width: 250px;
@@ -134,7 +135,7 @@
 
         div.social {
           margin-left: -55px;
-          margin-top: -65px;
+          margin-top: -70px;
           width: 160px;
 
           &:after {
@@ -279,10 +280,14 @@
       -webkit-overflow-scrolling: touch;
       font-size:0;
 
-      img {
+      figure  {
         height: 100%;
         display: inline-block;
         vertical-align: middle;
+
+        img {
+          height: 100%;
+        }
       }
     } // .images
 
@@ -328,6 +333,10 @@
       .family, .authority, .description, .distribution, .information {
         font-size: 14px;
         margin: 0 10px 15px 10px;
+
+        p {
+          margin: 0;
+        }
         
         .heading {
           color: #666;

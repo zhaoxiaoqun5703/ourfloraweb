@@ -1,13 +1,15 @@
-<div class="popover-inner" id="species-popover-initial">
+<div class="<%= browser.mobile? ? 'popover-inner-mobile' : 'popover-inner' %>" id="species-popover-initial">
   <% unless (browser.mobile? || browser.tablet?) %><i id="overlay-close" class="icon-cancel"></i><% end %>
   <div class="images">
     <% if @species_selected.images.length == 0 %>
       <img src="<%= image_path 'not_found_original.png' %>" width=250px height=400px>
     <% else %>
       <% @species_selected.images.each do |image| %>
-        <a href="<%= image.image.url(:original) %>" target="_blank">
-          <img src="<%= image.image.url(:original) %>">
-        </a>
+        <figure itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/ImageObject">
+          <a href="<%= image.image.url(:original) %>" itemprop="contentUrl" data-size="<%= image.image.image_size(:original) %>">
+            <img src="<%= browser.mobile? ? image.image.url(:medium_mobile) : image.image.url(:medium_desktop) %>">
+          </a>
+        </figure>
       <% end %>
     <% end %>
   </div>
@@ -16,7 +18,7 @@
     <div class="title"><em><%= @species_selected.genusSpecies %></em></div>
     <div class="authority"><%= @species_selected.authority %></div>
     <div class="subtitle"><%= @species_selected.commonName %></div>
-    <% unless (browser.mobile? || browser.tablet?) %><div class="share-button" href="https://twitter.com/share" data-via="CampusFloraOz" data-text="<%= @species_selected.genusSpecies %>" data-count="none"></div><% end %>
+    <% unless (browser.mobile? || browser.tablet?) %><div class="share-button"></div><% end %>
     <div class="family"><abbr class="heading">Family name</abbr><br /><%= @species_selected.family.name %></div>
     <div class="description"><abbr class="heading">Description</abbr><br /><%= @markdown.render(@species_selected.description).html_safe %></div>
     <div class="distribution"><abbr class="heading">Distribution</abbr><br /><%= @species_selected.distribution %></div>
@@ -30,7 +32,6 @@
 
 
 <script>
-  console.log("http://campusflora.sydneybiology.org/<%= @species_selected.images.first.image.url(:original) %>");
   $("#overlay-close").on('click', function() {
     $('#overlay-dark, #popover-outer').removeClass('selected')
     setTimeout(function() {
@@ -59,4 +60,9 @@
       }
     }
   });
+
+  // Bind the photoswipe gallery
+  <% if @species_selected.images.length > 0 %>
+    bindPhotoSwipe('.images');
+  <% end %>
 </script>

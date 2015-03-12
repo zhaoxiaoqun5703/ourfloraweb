@@ -14,10 +14,11 @@ json.cache! 'species_index_json' do
     json.family species.family
     json.images species.images do |image|
       json.image_url image.image.url(:original)
-      json.image_width 300
-      json.image_height 300
-      json.image_url_tiny image.image.url(:tiny)
-      json.image_url_small image.image.url(:thumb)
+      json.image_dimensions image.image.image_size(:original)
+      json.image_url_desktop image.image.url(:medium_desktop)
+      json.image_url_mobile image.image.url(:medium_mobile)
+      json.image_url_thumb_retina image.image.url(:thumb_retina)
+      json.image_url_thumb image.image.url(:thumb)
     end
     json.species_locations species.species_locations
   end

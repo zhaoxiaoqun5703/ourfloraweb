@@ -68,8 +68,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # use devise for user accounts
 gem 'devise'
 
-# Use paperclip for file uploads
+# Use paperclip for file uploads, with paperclip-meta for identifying image dimensions
 gem 'paperclip'
+gem 'paperclip-meta'
 
 # Actionpack page caching for caching json
 gem 'actionpack-action_caching'
