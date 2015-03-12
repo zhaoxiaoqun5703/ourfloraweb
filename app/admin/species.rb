@@ -76,10 +76,14 @@ ActiveAdmin.register Species do
     active_admin_comments_for(resource)
   end
 
+  scope :joined, :default => true do |species|
+    species.includes [:family]
+  end
+
   # This defines the column order for the index page which shows the list of all species
   index do
     selectable_column
-    column "Family" do |species|
+    column "Family", :sortable => :'families.name' do |species|
       species.family.name
     end
     column :genusSpecies
