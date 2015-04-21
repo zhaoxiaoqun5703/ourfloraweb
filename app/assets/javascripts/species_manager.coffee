@@ -104,26 +104,19 @@
       setTimeout ->
         $('#overlay-dark,#popover-outer').addClass('selected')
         # Initialize the share widget
-        new Share(".share-button", {
-          url: "campusflora.sydneybiology.org/species/#{self.model.get('slug')}",
-          title: "#{self.model.get('genusSpecies')}",
-          description: "#{self.model.get('genusSpecies')} @campusflora - campusflora.sydneybiology.org/species/#{self.model.get('slug')}",
-          ui: {
+        new Share ".share-button", 
+          url: "campusflora.sydneybiology.org/species/#{self.model.get('slug')}"
+          title: "#{self.model.get('genusSpecies')}"
+          description: "#{self.model.get('genusSpecies')} @campusflora - campusflora.sydneybiology.org/species/#{self.model.get('slug')}"
+          ui:
             button_text: 'Share'
-          },
-          networks: {
-            facebook: {
+          networks:
+            facebook:
               image: "http://campusflora.sydneybiology.org/#{if self.model.get('images').length > 0 then self.model.get('images')[0].image_url else IMG_NOT_FOUND_ORIGINAL}"
-            },
-            pinterest: {
+            pinterest:
               enabled: false
-            },
-            twitter: {
+            twitter:
               description: "I found #{self.model.get('genusSpecies')} on campus! via @CampusFloraOz campusflora.sydneybiology.org/species/#{self.model.get('slug')}"
-            }
-
-          }
-        });
         # Bind photoswipe on the image gallery
         if self.model.get('images').length > 0
           bindPhotoSwipe '.images'
@@ -230,8 +223,7 @@
       @model.set('tweetLocation', _recentLocation)
       popover = new SpeciesPopoverView({model: @model})
       $('#popover-outer').append(popover.render().el)
-      # Push a new html history state to mimic browser navigation to this species
-      # window.history.pushState("#{@model.get('genusSpecies')}", "#{@model.get('genusSpecies')} - CampusFlora", "#{window.location.protocol}//#{window.location.host}/species/#{@model.get('id')}")
+      # TODO: push a new browser history state to navigate to this species
 
     hidePins: ->
       for mapView in @mapViews
