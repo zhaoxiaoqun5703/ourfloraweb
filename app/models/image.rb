@@ -9,10 +9,10 @@ class Image < ActiveRecord::Base
 
   has_attached_file :image,
                     :styles => {
-                      :medium_desktop => "250x250^ -gravity center -extent 64x64 -gravity center -extent 250x250",
+                      :medium_desktop => "250x250^ -gravity center -extent 250x250",
                       :medium_mobile => "220x220^ -gravity center -extent 220x220",
-                      :thumb_retina => "100x100^ -gravity center -extent 100x100",
-                      :thumb => "50x50^ -gravity center -extent 50x50"
+                      :thumb_retina => "100x100#",
+                      :thumb => "50x50#"
                     },
                     :default_url => "/images/:style/missing.png",
                     :path => ":rails_root/public/assets/species_images/:genusSpecies/:id/:style_:basename.:extension",
