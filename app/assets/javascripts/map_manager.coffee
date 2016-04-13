@@ -46,4 +46,6 @@
     $('#current-location').on 'click', ->
       _map.panTo _geoMarker.getPosition()
 
+
+
     return _map
