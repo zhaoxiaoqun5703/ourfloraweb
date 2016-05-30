@@ -560,6 +560,74 @@
     model: FamilyModel
   )
 
+  # This is a shitty DemoSpeciesView
+  DetailSpeciesView = Backbone.View.extend(
+    el: '#detail-species'
+
+    # Define methods to be run at initialization time
+    initialize: ->
+      # try the below, see if it works!
+      locArr = window.location.href.split("/")
+      slug = locArr[4]
+      console.log(slug)
+      coll = new speciesCollection(_speciesRaw)
+      @model = coll.find (mod) ->
+        return slug.toLowerCase() is mod.get('slug')
+
+      @mapViews = []
+      # If there are locations defined for these species, set up new species map views
+      for location in @model.get('species_locations')
+        # Create a new SpeciesMapView with location data
+        mapView = new SpeciesMapView(model: new LocationModel(location))
+        # Set up google maps components associated with the species map view
+        mapView.initMapComponents @model, @
+        # Save the mapview into the array in this model
+        @mapViews.push(mapView)
+
+      @model.on 'hide', @hidePins, @
+      @model.on 'show', @showPins, @
+      @model.on 'fitMapToScreen', @fitMapToScreen, @
+
+      @render()
+
+    hidePins: ->
+      for mapView in @mapViews
+        mapView.hideMarker()
+
+    showPins: ->
+      for mapView in @mapViews
+        mapView.showMarker()
+
+    # Zooms and pans the google map to fit all currently showing markers
+    fitMapToScreen: ->
+      # Create a new boundary object
+      bounds = new google.maps.LatLngBounds()
+      # Extend the outside of the boundaries to fit the pins
+      for mapView in @mapViews
+         bounds.extend mapView.marker.getPosition()
+      # Center the map to the geometric center of all markers
+      _map.setCenter bounds.getCenter()
+      # Fit boundaries
+      _map.fitBounds bounds
+      # Remove one zoom level to ensure no marker is on the edge.
+      _map.setZoom(_map.getZoom() - 1)
+      # Set a minimum zoom to prevent excessive zoom in if there's only 1 marker
+      if _map.getZoom() > 19 then _map.setZoom 19
+      # Set a max zoom to prevent excessive zoom if the markers are across a wide area
+      if _map.getZoom() < 17 then _map.setZoom 17
+
+    render: ->
+      firstLocation = @model.get('species_locations')[0]
+      _recentLocation = "(#{firstLocation.lat}, #{firstLocation.lon})"
+      @showPopover()
+
+    showPopover: ->
+      # Pass the location of the selected species to the model so the user can tweet about it
+      @model.set('tweetLocation', _recentLocation)
+      popover = new SpeciesPopoverView({model: @model})
+      $('#popover-outer').append(popover.render().el)
+  )
+
   # SpeciesManager.initialize() is the only exported member variable, it will initialize the backbone objects, pull data
   # and set up the collection
   initialize: (species, trails, families, map) ->
@@ -572,6 +640,9 @@
     _familyOuterListView = new FamilyOuterListView()
     _speciesOuterListView = new SpeciesOuterListView()
     _trailOuterListview = new TrailOuterListView()
+
+    if (window.location.href.indexOf("species") > -1)
+      detail = new DetailSpeciesView()
 
     # Init markerClusterer to group close maps markers together
     # _markerClusterer = new MarkerClusterer(map, _markers, {gridSize: 30, maxZoom: 18, minimumClusterSize:4})

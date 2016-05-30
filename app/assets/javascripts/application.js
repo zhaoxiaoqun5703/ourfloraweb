@@ -21,4 +21,6 @@
 //= require photoswipe/photoswipe-ui-default
 //= require lunr
 //= require backlunr.min.js
+//= require geolocation-marker.js
+//= require infobox.js
 //= require_directory .
