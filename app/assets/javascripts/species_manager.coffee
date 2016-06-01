@@ -241,15 +241,15 @@
       for mapView in @mapViews
          bounds.extend mapView.marker.getPosition()
       # Center the map to the geometric center of all markers
-      _map.setCenter bounds.getCenter()
+      #_map.setCenter bounds.getCenter()
       # Fit boundaries
       _map.fitBounds bounds
       # Remove one zoom level to ensure no marker is on the edge.
-      _map.setZoom(_map.getZoom() - 1) 
+      #_map.setZoom(_map.getZoom() - 1) 
       # Set a minimum zoom to prevent excessive zoom in if there's only 1 marker
       if _map.getZoom() > 19 then _map.setZoom 19
       # Set a max zoom to prevent excessive zoom if the markers are across a wide area
-      if _map.getZoom() < 17 then _map.setZoom 17
+      #if _map.getZoom() < 17 then _map.setZoom 17
 
     showListView: ->
       @$el.removeClass 'hidden'
@@ -606,15 +606,15 @@
       for mapView in @mapViews
          bounds.extend mapView.marker.getPosition()
       # Center the map to the geometric center of all markers
-      _map.setCenter bounds.getCenter()
+      #_map.setCenter bounds.getCenter()
       # Fit boundaries
       _map.fitBounds bounds
       # Remove one zoom level to ensure no marker is on the edge.
-      _map.setZoom(_map.getZoom() - 1)
+      #_map.setZoom(_map.getZoom() - 1)
       # Set a minimum zoom to prevent excessive zoom in if there's only 1 marker
       if _map.getZoom() > 19 then _map.setZoom 19
       # Set a max zoom to prevent excessive zoom if the markers are across a wide area
-      if _map.getZoom() < 17 then _map.setZoom 17
+      #if _map.getZoom() < 17 then _map.setZoom 17
 
     render: ->
       firstLocation = @model.get('species_locations')[0]
