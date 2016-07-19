@@ -10,6 +10,23 @@
       $('#inner-container').toggleClass('menu-visible')
 
     # If we're on mobile, contract the side menu when the user taps the map
+    if HOMESCREEN_INSTALLED
+      $('#inner-container.ios').addClass('homescreen')
+
+    # Handle the about popup
+    $('#about').on 'click', -> 
+      $('#overlay-dark,#popover-about-outer').css('display', 'block')
+      # After a delay of 50 ms, add the class to allow the CSS transition to kick in at the next render loop
+      setTimeout( ->
+        $('#overlay-dark,#popover-about-outer').addClass('selected')
+      , 50)
+
+    $("#popover-about-outer #overlay-close").on 'click', ->
+      $('#overlay-dark, #popover-about-outer').removeClass('selected')
+      setTimeout( ->
+        $('#overlay-dark, #popover-about-outer').css('display', 'none')
+      , 200)
+
     if IS_MOBILE
       $('#map-canvas').on 'click', ->
         $('#expand-menu').removeClass('selected')

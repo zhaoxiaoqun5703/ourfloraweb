@@ -560,7 +560,7 @@
     model: FamilyModel
   )
 
-  # This is a shitty DemoSpeciesView
+  # Species Detail View
   DetailSpeciesView = Backbone.View.extend(
     el: '#detail-species'
 

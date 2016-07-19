@@ -66,26 +66,6 @@
 </div>
 
 <script>
-  if (HOMESCREEN_INSTALLED) {
-    $('#inner-container.ios').addClass('homescreen');
-  }
-
-  // Handle the about popup
-  $('#about').on('click', function() {
-      $('#overlay-dark,#popover-about-outer').css('display', 'block');
-      // After a delay of 50 ms, add the class to allow the CSS transition to kick in at the next render loop
-      setTimeout(function() {
-        $('#overlay-dark,#popover-about-outer').addClass('selected');
-      }, 50);
-  });
-
-  $("#popover-about-outer #overlay-close").on('click', function() {
-    $('#overlay-dark, #popover-about-outer').removeClass('selected')
-    setTimeout(function() {
-      $('#overlay-dark, #popover-about-outer').css('display', 'none')
-    }, 200);
-  });
-
   function init() {
     var mapManager = new MapManager;
     // Initialize the mapManager and get the google map
