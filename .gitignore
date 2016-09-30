@@ -6,7 +6,7 @@ capybara-*.html
 /tmp/sockets
 /tmp/pids
 /tmp/species_images
-/tmp/.DS_Store
+.DS_Store
 
 # Ignore figaro application.yml
 /config/application.yml
