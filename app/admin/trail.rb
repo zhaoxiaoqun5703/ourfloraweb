@@ -1,6 +1,12 @@
 ActiveAdmin.register Trail do
-  permit_params :name, species_trails_attributes: [:species_id, :trail_id, :id, :_destroy]
+  permit_params :name, :slug, species_trails_attributes: [:species_id, :trail_id, :id, :_destroy]
   remove_filter :species_trails
+
+  controller do
+    def find_resource
+      scoped_collection.where(slug: params[:id]).first!
+    end
+  end
 
   form do |f|
     f.semantic_errors # shows errors on :base
@@ -24,6 +30,7 @@ ActiveAdmin.register Trail do
   show do |trail|
     attributes_table do
       row :name
+      row :slug
     end
 
     panel 'Species' do

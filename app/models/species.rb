@@ -24,4 +24,10 @@ class Species < ActiveRecord::Base
     logger.debug 'expiring species cache'
     Rails.cache.clear
   end
+
+  def slug=(value)
+    if value.present?
+      write_attribute(:slug, value)
+    end
+  end
 end

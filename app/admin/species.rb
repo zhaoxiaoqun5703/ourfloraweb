@@ -5,7 +5,7 @@ ActiveAdmin.register Species do
   # Override find resource to get the select species by the friendly slug, rather than int id
   controller do
     def find_resource
-      scoped_collection.where(slug: params[:id]).first or scoped_collection.where(id: params[:id]).first
+      scoped_collection.where(slug: params[:id]).first!
     end
     def index
       params[:order] = "families.name_desc"
