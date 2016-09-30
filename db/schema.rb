@@ -14,132 +14,132 @@
 ActiveRecord::Schema.define(version: 20150311224513) do
 
   create_table "active_admin_comments", force: :cascade do |t|
-    t.string   "namespace"
-    t.text     "body"
-    t.string   "resource_id",   null: false
-    t.string   "resource_type", null: false
-    t.integer  "author_id"
-    t.string   "author_type"
+    t.string   "namespace",     limit: 255
+    t.text     "body",          limit: 65535
+    t.string   "resource_id",   limit: 255,   null: false
+    t.string   "resource_type", limit: 255,   null: false
+    t.integer  "author_id",     limit: 4
+    t.string   "author_type",   limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "active_admin_comments", ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id"
-  add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace"
-  add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
+  add_index "active_admin_comments", ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id", using: :btree
+  add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
+  add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
 
   create_table "admin_users", force: :cascade do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
-    t.string   "reset_password_token"
+    t.string   "email",                  limit: 255, default: "", null: false
+    t.string   "encrypted_password",     limit: 255, default: "", null: false
+    t.string   "reset_password_token",   limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",          limit: 4,   default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
+    t.string   "current_sign_in_ip",     limit: 255
+    t.string   "last_sign_in_ip",        limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true
-  add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
+  add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true, using: :btree
+  add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "families", force: :cascade do |t|
-    t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string   "phylogeny"
+    t.string   "name",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.string   "phylogeny",  limit: 255
   end
 
   create_table "friendly_id_slugs", force: :cascade do |t|
-    t.string   "slug",                      null: false
-    t.integer  "sluggable_id",              null: false
+    t.string   "slug",           limit: 255, null: false
+    t.integer  "sluggable_id",   limit: 4,   null: false
     t.string   "sluggable_type", limit: 50
-    t.string   "scope"
+    t.string   "scope",          limit: 255
     t.datetime "created_at"
   end
 
-  add_index "friendly_id_slugs", ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
-  add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
-  add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
-  add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
+  add_index "friendly_id_slugs", ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true, using: :btree
+  add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
 
   create_table "images", force: :cascade do |t|
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-    t.string   "image_file_name"
-    t.string   "image_content_type"
-    t.integer  "image_file_size"
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.string   "image_file_name",    limit: 255
+    t.string   "image_content_type", limit: 255
+    t.integer  "image_file_size",    limit: 4
     t.datetime "image_updated_at"
-    t.integer  "species_id"
-    t.string   "genusSpecies"
-    t.text     "image_meta"
+    t.integer  "species_id",         limit: 4
+    t.string   "genusSpecies",       limit: 255
+    t.text     "image_meta",         limit: 65535
   end
 
   create_table "page_contents", force: :cascade do |t|
-    t.text     "about_page_content"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.text     "about_page_content", limit: 65535
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
   end
 
   create_table "species", force: :cascade do |t|
-    t.string   "genusSpecies"
-    t.string   "commonName"
-    t.string   "indigenousName"
-    t.string   "authority"
-    t.text     "distribution"
-    t.text     "information"
-    t.text     "description"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-    t.integer  "family_id"
-    t.string   "slug"
+    t.string   "genusSpecies",   limit: 255
+    t.string   "commonName",     limit: 255
+    t.string   "indigenousName", limit: 255
+    t.string   "authority",      limit: 255
+    t.text     "distribution",   limit: 65535
+    t.text     "information",    limit: 65535
+    t.text     "description",    limit: 65535
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.integer  "family_id",      limit: 4
+    t.string   "slug",           limit: 255
   end
 
-  add_index "species", ["family_id"], name: "index_species_on_family_id"
-  add_index "species", ["genusSpecies"], name: "index_species_on_genusSpecies"
+  add_index "species", ["family_id"], name: "index_species_on_family_id", using: :btree
+  add_index "species", ["genusSpecies"], name: "index_species_on_genusSpecies", using: :btree
 
   create_table "species_locations", force: :cascade do |t|
-    t.integer  "species_id"
-    t.decimal  "lat",          precision: 10, scale: 6
-    t.decimal  "lon",          precision: 10, scale: 6
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
-    t.string   "arborplan_id"
+    t.integer  "species_id",   limit: 4
+    t.decimal  "lat",                      precision: 10, scale: 6
+    t.decimal  "lon",                      precision: 10, scale: 6
+    t.datetime "created_at",                                        null: false
+    t.datetime "updated_at",                                        null: false
+    t.string   "arborplan_id", limit: 255
   end
 
-  add_index "species_locations", ["species_id"], name: "index_species_locations_on_species_id"
+  add_index "species_locations", ["species_id"], name: "index_species_locations_on_species_id", using: :btree
 
   create_table "species_trails", force: :cascade do |t|
-    t.integer "species_id"
-    t.integer "trail_id"
+    t.integer "species_id", limit: 4
+    t.integer "trail_id",   limit: 4
   end
 
-  add_index "species_trails", ["species_id"], name: "index_species_trails_on_species_id"
-  add_index "species_trails", ["trail_id"], name: "index_species_trails_on_trail_id"
+  add_index "species_trails", ["species_id"], name: "index_species_trails_on_species_id", using: :btree
+  add_index "species_trails", ["trail_id"], name: "index_species_trails_on_trail_id", using: :btree
 
   create_table "trails", force: :cascade do |t|
-    t.text     "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.text     "name",       limit: 65535
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
-    t.string   "reset_password_token"
+    t.string   "email",                  limit: 255, default: "", null: false
+    t.string   "encrypted_password",     limit: 255, default: "", null: false
+    t.string   "reset_password_token",   limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",          limit: 4,   default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
+    t.string   "current_sign_in_ip",     limit: 255
+    t.string   "last_sign_in_ip",        limit: 255
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end
