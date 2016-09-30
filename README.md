@@ -15,10 +15,8 @@ This README aims to document the design process behind the app, as well provide 
 
 ## Stack
 ### Backend ###
-* rbenv -> ruby 2.2.0
+* ruby 2.2.0
 * Rails 4
-* Passenger
-* Nginx
 * MySQL via mysql2 gem
 
 ### Frontend ###
@@ -32,82 +30,19 @@ This README aims to document the design process behind the app, as well provide 
 
 ## Install Requirements ##
 Campus Flora runs on Ruby On Rails - and while you can certainly run this on a simplified service provider like Heroku, it's recommended that you run this on a plain old Linux VPS.  
-The University of Sydney is using Digital Ocean for this project, but there are many others such as Linode or even Amazon AWS that are all great.
+The University of Sydney is using Digital Ocean for this project, but there are many others such as Linode or Amazon AWS that are all great.
 
 ## Install Guide ##
 
-### Server setup (Blank server) ###
-* Log into your VPS __as root (important!)__
-* Download and run the Rbenv + Rails + Nginx + Passenger + MySQL installer from installscripts.io - [http://installscripts.io/rails-passenger-nginx-mysql-rbenv](http://installscripts.io/rails-passenger-nginx-mysql-rbenv)
-```
-#!bash
-wget -O /tmp/rails-passenger-nginx-mysql-rbenv.sh http://installscripts.io/scripts/rails-passenger-nginx-mysql-rbenv.sh
-sh /tmp/rails-passenger-nginx-mysql-rbenv.sh
-```
-* Note this script will take some time (20+ minutes on smaller VPS's) so grab a cup of coffee. The script will prompt you right at the end to set up your nginx config in a way that is relatively simple, then ask you to set your mysql root password.
-* There is also a script available for installing this stack using the [unicorn server instead of passenger.](http://www.installscripts.io/scripts/rails-unicorn-nginx-mysql-rbenv)
-* Install imagemagick (used for image uploads):
-```
-#!bash
-sudo apt-get install imagemagick --fix-missing
-```
-* Create a linux user called deploy, and give it permissions to the /srv/ directory where you'll be serving campus flora from:
-```
-#!bash
+### Environment Setup ###
+This project has been configured for local development using Docker, and of course you can also use docker to deploy the app in production if you like.
 
-adduser deploy
-chown -R deploy /srv
-chgrp -R www-data /srv
-
-```
-* Log out of the VPS
-* Copy your ssh key to the /home/deploy/.ssh/authorized_keys
-```
-#!bash
-scp ~/.ssh/id_rsa.pub root@server_ip_address:
-ssh root@server_ip_address
-cat id_rsa.pub >> /home/deploy/.ssh/authorized_keys
-```  
-* Next you're going to need to create a database and user for campus flora to use. First, log into the mysql console with mysql -uroot -p and enter the password you set earlier. Then run the following commands:
-```
-#!mysql
-CREATE DATABASE campusflora;
-CREATE USER 'campusflora'@'localhost' IDENTIFIED BY 'your_password';
-GRANT ALL PRIVILEGES ON campusflora.* TO 'campusflora'@'localhost';
-```
-
-### Local modifications ###
-Before you start trying to deploy campus flora you're going to want to make some local modifications to the rails app:  
-
-* Change the ip address listed in config/deploy/production.rb to point to your server  
-* Change the github url in config/deploy.rb to point to your repository if you've forked the repo  
-* Change the URL in config/sitemap.rb to point to the domain you'll be using for the production version of the site  
-* Create the file config/application.yml and set the variables DATABASE_USER, DATABASE_PASSWORD, SECRET_KEY_BASE and DEVISE_SECRET.  
-```
-#!yaml
-# config/application.yml
-development:
-  SECRET_KEY_BASE: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  DEVISE_SECRET: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-production:
-  SECRET_KEY_BASE: YOUR SECRET KEY BASE
-  DEVISE_SECRET: YOUR DEVISE SECRET KEY
-  DATABASE_USER: campusflora
-  DATABASE_PASSWORD: YOUR DATABASE PASSWORD
-```
-__Commit these changes via git and push them to your fork of campus flora (IMPORTANT)__  
-Try deploying with capistrano:
-```
-#!bash
-cap production deploy
-```
-
-If it was a success, the final step is to migrate the initial database.  
-Run the following command:  
-```
-#!bash
-cap production deploy:migrate
-```
-If that was successful, your app should be serving at YOUR_IP_OR_DOMAIN:80. You should be able to login at YOUR_URL/admin with the username 'admin@example.com' and password 'password'. **Please** change this!  
+* Download and configure Docker for your platform (strongly recommend native installation on Mac, see ([https://docs.docker.com/docker-for-mac/](https://docs.docker.com/docker-for-mac/))
+* If you're on Linux or Windows download [docker-compose](https://docs.docker.com/compose/) (it's automatically installed as part of Docker for mac)
+* Clone the repository with `git clone git@bitbucket.org:bio_eru/campusfloraweb.git`
+* Run `docker-compose up` inside the campusfloraweb directory. Docker will take care of the rest, be warned this involves some quite large downloads and may take some time.
+* Run the rails migrations to get the database up to date with `docker-compose run rails rake db:migrate`
+* Navigate to [http://localhost:3000](http://localhost:3000) and you should see the campus flora app.  
+* You should be able to login at localhost:3000/admin with the username 'admin@example.com' and password 'password'. **Please** change this!  
   
 If you have any issues, please don't hesitate to [refer to the wiki.](https://bitbucket.org/bio_eru/campusfloraweb/wiki)
