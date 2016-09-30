@@ -17,7 +17,7 @@
     </div>
     <div class="content">
       <h1 class="title">About</h1>
-      <p>Representing <abbr class="highlight"><%= @species.size %></abbr> species, <abbr class="highlight"><%= @families_count %></abbr> families and <abbr class="highlight"><%= @species_location_count %></abbr> individual plants.</p>
+      <p>Representing <abbr class="highlight"><%= @families_count %></abbr> families, <abbr class="highlight"><%= @species.size %></abbr> species and <abbr class="highlight"><%= @species_location_count %></abbr> individual plants.</p>
       <%= @markdown.render(@page_content.about_page_content).html_safe %> <br />
       <p><a href="http://sydney.edu.au/privacy.shtml" target="_privacy">Privacy Policy</a></p>
     </div>

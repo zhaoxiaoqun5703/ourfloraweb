@@ -7,6 +7,10 @@ ActiveAdmin.register Species do
     def find_resource
       scoped_collection.where(slug: params[:id]).first!
     end
+    def index
+      params[:order] = "families.name_des"
+      super
+    end
   end
 
   # Content for the edit page
@@ -44,15 +48,15 @@ ActiveAdmin.register Species do
         species.family.name
       end
       row :genusSpecies
+      row :authority
       row :commonName
       row :indigenousName
-      row :authority
       row :distribution
-      row :information do
-        markdown.render(species.information).html_safe
-      end
       row :description do
         markdown.render(species.description).html_safe
+      end
+      row :information do
+        markdown.render(species.information).html_safe
       end
     end
 
@@ -87,9 +91,9 @@ ActiveAdmin.register Species do
       species.family.name
     end
     column :genusSpecies
+    column :authority
     column :commonName
     column :indigenousName
-    column :authority
     column :distribution
     column :description
     column :information
@@ -102,9 +106,9 @@ ActiveAdmin.register Species do
   # Define which filters (search criteria) should be available and in what order
   filter :family, as: :select, collection: proc { Family.all.order('name') }
   filter :genusSpecies
+  filter :authority
   filter :commonName
   filter :indigenousName
-  filter :authority
   filter :distribution
   filter :description
   filter :information

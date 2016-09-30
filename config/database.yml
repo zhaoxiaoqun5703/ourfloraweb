@@ -15,9 +15,9 @@ development:
   reconnect: false
   database: campusflora
   pool: 5
-  username: CFDev
-  password: 'Campus Flora Yay!'
-  shost: localhost
+  username: campusflora
+  password: '@U%?38k&#~j)<0J36(4=T9(?h<u(V'
+  shost: <%= CAMPUSFLORAWEB_MYSQL_1_PORT_3306_TCP %>
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
