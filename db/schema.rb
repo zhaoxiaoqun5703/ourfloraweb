@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160930044735) do
+ActiveRecord::Schema.define(version: 20161012225218) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace",     limit: 255
@@ -76,6 +76,8 @@ ActiveRecord::Schema.define(version: 20160930044735) do
     t.integer  "species_id",         limit: 4
     t.string   "genusSpecies",       limit: 255
     t.text     "image_meta",         limit: 65535
+    t.string   "creator",            limit: 255
+    t.string   "copyright_holder",   limit: 255
   end
 
   create_table "page_contents", force: :cascade do |t|
@@ -105,9 +107,11 @@ ActiveRecord::Schema.define(version: 20160930044735) do
     t.integer  "species_id",   limit: 4
     t.decimal  "lat",                      precision: 10, scale: 6
     t.decimal  "lon",                      precision: 10, scale: 6
-    t.datetime "created_at",                                        null: false
-    t.datetime "updated_at",                                        null: false
+    t.datetime "created_at",                                                        null: false
+    t.datetime "updated_at",                                                        null: false
     t.string   "arborplan_id", limit: 255
+    t.boolean  "removed",      limit: 1,                            default: false
+    t.datetime "removal_date"
   end
 
   add_index "species_locations", ["species_id"], name: "index_species_locations_on_species_id", using: :btree

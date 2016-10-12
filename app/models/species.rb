@@ -30,4 +30,8 @@ class Species < ActiveRecord::Base
       write_attribute(:slug, value)
     end
   end
+
+  def display_name
+    genusSpecies
+  end
 end

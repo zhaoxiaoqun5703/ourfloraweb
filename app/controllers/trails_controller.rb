@@ -16,6 +16,31 @@ class TrailsController < ApplicationController
     end
   end
 
+  def show
+    respond_to do |format|
+      # If they're looking at the interface and they specify a trail, load the index anyway but highlight the selected trail
+      format.html {
+        @families = Family.includes(:species).order(:name).load
+        @families = @families.to_json(include: [:species => {:only => :id}])
+        
+        # Render list of all trails and species and push to the view as JSON so that backbone can use it
+        @species = Species.eager_load(:family, :species_locations, :images)
+
+        @trails = Trail.includes(:species).all
+        @trails = @trails.to_json(include: [:species => {:only => :id}])
+
+        @page_title = @species_selected.genusSpecies
+
+        # Initialise a markdown parser that we can use in the view to well, parse markdown
+        @markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true)
+        # Grab the about page content to render
+        @page_content = PageContent.first
+
+        render 'map/index'
+      }
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_trail

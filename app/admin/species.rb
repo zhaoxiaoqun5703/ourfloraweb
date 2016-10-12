@@ -1,5 +1,5 @@
 ActiveAdmin.register Species do
-  permit_params :commonName, :authority, :distribution, :indigenousName, :information, :genusSpecies, :description, :family_id, :slug, species_locations_attributes: [:lat, :lon, :arborplan_id, :id, :_destroy], images_attributes: [:image, :id, :_destroy]
+  permit_params :commonName, :authority, :distribution, :indigenousName, :information, :genusSpecies, :description, :family_id, :slug, species_locations_attributes: [:lat, :lon, :arborplan_id, :removed, :id, :_destroy], images_attributes: [:image, :id, :creator, :copyright_holder, :_destroy]
   remove_filter :species_trails
 
   # Override find resource to get the select species by the friendly slug, rather than int id
@@ -8,7 +8,7 @@ ActiveAdmin.register Species do
       scoped_collection.where(slug: params[:id]).first!
     end
     def index
-      params[:order] = "families.name_desc"
+      params[:order] = "families.name_asc"
       super
     end
   end
@@ -16,15 +16,23 @@ ActiveAdmin.register Species do
   # Content for the edit page
   form :html => { :enctype => "multipart/form-data" } do |f|
     f.semantic_errors # shows errors on :base
+    f.actions # adds the 'Submit' and 'Cancel' buttons
+
     f.inputs 'Details' do
       f.inputs          # builds an input field for every attribute
     end
 
     f.inputs 'Locations' do
-      f.has_many :species_locations, heading: nil, allow_destroy: true, new_record: true do |a|
+      f.has_many :species_locations, heading: nil, allow_destroy: true, allow_update: true, new_record: true do |a|
         a.input :lat
         a.input :lon 
-        a.input :arborplan_id 
+        a.input :arborplan_id
+        if a.object.id
+          a.input :removed, :label => "Mark as removed"
+        end
+        if (a.object.removed)
+          a.input :removal_date, as: :string
+        end
       end
     end
 
@@ -34,6 +42,8 @@ ActiveAdmin.register Species do
                         :required => true,
                         :hint => 'Accepts JPG, GIF, PNG.',
                         :image => proc { |o| o.image.url(:thumb) }
+        a.input :creator
+        a.input :copyright_holder
       end
     end
 
