@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161012225218) do
+ActiveRecord::Schema.define(version: 20161012235901) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace",     limit: 255
@@ -125,10 +125,11 @@ ActiveRecord::Schema.define(version: 20161012225218) do
   add_index "species_trails", ["trail_id"], name: "index_species_trails_on_trail_id", using: :btree
 
   create_table "trails", force: :cascade do |t|
-    t.text     "name",       limit: 65535
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
-    t.string   "slug",       limit: 255
+    t.text     "name",        limit: 65535
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.string   "slug",        limit: 255
+    t.text     "information", limit: 65535
   end
 
   create_table "users", force: :cascade do |t|

@@ -377,6 +377,8 @@ html {
             text-align: left;
             padding: 15px 18px 15px 20px;
             cursor: pointer;
+            display: flex;
+            align-items: center;
             @include backgroundHover($button-colour, 3%);
             @include backgroundClick($button-colour, 6%);
             @include unselectable();
@@ -391,8 +393,7 @@ html {
             }
 
             .title {
-              display: inline-block;
-              vertical-align: middle;
+              flex-grow: 1;
             }
 
             .checkbox {
@@ -422,7 +423,21 @@ html {
                 }
               }
             } // .checkbox
-          } // .family-row
+
+            .information {
+              width: 28px;
+              height: 28px;
+              color: #fff;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              overflow: hidden;
+              line-height: 1;
+              @include backgroundHover(lighten($button-colour, 10%));
+              @include backgroundClick(lighten($button-colour, 10%));
+              @include roundCornerAll(30px);
+            }
+          } // .family-row, .trail-row
         } // .menu-content-container
       } // .menu-content
     } // .side-menu

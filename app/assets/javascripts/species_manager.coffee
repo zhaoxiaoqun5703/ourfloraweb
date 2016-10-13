@@ -44,7 +44,7 @@
     className: if IS_MOBILE then 'popover-inner-mobile' else 'popover-inner'
     id: 'popover-inner'
     # Select the underscore template to use, found in view/_map.html.erb
-    template: _.template($('#popover-template').html())
+    template: _.template($('#species-popover-template').html())
 
     events:
       'click .picture': 'fullscreenPicture'
@@ -71,9 +71,9 @@
     # Fade out the overlay and set display to none to prevent invisible z index problems
     closeOverlay: ->
       self = @
-      $('#overlay-dark, #popover-outer').removeClass('selected')
+      $('#overlay-dark-species, #popover-outer').removeClass('selected')
       setTimeout ->
-        $('#overlay-dark,#popover-outer').css('display', 'none')
+        $('#overlay-dark-species,#popover-outer').css('display', 'none')
         # After we've faded out the popover, remove it from the DOM
         self.remove()
       , 200
@@ -99,10 +99,10 @@
       # Cache self to use inside the timeout block
       self = @
       # Set display to block from none
-      $('#overlay-dark,#popover-outer').css('display', 'block')
+      $('#overlay-dark-species,#popover-outer').css('display', 'block')
       # After a delay of 50 ms, add the class to allow the CSS transition to kick in at the next render loop
       setTimeout ->
-        $('#overlay-dark,#popover-outer').addClass('selected')
+        $('#overlay-dark-species,#popover-outer').addClass('selected')
         # Initialize the share widget
         new Share ".share-button", 
           url: "campusflora.sydneybiology.org/species/#{self.model.get('slug')}"
@@ -134,7 +134,7 @@
 
       @parentModel = parentModel
       # Define google maps info window (little box that pops up when you click a marker)
-      infoTemplate = _.template($('#infobox-template').html())
+      infoTemplate = _.template($('#species-infobox-template').html())
       # Add arborplan id to our attributes
       attributes = @parentModel.attributes
       attributes['arborplan_id'] = @model.get('arborplan_id')
@@ -440,6 +440,87 @@
         model.trigger('hide')
   )
 
+  # View for selected species shown in the center of the screen
+  TrailPopoverView = Backbone.View.extend(
+    # Id and class name for popover view
+    className: if IS_MOBILE then 'popover-inner-mobile' else 'popover-inner'
+    id: 'popover-inner'
+    # Select the underscore template to use, found in view/_map.html.erb
+    template: _.template($('#trail-popover-template').html())
+
+    events:
+      'click .picture': 'fullscreenPicture'
+
+    initialize: ->
+      self = @
+
+      # Don't close the window if the user clicked inside, only if they clicked on the grey part outside
+      $('#popover-outer').on 'click', '#popover-inner', (e) ->
+        e.stopPropagation()
+
+      $('#popover-outer').on 'click', (e) ->
+        self.closeOverlay()
+
+    # Define javascript events for popover
+    events:
+      'click #overlay-close' : 'closeOverlay'
+      'click #highlight-map' : 'showOnMap'
+
+    # Open a picture in a new tab
+    fullscreenPicture: (e) ->
+      # window.open(url,'_blank');
+
+    # Fade out the overlay and set display to none to prevent invisible z index problems
+    closeOverlay: ->
+      self = @
+      $('#overlay-dark-trail, #popover-outer').removeClass('selected')
+      setTimeout ->
+        $('#overlay-dark-trail,#popover-outer').css('display', 'none')
+        # After we've faded out the popover, remove it from the DOM
+        self.remove()
+      , 200
+
+    # Highlights the popover species on the map
+    showOnMap: ->
+      # Hide all markers
+      _familyOuterListView.hideAll()
+
+      @model.trigger('toggleTrail')
+      @closeOverlay()
+
+      # Close the side menu when exiting the overlay if we're on mobile
+      if IS_MOBILE
+        $('#expand-menu').removeClass('selected')
+        $('#inner-container').removeClass('menu-visible')
+
+    render: ->
+      # Render the element from the template and model
+      @$el.html @template(@model.toJSON())
+      # Cache self to use inside the timeout block
+      self = @
+      # Set display to block from none
+      $('#overlay-dark-trail,#popover-outer').css('display', 'block')
+      # After a delay of 50 ms, add the class to allow the CSS transition to kick in at the next render loop
+      setTimeout ->
+        $('#overlay-dark-trail,#popover-outer').addClass('selected')
+        # Initialize the share widget
+        new Share ".share-button", 
+          url: "campusflora.sydneybiology.org/trails/#{self.model.get('slug')}"
+          title: "#{self.model.get('name')}"
+          description: "#{self.model.get('name')} @campusflora - campusflora.sydneybiology.org/trails/#{self.model.get('slug')}"
+          ui:
+            button_text: 'Share'
+          networks:
+            facebook:
+              image: "http://campusflora.sydneybiology.org/#{IMG_NOT_FOUND_ORIGINAL}"
+            pinterest:
+              enabled: false
+            twitter:
+              description: "I found #{self.model.get('name')} on campus! via @CampusFloraOz campusflora.sydneybiology.org/trails/#{self.model.get('slug')}"
+      , 50
+      this
+  )
+
   # The view for each row in the trails menu
   TrailListView = Backbone.View.extend(
     # Set class name for generated view
@@ -450,13 +531,24 @@
     template: _.template($('#trail-row-template').html())
     # Define javascript events
     events:
+      'click .information' : 'showPopover'
       'click' : 'toggleTrail'
 
     initialize: ->
+      @model.on 'toggleTrail', @toggleTrail, @
       @render()
 
+    # When clicked, show the central popover with the corresponding data
+    showPopover: (event) ->
+      # Pass the location of the selected species to the model so the user can tweet about it
+      @model.set('tweetLocation', _recentLocation)
+      popover = new TrailPopoverView({model: @model})
+      $('#popover-outer').append(popover.render().el)
+      # TODO: push a new browser history state to navigate to this species
+      event.stopImmediatePropagation();
+
     # Hides / displays the species managed by this family on the map
-    toggleTrail: ->
+    toggleTrail: (event) ->
       # If it's already selected, toggle off by removing selected class from the checkbox inside this view
       if @$el.find('.checkbox').hasClass('selected')
         @$el.find('.checkbox').removeClass('selected')
@@ -566,7 +658,6 @@
 
     # Define methods to be run at initialization time
     initialize: ->
-      # try the below, see if it works!
       locArr = window.location.href.split("/")
       slug = locArr[4]
       console.log(slug)
@@ -628,6 +719,27 @@
       $('#popover-outer').append(popover.render().el)
   )
 
+  # Species Detail View
+  DetailTrailView = Backbone.View.extend(
+    el: '#detail-trail'
+
+    # Define methods to be run at initialization time
+    initialize: ->
+      locArr = window.location.href.split("/")
+      slug = locArr[4]
+      @model = new TrailModel(_.find _trailsRaw, (trail) -> trail.slug == slug)
+
+      @render()
+
+    render: ->
+      @showPopover()
+
+    showPopover: ->
+      # Pass the location of the selected species to the model so the user can tweet about it
+      popover = new TrailPopoverView({model: @model})
+      $('#popover-outer').append(popover.render().el)
+  )
+
   # SpeciesManager.initialize() is the only exported member variable, it will initialize the backbone objects, pull data
   # and set up the collection
   initialize: (species, trails, families, map) ->
@@ -643,6 +755,9 @@
 
     if (window.location.href.indexOf("species") > -1)
       detail = new DetailSpeciesView()
+
+    if (window.location.href.indexOf("trails") > -1)
+      detail = new DetailTrailView()
 
     # Init markerClusterer to group close maps markers together
     # _markerClusterer = new MarkerClusterer(map, _markers, {gridSize: 30, maxZoom: 18, minimumClusterSize:4})

@@ -1,5 +1,5 @@
 ActiveAdmin.register Trail do
-  permit_params :name, :slug, species_trails_attributes: [:species_id, :trail_id, :id, :_destroy]
+  permit_params :name, :slug, :information, species_trails_attributes: [:species_id, :trail_id, :id, :_destroy]
   remove_filter :species_trails
 
   controller do
@@ -31,6 +31,7 @@ ActiveAdmin.register Trail do
     attributes_table do
       row :name
       row :slug
+      row :information
     end
 
     panel 'Species' do

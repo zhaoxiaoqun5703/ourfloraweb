@@ -29,7 +29,7 @@ class TrailsController < ApplicationController
         @trails = Trail.includes(:species).all
         @trails = @trails.to_json(include: [:species => {:only => :id}])
 
-        @page_title = @species_selected.genusSpecies
+        @page_title = @trail_selected.name
 
         # Initialise a markdown parser that we can use in the view to well, parse markdown
         @markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true)
@@ -44,7 +44,8 @@ class TrailsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_trail
-      @trail = Trail.find(params[:id])
+      puts params[:id]
+      @trail_selected = Trail.friendly.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

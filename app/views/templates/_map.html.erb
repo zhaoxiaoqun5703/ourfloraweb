@@ -1,4 +1,4 @@
-<script type="text/template" id="popover-template">
+<script type="text/template" id="species-popover-template">
   <% unless (browser.mobile? || browser.tablet?) %><i id="overlay-close" class="icon-cancel"></i><% end %>
   <div class="images">
     <@ if (images.length == 0) { @>
@@ -33,7 +33,7 @@
   </div>
 </script>
 
-<script type="text/template" id="infobox-template">
+<script type="text/template" id="species-infobox-template">
   <div class="species-infobox-outer">
     <div class="species-infobox" id="infobox-<@= id @>">
       <img class="list-image<@ print(images.length > 0 ? '' : ' no-image') @>" src="<@ print(images.length > 0 ? (IS_RETINA ? images[0].image_url_thumb_retina : images[0].image_url_thumb) : IMG_NOT_FOUND_SMALL) @>">
@@ -44,5 +44,16 @@
       </div>
       <%= image_tag 'disclosure-indicator-dark.png', class: 'disclosure-indicator' %>
     </div>
+  </div>
+</script>
+
+<script type="text/template" id="trail-popover-template">
+  <% unless (browser.mobile? || browser.tablet?) %><i id="overlay-close" class="icon-cancel"></i><% end %>
+  <div class="content">
+    <% if (browser.mobile? || browser.tablet?) %><i id="overlay-close" class="icon-cancel mobile"></i><% end %>
+    <div class="title"><em><@= name @></em></div>
+    <div id="highlight-map" class="map-view"><i class="icon-location"></i>View trail on map</div>
+    <% unless (browser.mobile? || browser.tablet?) %><div class="share-button"></div><% end %>
+    <div class="information"><abbr class="heading">Information</abbr><br /><@= markdown.toHTML(information) @></div>
   </div>
 </script>
