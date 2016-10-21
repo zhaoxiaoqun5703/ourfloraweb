@@ -10,6 +10,7 @@
   _familiesRaw = null
 
   _map = null
+  _trailPath = null
   # Store a reference to the currently open google maps pin window
   _openInfoBox = null
   # Store a reference to the most recently selected location so that we can place it in a tweet
@@ -138,6 +139,7 @@
       # Add arborplan id to our attributes
       attributes = @parentModel.attributes
       attributes['arborplan_id'] = @model.get('arborplan_id')
+      attributes['id'] = @model.get('id')
 
       # Initialize the little popup box when you click the marker
       @infoBox = new InfoBox(
@@ -156,6 +158,8 @@
         map: _map
         title: @parentModel.get('genusSpecies')
       )
+
+      @marker.attributes = @model.attributes
 
       _markers.push @marker
 
@@ -429,12 +433,15 @@
       @collection.each (model) ->
         model.trigger('show')
 
+      if _trailPath then _trailPath.setMap(null)
+
     hideAll: ->
       # First, hide all markers
       for marker in _markers
         marker.setMap(null)
         closeInfoBox(_openInfoBox)
 
+      if _trailPath then _trailPath.setMap(null)
       # Then, uncheck all selected families
       @collection.each (model) ->
         model.trigger('hide')
@@ -562,13 +569,26 @@
         # Remove all markers from the map
         _familyOuterListView.hideAll()
 
-        # Show all markers that are associated with this trail
-        for speciesObject in @model.get('species')
-          for speciesModel in _speciesOuterListView.collection.where({id: speciesObject.id})
-            speciesModel.trigger('show')
+        for mapMarker in _markers
+          mapMarker.setMap(null)
 
-            for familyModel in _familyOuterListView.collection.where({id: speciesModel.get('family').id})
-              familyModel.trigger('show')
+        # Show all markers that are associated with this trail
+        locations = _.map @model.get('species_locations'), (location) ->
+          console.log(location)
+          return new google.maps.LatLng(location.lat, location.lon)
+
+        _trailPath = new google.maps.Polyline({
+          path: locations,
+          strokeColor: "#FF0000",
+          strokeOpacity: 1.0,
+          strokeWeight: 4
+        });
+
+        _trailPath.setMap(_map)
+
+        for speciesLocationObject in @model.get('species_locations')
+          for mapMarker in _markers
+            if speciesLocationObject.id == mapMarker.attributes.id then mapMarker.setMap(_map)
 
         @$el.find('.checkbox').addClass('selected')
 

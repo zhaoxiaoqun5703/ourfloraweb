@@ -1,6 +1,6 @@
 ActiveAdmin.register Trail do
-  permit_params :name, :slug, :information, species_trails_attributes: [:species_id, :trail_id, :id, :_destroy]
-  remove_filter :species_trails
+  permit_params :name, :slug, :information, species_location_trails_attributes: [:id, :species_location_id, :trail_id, :_destroy]
+  remove_filter :species_location_trails
 
   controller do
     def find_resource
@@ -14,9 +14,9 @@ ActiveAdmin.register Trail do
       f.inputs          # builds an input field for every attribute
     end
 
-    f.inputs 'Species' do
-      f.has_many :species_trails, heading: "Species", allow_destroy: true, new_record: true do |a|
-        a.input :species_id, :label => 'Genus Species', :as => :select, :collection => Species.all.order(:genusSpecies).map{|s| ["#{s.genusSpecies}", s.id]}
+    f.inputs 'Individual Plants' do
+      f.has_many :species_location_trails, heading: "Individual Plants", allow_destroy: true, new_record: true do |a|
+        a.input :species_location_id, :label => 'Plant (Species Location) ID', :as => :select, :collection => SpeciesLocation.all.order(:arborplan_id).map{|s| ["ID: #{s.id} - Arborplan ID: #{s.arborplan_id} - #{s.species.genusSpecies}", s.id]}
       end
     end
 
@@ -34,11 +34,12 @@ ActiveAdmin.register Trail do
       row :information
     end
 
-    panel 'Species' do
-      table_for trail.species do
+    panel 'Individual Plants' do
+      table_for trail.species_locations do
         column 'ID', :id
-        column 'Genus Species', :genusSpecies
-        column 'Common Name', :commonName
+        column 'Arborplan ID', :arborplan_id
+        column 'Latitude', :lat
+        column 'Longitude', :lon
       end
     end
 
