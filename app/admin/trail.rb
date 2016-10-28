@@ -9,6 +9,7 @@ ActiveAdmin.register Trail do
   end
 
   form do |f|
+    f.actions # adds the 'Submit' and 'Cancel' buttons
     f.semantic_errors # shows errors on :base
     f.inputs 'Details' do
       f.inputs          # builds an input field for every attribute

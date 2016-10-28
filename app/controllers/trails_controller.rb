@@ -26,8 +26,8 @@ class TrailsController < ApplicationController
         # Render list of all trails and species and push to the view as JSON so that backbone can use it
         @species = Species.eager_load(:family, :species_locations, :images)
 
-        @trails = Trail.includes(:species).all
-        @trails = @trails.to_json(include: [:species => {:only => :id}])
+        @trails = Trail.includes(:species_locations).all
+        @trails = @trails.to_json(include: [:species_locations => {:only => [:id, :lat, :lon]}])
 
         @page_title = @trail_selected.name
 

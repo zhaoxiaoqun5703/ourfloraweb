@@ -1,7 +1,7 @@
 class MapController < ApplicationController
   def index
     # Render list of all species, trails and families and push to the view as JSON so that backbone can use it
-    @species = Species.eager_load(:family, :species_locations, :images)
+    @species = Species.eager_load(:family, :species_locations, :images).where("species_locations.removed = false")
     @species_location_count = SpeciesLocation.count
 
     @families = Family.includes(:species).order(:name).load
