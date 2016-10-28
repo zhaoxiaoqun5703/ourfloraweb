@@ -17,7 +17,7 @@ ActiveAdmin.register Trail do
 
     f.inputs 'Individual Plants' do
       f.has_many :species_location_trails, heading: "Individual Plants", allow_destroy: true, new_record: true do |a|
-        a.input :species_location_id, :label => 'Plant (Species Location) ID', :as => :select, :collection => SpeciesLocation.all.order(:arborplan_id).map{|s| ["ID: #{s.id} - Arborplan ID: #{s.arborplan_id} - #{s.species.genusSpecies}", s.id]}
+        a.input :species_location_id, :label => 'Plant (Species Location) ID', :as => :select, :collection => SpeciesLocation.all.order(:arborplan_id).map{|s| ["ID: #{s.id} - Arborplan ID: #{s.arborplan_id} - #{s.species && s.species.genusSpecies} (#{s.lat}, #{s.lon})", s.id]}
       end
     end
 

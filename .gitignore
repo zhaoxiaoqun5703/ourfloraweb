@@ -13,6 +13,8 @@ capybara-*.html
 
 .DS_Store
 
+tmp/*
+
 /public/assets
 
 /db/*.sqlite3
