@@ -13,5 +13,6 @@ class SpeciesLocation < ActiveRecord::Base
       self.removal_date = null
       self.save()
     end
+    Rails.cache.clear
   end
 end
