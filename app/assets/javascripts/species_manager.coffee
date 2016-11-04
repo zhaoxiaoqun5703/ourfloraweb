@@ -125,6 +125,91 @@
       this
   )
 
+  SpeciesLocationPopoverView = Backbone.View.extend(
+    # Id and class name for popover view
+    className: if IS_MOBILE then 'popover-inner-mobile' else 'popover-inner'
+    id: 'popover-inner'
+    # Select the underscore template to use, found in view/_map.html.erb
+    template: _.template($('#species-location-popover-template').html())
+
+    events:
+      'click .picture': 'fullscreenPicture'
+
+    initialize: ->
+      self = @
+
+      # Don't close the window if the user clicked inside, only if they clicked on the grey part outside
+      $('#popover-outer').on 'click', '#popover-inner', (e) ->
+        e.stopPropagation()
+
+      $('#popover-outer').on 'click', (e) ->
+        self.closeOverlay()
+
+    # Define javascript events for popover
+    events:
+      'click #overlay-close' : 'closeOverlay'
+      'click #highlight-map' : 'showOnMap'
+
+    # Open a picture in a new tab
+    fullscreenPicture: (e) ->
+      window.open(url,'_blank');
+
+    # Fade out the overlay and set display to none to prevent invisible z index problems
+    closeOverlay: ->
+      self = @
+      $('#overlay-dark-species, #popover-outer').removeClass('selected')
+      setTimeout ->
+        $('#overlay-dark-species,#popover-outer').css('display', 'none')
+        # After we've faded out the popover, remove it from the DOM
+        self.remove()
+      , 200
+
+    # Highlights the popover species on the map
+    showOnMap: ->
+      # Hide all markers
+      _familyOuterListView.hideAll()
+
+      # Show markers for this species
+      @model.get('backboneModel').trigger('show')
+      @model.get('backboneModel').trigger('fitMapToScreen')
+      @closeOverlay()
+
+      # Close the side menu when exiting the overlay if we're on mobile
+      if IS_MOBILE
+        $('#expand-menu').removeClass('selected')
+        $('#inner-container').removeClass('menu-visible')
+
+    render: ->
+      # Render the element from the template and model
+      @$el.html @template(@model.toJSON())
+      # Cache self to use inside the timeout block
+      self = @
+      # Set display to block from none
+      $('#overlay-dark-species,#popover-outer').css('display', 'block')
+      # After a delay of 50 ms, add the class to allow the CSS transition to kick in at the next render loop
+      setTimeout ->
+        $('#overlay-dark-species,#popover-outer').addClass('selected')
+        # Initialize the share widget
+        new Share ".share-button", 
+          url: "campusflora.sydneybiology.org/species/#{self.model.get('slug')}"
+          title: "#{self.model.get('genusSpecies')}"
+          description: "#{self.model.get('genusSpecies')} @campusflora - campusflora.sydneybiology.org/species/#{self.model.get('slug')}"
+          ui:
+            button_text: 'Share'
+          networks:
+            facebook:
+              image: "http://campusflora.sydneybiology.org/#{if self.model.get('images').length > 0 then self.model.get('images')[0].image_url else IMG_NOT_FOUND_ORIGINAL}"
+            pinterest:
+              enabled: false
+            twitter:
+              description: "I found #{self.model.get('genusSpecies')} on campus! via @CampusFloraOz campusflora.sydneybiology.org/species/#{self.model.get('slug')}"
+        # Bind photoswipe on the image gallery
+        if self.model.get('images').length > 0
+          bindPhotoSwipe '.images'
+      , 50
+      this
+  )
+
   SpeciesMapView = Backbone.View.extend(
     # Cache the parent model so we can access species data in each sub location
     parentModel: null
@@ -137,7 +222,10 @@
       # Define google maps info window (little box that pops up when you click a marker)
       infoTemplate = _.template($('#species-infobox-template').html())
       # Add arborplan id to our attributes
-      attributes = @parentModel.attributes
+      attributes = _.extend({}, @parentModel.attributes, @model.attributes)
+      attributes.species_information = @parentModel.get('information')
+      attributes.location_information = @model.get('information')
+      attributes.backboneModel = @parentModel
       attributes['arborplan_id'] = @model.get('arborplan_id')
       attributes['id'] = @model.get('id')
 
@@ -175,7 +263,9 @@
       # Bind the click event on the new infobox to show the popover
       google.maps.event.addListener @infoBox, 'domready', ->
         $("#infobox-#{self.model.get('id')}").on 'click', ->
-          listView.showPopover()
+          self.model.set('tweetLocation', _recentLocation)
+          popover = new SpeciesLocationPopoverView({model: new SpeciesModel(attributes)})
+          $('#popover-outer').append(popover.render().el)
 
     # Methods for hiding and showing google maps markers
     hideMarker: ->

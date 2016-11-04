@@ -7,7 +7,7 @@ ActiveAdmin.setup do |config|
   config.site_title = "Campusflora"
 
   # Set the multipart limit so large forms don't crash
-  Rack::Utils.multipart_part_limit = 512
+  Rack::Utils.multipart_part_limit = 0
 
   # Set the link url for the title. For example, to take
   # users to your main site. Defaults to no link.
