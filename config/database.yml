@@ -33,4 +33,3 @@ production:
   password: <%= ENV['DATABASE_PASSWORD'] %>
   host: <%= ENV['CAMPUSFLORAWEB_MYSQL_1_PORT_3306_TCP_ADDR'] %>
   port: <%= ENV['CAMPUSFLORAWEB_MYSQL_1_PORT_3306_TCP_PORT'] %>
-

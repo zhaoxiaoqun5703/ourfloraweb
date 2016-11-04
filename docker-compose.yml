@@ -7,6 +7,8 @@ rails:
    - .:/home/app/campusflora
   links:
    - mysql
+  environment:
+   - RAILS_SERVE_STATIC_FILES=true
 mysql:
   build: .
   dockerfile: ./docker/Dockerfile-mysql
