@@ -31,4 +31,6 @@ production:
   pool: 5
   username: <%= ENV['DATABASE_USER'] %>
   password: <%= ENV['DATABASE_PASSWORD'] %>
-  shost: <%= ENV['CAMPUSFLORAWEB_MYSQL_1_PORT_3306_TCP'] %>
+  host: <%= ENV['CAMPUSFLORAWEB_MYSQL_1_PORT_3306_TCP_ADDR'] %>
+  port: <%= ENV['CAMPUSFLORAWEB_MYSQL_1_PORT_3306_TCP_PORT'] %>
+
