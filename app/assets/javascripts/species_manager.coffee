@@ -67,7 +67,7 @@
 
     # Open a picture in a new tab
     fullscreenPicture: (e) ->
-      # window.open(url,'_blank');
+      window.open(url,'_blank');
 
     # Fade out the overlay and set display to none to prevent invisible z index problems
     closeOverlay: ->
@@ -174,7 +174,7 @@
       
       # Bind the click event on the new infobox to show the popover
       google.maps.event.addListener @infoBox, 'domready', ->
-        $("#infobox-#{self.parentModel.id}").on 'click', ->
+        $("#infobox-#{self.model.get('id')}").on 'click', ->
           listView.showPopover()
 
     # Methods for hiding and showing google maps markers
@@ -574,8 +574,9 @@
 
         # Show all markers that are associated with this trail
         locations = _.map @model.get('species_locations'), (location) ->
-          console.log(location)
           return new google.maps.LatLng(location.lat, location.lon)
+
+        locations.push locations[0] # Make sure the line connects into a full polygon
 
         _trailPath = new google.maps.Polyline({
           path: locations,
@@ -680,7 +681,6 @@
     initialize: ->
       locArr = window.location.href.split("/")
       slug = locArr[4]
-      console.log(slug)
       coll = new speciesCollection(_speciesRaw)
       @model = coll.find (mod) ->
         return slug.toLowerCase() is mod.get('slug')

@@ -26,7 +26,8 @@ ActiveAdmin.register Species do
       f.has_many :species_locations, heading: nil, allow_destroy: true, allow_update: true, new_record: true do |a|
         a.input :lat
         a.input :lon 
-        a.input :arborplan_id
+        a.input :arborplan_id, :label => 'Arborplan ID'
+        a.input :information
         if a.object.id
           a.input :removed, :label => "Mark as removed"
         end
@@ -76,6 +77,7 @@ ActiveAdmin.register Species do
         column 'Arborplan ID', :arborplan_id
         column 'Latitude', :lat
         column 'Longitude', :lon
+        column 'Information', :information
       end
     end
 
