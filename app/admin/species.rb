@@ -19,13 +19,21 @@ ActiveAdmin.register Species do
     f.actions # adds the 'Submit' and 'Cancel' buttons
 
     f.inputs 'Details' do
-      f.inputs          # builds an input field for every attribute
+      f.input :family
+      f.input :genusSpecies
+      f.input :commonName
+      f.input :indigenousName
+      f.input :authority
+      f.input :distribution
+      f.input :description
+      f.input :information
+      f.input :slug
     end
 
     f.inputs 'Locations' do
       f.has_many :species_locations, heading: nil, allow_destroy: true, allow_update: true, new_record: true do |a|
         a.input :lat
-        a.input :lon 
+        a.input :lon
         a.input :arborplan_id, :label => 'Arborplan ID'
         a.input :information
         if a.object.id
