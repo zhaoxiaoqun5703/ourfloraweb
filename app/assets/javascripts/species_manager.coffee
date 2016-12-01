@@ -105,7 +105,7 @@
       setTimeout ->
         $('#overlay-dark-species,#popover-outer').addClass('selected')
         # Initialize the share widget
-        new Share ".share-button", 
+        new Share ".share-button",
           url: "campusflora.sydneybiology.org/species/#{self.model.get('slug')}"
           title: "#{self.model.get('genusSpecies')}"
           description: "#{self.model.get('genusSpecies')} @campusflora - campusflora.sydneybiology.org/species/#{self.model.get('slug')}"
@@ -190,7 +190,7 @@
       setTimeout ->
         $('#overlay-dark-species,#popover-outer').addClass('selected')
         # Initialize the share widget
-        new Share ".share-button", 
+        new Share ".share-button",
           url: "campusflora.sydneybiology.org/species/#{self.model.get('slug')}"
           title: "#{self.model.get('genusSpecies')}"
           description: "#{self.model.get('genusSpecies')} @campusflora - campusflora.sydneybiology.org/species/#{self.model.get('slug')}"
@@ -213,7 +213,7 @@
   SpeciesMapView = Backbone.View.extend(
     # Cache the parent model so we can access species data in each sub location
     parentModel: null
-      
+
     # Initialize google maps objects and set the parent model
     initMapComponents: (parentModel, listView) ->
       self = @
@@ -259,7 +259,7 @@
         _recentLocation = "(#{self.model.get('lat')}, #{self.model.get('lon')})"
         # Prevent the event from bubbling up so the infoBox will stay open
         return false
-      
+
       # Bind the click event on the new infobox to show the popover
       google.maps.event.addListener @infoBox, 'domready', ->
         $("#infobox-#{self.model.get('id')}").on 'click', ->
@@ -339,7 +339,7 @@
       # Fit boundaries
       _map.fitBounds bounds
       # Remove one zoom level to ensure no marker is on the edge.
-      #_map.setZoom(_map.getZoom() - 1) 
+      #_map.setZoom(_map.getZoom() - 1)
       # Set a minimum zoom to prevent excessive zoom in if there's only 1 marker
       if _map.getZoom() > 19 then _map.setZoom 19
       # Set a max zoom to prevent excessive zoom if the markers are across a wide area
@@ -461,7 +461,7 @@
     toggleFamily: ->
       # Remove selected class from the checkbox inside this view
       if @selected then @$el.find('.checkbox').removeClass 'selected' else @$el.find('.checkbox').addClass 'selected'
-        
+
       # Loop through and hide or show the species markers
       speciesModels = []
       for speciesObject in @model.get('species')
@@ -601,7 +601,7 @@
       setTimeout ->
         $('#overlay-dark-trail,#popover-outer').addClass('selected')
         # Initialize the share widget
-        new Share ".share-button", 
+        new Share ".share-button",
           url: "campusflora.sydneybiology.org/trails/#{self.model.get('slug')}"
           title: "#{self.model.get('name')}"
           description: "#{self.model.get('name')} @campusflora - campusflora.sydneybiology.org/trails/#{self.model.get('slug')}"
@@ -664,18 +664,29 @@
 
         # Show all markers that are associated with this trail
         locations = _.map @model.get('species_locations'), (location) ->
-          return new google.maps.LatLng(location.lat, location.lon)
+          return {
+            location: "#{location.lat}, #{location.lon}",
+            stopover: false
+          }
 
-        locations.push locations[0] # Make sure the line connects into a full polygon
+        # Instantiate a directions service.
+        directionsService = new google.maps.DirectionsService
+        directionsDisplay = new google.maps.DirectionsRenderer({
+          map: _map
+        })
 
-        _trailPath = new google.maps.Polyline({
-          path: locations,
-          strokeColor: "#FF0000",
-          strokeOpacity: 1.0,
-          strokeWeight: 4
-        });
-
-        _trailPath.setMap(_map)
+        directionsService.route({
+          origin: locations[0].location
+          destination: locations[locations.length - 1].location
+          waypoints: locations,
+          optimizeWaypoints: true,
+          travelMode: 'WALKING'
+        }, (response, status) ->
+          if status == 'OK'
+            directionsDisplay.setDirections(response)
+          else
+            window.alert('Directions request failed due to ' + status)
+        )
 
         for speciesLocationObject in @model.get('species_locations')
           for mapMarker in _markers
@@ -737,7 +748,7 @@
     # Use the species model
     model: SpeciesModel
     # Specify fields to search with Lunr full text search
-    lunroptions: 
+    lunroptions:
       fields: [
           { name: "genusSpecies", boost: 10 }
           { name: "commonName", boost: 5 }
@@ -898,4 +909,3 @@
     # Hide current marker if there is one when clicking on map
     google.maps.event.addListener _map, "click", ->
       closeInfoBox(_openInfoBox)
-      
