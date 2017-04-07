@@ -9,6 +9,13 @@ ActiveAdmin.setup do |config|
   # Set the multipart limit so large forms don't crash
   Rack::Utils.multipart_part_limit = 0
 
+  config.register_stylesheet 'trail_designer.css'
+  config.register_javascript 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBy6VlcDNRvb7tjqoPVpiWSMhuV6InfFFA'
+  config.register_javascript 'https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js'
+  config.register_stylesheet 'https://cdn.linearicons.com/free/1.0.0/icon-font.min.css'
+  config.register_javascript 'Sortable.js'
+  config.register_javascript 'infobox.js'
+
   # Set the link url for the title. For example, to take
   # users to your main site. Defaults to no link.
   #
