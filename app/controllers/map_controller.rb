@@ -8,8 +8,8 @@ class MapController < ApplicationController
     @families_count = Family.count
     @families = @families.to_json(include: [:species => {:only => :id}])
 
-    @trails = Trail.includes(:species_locations).all
-    @trails = @trails.to_json(include: [:species_locations => {:only => [:id, :lat, :lon]}])
+    @trails = Trail.includes(:species_location_trails).includes(:trail_points).all
+    @trails = @trails.to_json(include: [:species_location_trails, :trail_points])
 
     # Initialise a markdown parser that we can use in the view to well, parse markdown
     @markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true)

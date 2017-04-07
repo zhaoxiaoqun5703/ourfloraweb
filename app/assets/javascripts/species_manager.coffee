@@ -11,6 +11,7 @@
 
   _map = null
   _trailPath = null
+  _trailPoints = []
   # Store a reference to the currently open google maps pin window
   _openInfoBox = null
   # Store a reference to the most recently selected location so that we can place it in a tweet
@@ -653,6 +654,24 @@
         _familyOuterListView.selectAll()
 
       else
+        # Re draw the line between the points on the trail
+        drawTrailLine = () =>
+          if (_trailPath)
+            _trailPath.setMap(null)
+            _trailPath = null
+
+          _trailPath = new google.maps.Polyline
+            strokeColor: '#69D2E7'
+            strokeOpacity: 1.0
+            strokeWeight: 5
+
+          path = _trailPath.getPath()
+
+          for point in _trailPoints
+            path.push(point.getPosition())
+
+          _trailPath.setMap(_map)
+
         # Unselect all other trails
         @$el.parent().find('.trail-row .checkbox').removeClass('selected')
 
@@ -662,36 +681,30 @@
         for mapMarker in _markers
           mapMarker.setMap(null)
 
-        # Show all markers that are associated with this trail
-        locations = _.map @model.get('species_locations'), (location) ->
-          return {
-            location: "#{location.lat}, #{location.lon}",
-            stopover: false
-          }
+        for mapMarker in _trailPoints
+          mapMarker.setMap(null)
 
-        # Instantiate a directions service.
-        directionsService = new google.maps.DirectionsService
-        directionsDisplay = new google.maps.DirectionsRenderer({
-          map: _map
-        })
+        _trailPoints = []
 
-        directionsService.route({
-          origin: locations[0].location
-          destination: locations[locations.length - 1].location
-          waypoints: locations,
-          optimizeWaypoints: true,
-          travelMode: 'WALKING'
-        }, (response, status) ->
-          if status == 'OK'
-            directionsDisplay.setDirections(response)
-          else
-            window.alert('Directions request failed due to ' + status)
-        )
+        # Push all the points into a polyline
+        for point in @model.get('points')
+          if point.type == 'species'
+            for mapMarker in _markers
+              if point.species_location_id == mapMarker.attributes.id
+                mapMarker.setMap(_map)
+                _trailPoints.push(mapMarker)
+          else if point.type == 'point'
+            marker = new google.maps.Marker
+              map: _map
+              animation: google.maps.Animation.DROP
+              position:
+                lat: parseFloat(point.lat)
+                lng: parseFloat(point.lon)
+              icon: 'http://maps.google.com/mapfiles/kml/paddle/blu-circle-lv.png'
 
-        for speciesLocationObject in @model.get('species_locations')
-          for mapMarker in _markers
-            if speciesLocationObject.id == mapMarker.attributes.id then mapMarker.setMap(_map)
+            _trailPoints.push(marker)
 
+        drawTrailLine()
         @$el.find('.checkbox').addClass('selected')
 
     render: ->
@@ -869,6 +882,20 @@
     _trailsRaw = trails
     _familiesRaw = families
     _map = map
+    i = 0
+    while i < _trailsRaw.length
+      _trailsRaw[i].points = []
+      j = 0
+      while j < _trailsRaw[i].trail_points.length
+        _trailsRaw[i].trail_points[j].type = 'point'
+        _trailsRaw[i].points[_trailsRaw[i].trail_points[j].order] = _trailsRaw[i].trail_points[j]
+        j++
+      j = 0
+      while j < _trailsRaw[i].species_location_trails.length
+        _trailsRaw[i].species_location_trails[j].type = 'species'
+        _trailsRaw[i].points[_trailsRaw[i].species_location_trails[j].order] = _trailsRaw[i].species_location_trails[j]
+        j++
+      i++
     # Create a new list view to kick off species and trail management via backbone
     _familyOuterListView = new FamilyOuterListView()
     _speciesOuterListView = new SpeciesOuterListView()
