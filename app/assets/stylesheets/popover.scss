@@ -250,7 +250,7 @@
         } // div.social
       } // .share-button
 
-      .family, .description, .distribution, .information {
+      .family, .description, .distribution, .information, .indigenous-name {
         font-size: 14px;
         margin-bottom: 15px;
 
@@ -263,7 +263,7 @@
           color: darken(#38678B, 5%);
           text-decoration: underline;
         }
-        
+
         .heading {
           color: #666;
           border: none;
@@ -366,14 +366,14 @@
         margin-left: 10px;
       }
 
-      .family, .authority, .description, .distribution, .information {
+      .family, .authority, .description, .distribution, .information, .indigenous-name {
         font-size: 14px;
         margin: 0 10px 15px 10px;
 
         p {
           margin: 0;
         }
-        
+
         .heading {
           color: #666;
           border: none;

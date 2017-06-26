@@ -2,7 +2,7 @@
 lock '3.3.5'
 
 set :application, 'campus_flora'
-set :repo_url, 'git@bitbucket.org:bio_eru/campusfloraweb.git'
+set :repo_url, 'git@github.com:nicbarker/campusfloraweb.git'
 
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
@@ -37,6 +37,8 @@ set :deploy_to, '/srv/campus_flora'
 set :default_env, {
   'DEVISE_SECRET' => ENV['DEVISE_SECRET']
 }
+
+set :ssh_options, { :forward_agent => true }
 
 set :rbenv_custom_path, '/usr/local/rbenv'
 set :rbenv_type, :user # or :system, depends on your rbenv setup
