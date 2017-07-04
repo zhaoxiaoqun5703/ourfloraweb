@@ -21,7 +21,7 @@
     <div id="highlight-map" class="map-view"><i class="icon-location"></i>View species on map</div>
     <% unless (browser.mobile? || browser.tablet?) %><div class="share-button"></div><% end %>
     <div class="family"><abbr class="heading">Family name</abbr><br /><@= family.name @></div>
-    <div class="indigenous-name"><abbr class="heading">Indigenous Name</abbr><br /><@= indigenousName.length > 0 ? indigenousName : 'None' @></div>
+    <@ if (indigenousName.length > 0) { @><div class="indigenous-name"><abbr class="heading">Indigenous Name</abbr><br /><@= indigenousName @></div><@ } @>
     <div class="description"><abbr class="heading">Description</abbr><br /><@= markdown.toHTML(description) @></div>
     <div class="distribution"><abbr class="heading">Distribution</abbr><br /><@= markdown.toHTML(distribution) @></div>
     <div class="information">
@@ -66,7 +66,7 @@
     <@ } @>
     <% unless (browser.mobile? || browser.tablet?) %><div class="share-button"></div><% end %>
     <div class="family"><abbr class="heading">Family name</abbr><br /><@= family.name @></div>
-    <div class="indigenous-name"><abbr class="heading">Indigenous Name</abbr><br /><@= indigenousName.length > 0 ? indigenousName : 'None' @></div>
+    <@ if (indigenousName.length > 0) { @><div class="indigenous-name"><abbr class="heading">Indigenous Name</abbr><br /><@= indigenousName @></div><@ } @>
     <div class="description"><abbr class="heading">Description</abbr><br /><@= markdown.toHTML(description) @></div>
     <div class="distribution"><abbr class="heading">Distribution</abbr><br /><@= markdown.toHTML(distribution) @></div>
     <div class="information">
