@@ -51,7 +51,8 @@
     _map = new google.maps.Map $('#map-canvas')[0],
       center:
         lat: -33.886204, 
-        lng: 151.189005
+        lat: 39.92,  
+        lng: 116.46
       zoom: 19,
       disableDefaultUI: true,
       mapTypeId: google.maps.MapTypeId.SATELLITE
