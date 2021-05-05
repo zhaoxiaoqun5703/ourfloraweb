@@ -1,4 +1,4 @@
-FROM mysql:latest
+FROM mysql:5.7
 
 ENV MYSQL_ROOT_PASSWORD 5at2=e9=424Ig<#%P2ov2j103Y2eL
 ENV MYSQL_USER campusflora
