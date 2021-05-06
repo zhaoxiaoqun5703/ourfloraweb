@@ -6,10 +6,6 @@
     center: 
       lat: 51.508742
       lng: -0.120850
-    zoom: 19
-    disableDefaultUI: true
-    disableDoubleClickZoom: true
-    mapTypeId: google.maps.MapTypeId.SATELLITE
 
   # Initialize our google maps object and return it
   initialize: ->
@@ -66,7 +62,13 @@
       # zoom: 19,
       # disableDefaultUI: true,
       # mapTypeId: google.maps.MapTypeId.SATELLITE
-    _map = new google.maps.Map($('#map-canvas')[0], {_mapProp})
+    _map = new google.maps.Map($('#map-canvas')[0],{
+      _mapProp,
+      zoom: 19,
+      disableDefaultUI: true,
+      disableDoubleClickZoom: true,
+      mapTypeId: google.maps.MapTypeId.SATELLITE
+    })
 
     # Add a current location marker to the map
     _geoMarker = new GeolocationMarker _map
