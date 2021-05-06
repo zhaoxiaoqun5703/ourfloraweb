@@ -1,6 +1,7 @@
 ActiveAdmin.register_page "Dashboard" do
 
   menu priority: 1, label: proc{ I18n.t("active_admin.dashboard") }
+  
 
   content title: proc{ I18n.t("active_admin.dashboard") } do
     div class: "blank_slate_container", id: "dashboard_default_message" do
@@ -30,4 +31,22 @@ ActiveAdmin.register_page "Dashboard" do
     #   end
     # end
   end # content
+
+  form do |f|
+    # f.actions # adds the 'Submit' and 'Cancel' buttons
+    # f.semantic_errors # shows errors on :base
+    f.inputs 'Details' do
+      f.inputs          # builds an input field for every attribute
+    end
+    # combined = []
+    # trail.trail_points.each do |t|
+    #   combined[t.order] = t
+    # end
+    # trail.species_location_trails.each do |t|
+    #   combined[t.order] = t
+    # end
+    # render partial: "admin/trail_new.html.erb", locals: { form: f, combined: combined }
+    # f.actions # adds the 'Submit' and 'Cancel' buttons
+  end
+
 end
