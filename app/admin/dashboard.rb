@@ -10,11 +10,13 @@ ActiveAdmin.register_page "Dashboard" do
       end
     end
     form do |f|
-      f.inputs 'Details' do
-        f.input :title
-        f.input :published_at, label: 'Publish Post At'
+      f.inputs do
+        f.input :name
+        f.input :email
+        f.input :birthday
+        f.input :foobar, :as => :string
       end
-      f.actions
+      f.buttons
     end
 
       # div class: "blank_slate_container", id: "dashboard_default_message" do
