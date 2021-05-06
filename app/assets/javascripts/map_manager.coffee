@@ -56,8 +56,9 @@
     zoom:9,
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     disableDefaultUI: true
-  };
-    _map = new google.maps.Map(document.getElementById("map-canvas"),_mapProp);
+  }
+    _map = new google.maps.Map $('#map-canvas'),_mapProp
+    # _map = new google.maps.Map(document.getElementById("map-canvas"),_mapProp)
       # center:
       #   lat: 39.92,  
       #   lng: 116.46
