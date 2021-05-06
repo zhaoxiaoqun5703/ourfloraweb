@@ -49,8 +49,16 @@
         _map.setZoom(zoom)
 
     _map = new google.maps.Map $('#map-canvas')[0],
+#set the latitude and longitude here
+    
+    # _map = new google.maps.Map $('#map-canvas')[0],
+    var mapProp = {
+    center: new google.maps.LatLng(51.508742,-0.120850),
+    zoom:9,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  };
+    _map = new google.maps.Map(document.getElementById("map-canvas"),mapProp);
       center:
-        lat: -33.886204, 
         lat: 39.92,  
         lng: 116.46
       zoom: 19,
