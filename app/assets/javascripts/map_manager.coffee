@@ -2,10 +2,6 @@
   _map = null
   _geoMarker = null
       center: {
-  _mapProp = 
-    center: 
-      lat: 51.508742
-      lng: -0.120850
 
   # Initialize our google maps object and return it
   initialize: ->
@@ -54,7 +50,6 @@
         _map.setZoom(zoom)
 
 #set the latitude and longitude here
-    
     # _map = new google.maps.Map $('#map-canvas')[0],
       # center:
       #   lat: 39.92,  
@@ -62,8 +57,9 @@
       # zoom: 19,
       # disableDefaultUI: true,
       # mapTypeId: google.maps.MapTypeId.SATELLITE
+    latlng = new google.maps.LatLng(39.92, 116.46); 
     _map = new google.maps.Map($('#map-canvas')[0],{
-      _mapProp,
+      center: latlng,
       zoom: 19,
       disableDefaultUI: true,
       disableDoubleClickZoom: true,
