@@ -10,13 +10,20 @@ ActiveAdmin.register_page "Dashboard" do
       end
     end
 
-      div class: "blank_slate_container", id: "dashboard_default_message" do
-        span class: "blank_slate" do
-          span I18n.t("hello")
-          # small I18n.t("active_admin.dashboard_welcome.call_to_action")
+      # div class: "blank_slate_container", id: "dashboard_default_message" do
+      #   span class: "blank_slate" do
+      #     span I18n.t("hello")
+      #     # small I18n.t("active_admin.dashboard_welcome.call_to_action")
+      #   end
+      # end
+      form do |f|
+        f.inputs "Admin Details" do
+          f.input :email
+          f.input :password
+          f.input :password_confirmation
         end
+        f.actions
       end
-
     # Here is an example of a simple dashboard with columns and panels.
     #
     # columns do
