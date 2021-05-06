@@ -52,7 +52,7 @@
 #set the latitude and longitude here
     
     # _map = new google.maps.Map $('#map-canvas')[0],
-    var mapProp = {
+    mapProp = {
     center: new google.maps.LatLng(51.508742,-0.120850),
     zoom:9,
     mapTypeId: google.maps.MapTypeId.ROADMAP,
