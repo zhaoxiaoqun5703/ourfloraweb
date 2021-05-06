@@ -1,7 +1,6 @@
 @MapManager = ->
   _map = null
   _geoMarker = null
-      center: {
 
   # Initialize our google maps object and return it
   initialize: ->
