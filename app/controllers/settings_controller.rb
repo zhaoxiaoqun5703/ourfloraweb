@@ -1,4 +1,4 @@
-class UsersController < InheritedResources::Base
+class SettingsController < InheritedResources::Base
 
   private
 
