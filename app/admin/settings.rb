@@ -5,12 +5,12 @@ ActiveAdmin.register_page "Settings" do
   # Prevent a new resource from being created, we can only edit this one row
   config.clear_action_items!
 
-  show do |page_content|
+  show do |settings|
     # Initialize a markdown parser
     markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true)
     attributes_table do
       row :about_page_content do
-        markdown.render(page_content.about_page_content).html_safe
+        markdown.render(settings.about_page_content).html_safe
       end
     end
 
