@@ -48,8 +48,9 @@ ActiveRecord::Schema.define(version: 20170406052832) do
 #copy
   create_table "settings", force: :cascade do |t|
     t.text     "about_page_content", limit: 65535
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
+    t.decimal  "lat",                 precision: 10, scale: 6
+    t.decimal  "lon",                 precision: 10, scale: 6
+
   end
  #end copy
   create_table "families", force: :cascade do |t|
