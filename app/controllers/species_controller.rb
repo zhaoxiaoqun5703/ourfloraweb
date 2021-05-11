@@ -35,7 +35,7 @@ class SpeciesController < ApplicationController
         @markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true)
         # Grab the about page content to render
         @page_content = PageContent.first
-
+        @setting = Setting.first
         render 'map/index'
       }
     end
