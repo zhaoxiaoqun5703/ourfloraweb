@@ -18,11 +18,11 @@ ActiveAdmin.register Setting do
   # end
 
   #   # This defines the column order for the index page which shows the list of all species
-  # index do
-  #   column :about_page_content
-  #   column :created_at
-  #   column :updated_at
-  #   actions
-  # end
+  index do
+    column :about_page_content
+    column :lat
+    column :lon
+    actions
+  end
 
 end
