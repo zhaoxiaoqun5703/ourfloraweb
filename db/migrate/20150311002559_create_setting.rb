@@ -8,6 +8,6 @@ class CreateSetting < ActiveRecord::Migration
 
     # Create a single row for the about page content
     # Setting.create!(:about_page_content => 'Test Content')
-    AdminUser.create!(:about_page_content => 'test content', :lat => 'lat', :lon => 'lon')
+    Setting.create!(:about_page_content => 'test content', :lat => 'lat', :lon => 'lon')
   end
 end 
