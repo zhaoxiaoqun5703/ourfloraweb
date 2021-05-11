@@ -24,10 +24,5 @@ ActiveAdmin.register_page "Settings" do
     column :updated_at
     actions
   end
-  controller do
-    def create
-      @settings = Settings.create(permitted_params)
-      do_some_magic_stuff_here
-    end
-  end
+
 end
