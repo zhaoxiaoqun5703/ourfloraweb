@@ -1,8 +1,8 @@
-@MapManager = ->
+@MapManager = (la,lo) ->
   _map = null
   _geoMarker = null
-  # _lat = @setting.lat
-  # _lon = @setting.lat
+  _lat = la
+  _lon = lo
 
 
   # Initialize our google maps object and return it
@@ -60,7 +60,7 @@
       # disableDefaultUI: true,
       # mapTypeId: google.maps.MapTypeId.SATELLITE
 
-    latlng = new google.maps.LatLng(@model.get('lat'), 116.46)
+    latlng = new google.maps.LatLng(_lat, _lon)
     _map = new google.maps.Map($('#map-canvas')[0],{
       center: latlng,
       zoom: 19,

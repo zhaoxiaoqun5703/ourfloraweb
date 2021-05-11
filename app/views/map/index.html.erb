@@ -73,9 +73,9 @@
 <script>
   function init() {
 
-    var mapManager = new MapManager;
+    var mapManager = new MapManager(<%= @setting.lat %>,<%= @setting.lon %>);
     // Initialize the mapManager and get the google map
-    console.log(<%= @setting.about_page_content %>);
+    //console.log(<%= @setting.about_page_content %>);
     var map = mapManager.initialize();
     var speciesManager = new SpeciesManager;
     speciesManager.initialize(<% cache 'species_index_json', skip_digest: true do %><%= raw render(:template => 'species/index.json', :locals => { :species => @species}) %><% end %>, <%= raw @trails %>, <%= raw @families %>, map);
