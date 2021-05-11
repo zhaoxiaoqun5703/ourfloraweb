@@ -72,7 +72,8 @@
 
 <script>
   function init() {
-    var mapManager = new MapManager(@setting.lat);
+
+    var mapManager = new MapManager;
     // Initialize the mapManager and get the google map
     var map = mapManager.initialize();
     var speciesManager = new SpeciesManager;
