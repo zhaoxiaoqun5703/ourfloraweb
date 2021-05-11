@@ -1,26 +1,27 @@
 ActiveAdmin.register_page "Settings" do
-  # permit_params :email, :password, :password_confirmation
-  
-  # index do
-  #   selectable_column
-  #   id_column
-  #   column :email
-  #   column :current_sign_in_at
-  #   column :sign_in_count
-  #   column :created_at
-  #   actions
-  # end
+  permit_params :about_page_content
+  actions :all, :except => [:destroy]
 
-  # filter :email
-  # filter :current_sign_in_at
-  # filter :sign_in_count
-  # filter :created_at
+  # Prevent a new resource from being created, we can only edit this one row
+  config.clear_action_items!
 
-  # form do |f|
-  #   f.inputs "Admin Details" do
-  #     f.input :email
-  #     f.input :password
-  #     f.input :password_confirmation
-  #   end
-  #   f.actions
+  show do |page_content|
+    # Initialize a markdown parser
+    markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true)
+    attributes_table do
+      row :about_page_content do
+        markdown.render(page_content.about_page_content).html_safe
+      end
+    end
+
+    active_admin_comments_for(resource)
+  end
+
+    # This defines the column order for the index page which shows the list of all species
+  index do
+    column :about_page_content
+    column :created_at
+    column :updated_at
+    actions
+  end
 end
