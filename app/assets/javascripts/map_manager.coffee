@@ -60,7 +60,7 @@
       # disableDefaultUI: true,
       # mapTypeId: google.maps.MapTypeId.SATELLITE
 
-    latlng = new google.maps.LatLng(x, 35.69)
+    latlng = new google.maps.LatLng(x, 116.46)
     _map = new google.maps.Map($('#map-canvas')[0],{
       center: latlng,
       zoom: 19,
