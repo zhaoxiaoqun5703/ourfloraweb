@@ -1,4 +1,4 @@
-class Settings  < ActiveRecord::Base
+class Setting  < ActiveRecord::Base
     # devise :database_authenticatable, 
     # :recoverable, :rememberable, :trackable, :validatable
 end

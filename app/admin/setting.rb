@@ -1,16 +1,16 @@
-ActiveAdmin.register_page "Settings" do
-  permit_params :about_page_content
+ActiveAdmin.register_page "Setting" do
+  # permit_params :about_page_content
   actions :all, :except => [:destroy]
 
   # Prevent a new resource from being created, we can only edit this one row
   config.clear_action_items!
 
-  show do |settings|
+  show do |setting|
     # Initialize a markdown parser
     markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true)
     attributes_table do
       row :about_page_content do
-        markdown.render(settings.about_page_content).html_safe
+        markdown.render(setting.about_page_content).html_safe
       end
     end
 
