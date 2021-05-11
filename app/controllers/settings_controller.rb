@@ -1,9 +1,9 @@
 class SettingsController < InheritedResources::Base
 
-  private
+  # private
 
-    def setting_params
-      params.required(:setting).permit(:about_page_content)
-    end
+  #   def setting_params
+  #     params.required(:setting).permit(:about_page_content)
+  #   end
 end
 
