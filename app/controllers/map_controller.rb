@@ -15,5 +15,6 @@ class MapController < ApplicationController
     @markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true)
     # Grab the about page content to render
     @page_content = PageContent.first
+    @setting = Setting.first
   end
 end

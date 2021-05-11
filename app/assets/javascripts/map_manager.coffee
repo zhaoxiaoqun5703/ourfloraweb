@@ -1,7 +1,7 @@
 @MapManager = ->
   _map = null
   _geoMarker = null
-  _lat = @page_content.about_page_content
+  _lat = @setting.about_page_content
 
 
   # Initialize our google maps object and return it
