@@ -6,6 +6,6 @@ class CreatePageContent < ActiveRecord::Migration
     end
 
     # Create a single row for the about page content
-    PageContent.create!(:about_page_content => 'Test Content')
+    Settings.create!(:about_page_content => 'Test Content')
   end
 end 
