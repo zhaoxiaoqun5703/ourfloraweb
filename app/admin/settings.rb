@@ -26,7 +26,7 @@ ActiveAdmin.register_page "Settings" do
   end
   controller do
     def create
-      AdminUser.create(params[:settings].permit(:about_page_content, :created_at, :updated_at))
+      Settings.create(params[:settings].permit(:about_page_content, :created_at, :updated_at))
       do_some_magic_stuff_here
     end
   end
