@@ -1,4 +1,4 @@
-class CreatePageContent < ActiveRecord::Migration
+class CreateSettings < ActiveRecord::Migration
   def change
     create_table :settings do |t|
       t.text :about_page_content
