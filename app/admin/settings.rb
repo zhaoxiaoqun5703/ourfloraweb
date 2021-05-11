@@ -1,5 +1,5 @@
 ActiveAdmin.register_page "Settings" do
-  permit_params :about_page_content
+  permit_params :about_page_content, :created_at, :updated_at
   actions :all, :except => [:destroy]
 
   # Prevent a new resource from being created, we can only edit this one row
