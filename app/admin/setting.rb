@@ -1,4 +1,4 @@
-ActiveAdmin.register "Setting" do
+ActiveAdmin.register Setting do
   permit_params :about_page_content
   # actions :all, :except => [:destroy]
 
